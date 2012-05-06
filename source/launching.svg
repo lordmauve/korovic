@@ -70,7 +70,7 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1.2"
-     inkscape:cx="309.25216"
+     inkscape:cx="363.99141"
      inkscape:cy="263.0291"
      inkscape:current-layer="layer1"
      inkscape:document-units="px"
@@ -818,6 +818,101 @@
          width="13.788582"
          id="rect3821"
          style="color:#000000;fill:#c78e36;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+    </g>
+    <g
+       transform="translate(277,464)"
+       id="g5696">
+      <rect
+         y="62"
+         x="449"
+         height="64"
+         width="64"
+         id="rect5694"
+         style="opacity:0.75;color:#000000;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+      <text
+         xml:space="preserve"
+         style="font-size:35.55814743px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-indent:0;text-align:start;text-decoration:none;line-height:160.00000238%;letter-spacing:4.29040956;word-spacing:normal;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:start;baseline-shift:baseline;color:#000000;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Atomic Clock Radio;-inkscape-font-specification:Atomic Clock Radio"
+         x="452.96701"
+         y="80.3508"
+         id="text5635"
+         sodipodi:linespacing="160%"><tspan
+           id="tspan5660"
+           style="font-size:17.77907372px"
+           sodipodi:role="line"
+           x="452.96701"
+           y="80.3508">2</tspan></text>
+      <g
+         id="g3827-1"
+         transform="matrix(0.60014246,0,0,0.60014246,167.84922,-23.31214)">
+        <g
+           transform="matrix(1,0,0,0.75904974,0,47.111935)"
+           id="g3823-3">
+          <path
+             style="color:#000000;fill:#c78e36;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:3.82508016;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+             d="m 522.19836,194.2881 c 0,0 -11.66726,-62.57895 0,-62.57895 11.66726,0 0,62.57895 0,62.57895 z"
+             id="path3817-9"
+             inkscape:connector-curvature="0"
+             sodipodi:nodetypes="czc" />
+          <path
+             sodipodi:nodetypes="czc"
+             inkscape:connector-curvature="0"
+             id="path3819-7"
+             d="m 522.19836,196.76297 c 0,0 -11.66726,62.57895 0,62.57895 11.66726,0 0,-62.57895 0,-62.57895 z"
+             style="color:#000000;fill:#c78e36;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:3.82508016;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+        </g>
+        <rect
+           ry="3.0026619"
+           rx="5.2552581"
+           y="191.10612"
+           x="514.06665"
+           height="8.8388348"
+           width="13.788582"
+           id="rect3821-5"
+           style="color:#000000;fill:#c78e36;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:3.33254218;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+      </g>
+    </g>
+    <g
+       id="g7451"
+       transform="translate(203,464)">
+      <rect
+         style="opacity:0.75;color:#000000;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+         id="rect7453"
+         width="64"
+         height="64"
+         x="449"
+         y="62" />
+      <g
+         id="g7455"
+         transform="matrix(0.91939934,0,0,0.91939934,176.9552,43.231494)">
+        <path
+           sodipodi:nodetypes="zsssz"
+           inkscape:connector-curvature="0"
+           id="path7457"
+           d="m 331.52061,82.200756 c 10.47561,0 -17.41403,-13.639487 -17.41403,-30.86634 0,-11.858795 7.79653,-21.472237 17.41403,-21.472237 9.6175,0 17.41403,9.613442 17.41403,21.472237 0,16.555846 -27.88964,30.86634 -17.41403,30.86634 z"
+           style="color:#000000;fill:#ff0000;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:2.17533326;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+        <path
+           transform="matrix(1.1666667,0,0,1.1666667,-55.154329,-7.8093899)"
+           d="m 330.92596,42.613697 c 0,2.343146 -1.8995,4.242641 -4.24264,4.242641 -2.34315,0 -4.24264,-1.899495 -4.24264,-4.242641 0,-2.343146 1.89949,-4.24264 4.24264,-4.24264 2.34314,0 4.24264,1.899494 4.24264,4.24264 z"
+           sodipodi:ry="4.2426405"
+           sodipodi:rx="4.2426405"
+           sodipodi:cy="42.613697"
+           sodipodi:cx="326.68332"
+           id="path7459"
+           style="opacity:0.75;color:#000000;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+           sodipodi:type="arc" />
+      </g>
+      <text
+         sodipodi:linespacing="160%"
+         id="text7461"
+         y="80.3508"
+         x="452.96701"
+         style="font-size:35.55814743px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-indent:0;text-align:start;text-decoration:none;line-height:160.00000238%;letter-spacing:4.29040956;word-spacing:normal;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:start;baseline-shift:baseline;color:#000000;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Atomic Clock Radio;-inkscape-font-specification:Atomic Clock Radio"
+         xml:space="preserve"><tspan
+           y="80.3508"
+           x="452.96701"
+           sodipodi:role="line"
+           style="font-size:17.77907372px"
+           id="tspan7463">1</tspan></text>
     </g>
   </g>
 </svg>
