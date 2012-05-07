@@ -1,4 +1,8 @@
 from pyglet.sprite import Sprite
+from pyglet.window import key
+from pyglet.event import EVENT_HANDLED
+
+from .vector import v
 
 from .background import GradientPainter, sky
 from .background import HorizonPainter, ForegroundSeaPainter
@@ -39,16 +43,84 @@ class Scene(object):
         self.fgsea.draw(vp)
         self.hud.draw()
 
+    def get_handlers(self):
+        return {
+            'on_key_press': self.on_key_press,
+            'on_key_release': self.on_key_release,
+            'on_draw': self.draw
+        }
+
+    def on_key_press(self, symbol, modifiers):
+        if key._0 <= symbol <= key._9:
+            controller = symbol - key._0
+            self.world.get_controller(controller).on_press()
+            return EVENT_HANDLED
+
+
+    def on_key_release(self, symbol, modifiers):
+        """Pass the key release event to the appropriate controller.
+        
+        """
+        if key._0 <= symbol <= key._9:
+            controller = symbol - key._0
+            self.world.get_controller(controller).on_release()
+            return EVENT_HANDLED
+
+    def stop(self):
+        pass
+
 
 class Editor(object):
-    def __init__(self, squid):
+    def __init__(self, window, squid):
+        self.window = window
         self.squid = squid
         self.background = Sprite(loader.image('data/sprites/editor-bg.png'))
-        self.squid.attachments[0].selected = True
+        #self.squid.attachments[0].selected = True
+        self.editor = None
     
     def update(self, dt):
         pass
 
     def draw(self):
         self.background.draw()
-        self.squid.draw()
+        if self.editor:
+            self.squid.draw_selected(editor=self.editor)
+        else:
+            self.squid.draw()
+
+    def get_handlers(self):
+        return {
+            'on_draw': self.draw,
+            'on_mouse_release': self.on_mouse_release
+        }
+
+    def set_editor(self, editor):
+        if self.editor:
+            self.window.pop_handlers()
+        self.editor = editor
+        self.window.push_handlers(**editor.get_handlers())
+
+    def clear_editor(self):
+        if self.editor:
+            self.window.pop_handlers()
+            self.editor = None
+
+    def stop(self):
+        self.clear_editor()
+
+    def on_mouse_release(self, x, y, button, modifiers):
+        mpos = v(x, y)
+
+        closest_dist = 300 ** 2
+        closest = None
+
+        for a in self.squid.attachments:
+            dist = (a.position - mpos).length2
+            if dist < closest_dist:
+                closest = a
+                closest_dist = dist
+
+        if closest:
+            self.set_editor(closest.editor())
+        else:
+            self.clear_editor()

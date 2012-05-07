@@ -4,11 +4,11 @@ from pyglet import gl
 import pymunk
 import math
 
-from .constants import SELECTED_COLOUR, WHITE
 from .vector import v
 from .controllers import PressController
 from . import loader
 from .primitives import Protractor
+from .editor import AngleEditor
 
 
 class Component(object):
@@ -47,8 +47,7 @@ class Component(object):
 
         cls.image.anchor_x = -int(offset.x + 0.5)
         cls.image.anchor_y = int(cls.image.height + offset.y + 0.5)
-        cls.moi = moi
-        print moi
+        cls.moi = moi  # moment of intertia
 
     def create_body(self):
         self.body = pymunk.Body(self.MASS, self.moi)
@@ -119,12 +118,26 @@ class Susie(Component):
             a.update(dt)
         self.body.angular_velocity *= self.ANGULAR_VELOCITY_DAMPING
 
-    def draw_component(self):
+    def draw_component(self, selected=None):
         self.sprite.set_position(*self.body.position)
         self.sprite.rotation = -180 / math.pi * self.body.angle
         self.sprite.draw()
+
+    def draw(self):
+        self.draw_component()
         for a in self.attachments:
             a.draw()
+
+    def draw_selected(self, editor=None):
+        self.draw_component()
+        if editor is not None:
+            for a in self.attachments:
+                if a is not editor.component:
+                    a.draw()
+                editor.draw()
+        else:
+            for a in self.attachments:
+                a.draw()
 
 
 class JetEngine(Component):
@@ -156,10 +169,5 @@ class JetEngine(Component):
     def controller(self):
         return PressController(self)
 
-    def draw_selected(self):
-        self.sprite.color = SELECTED_COLOUR
-        self.draw_component()
-        gl.glColor3f(*SELECTED_COLOUR)
-        Protractor(centre=self.position, radius=60, angle=self.angle * (180 / math.pi)).draw()
-        gl.glColor3f(*WHITE)
-        self.sprite.color = WHITE
+    def editor(self):
+        return AngleEditor(self)

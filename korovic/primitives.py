@@ -32,6 +32,12 @@ class Circle(object):
 
 
 class Protractor(object):
+    """A circular display an angle.
+
+    Users should be able to drag on the protractor to adjust the angle of the
+    component.
+
+    """
     def __init__(self, radius, centre=(0, 0), min_angle=0, max_angle=90, angle=None):
         self.circle = Circle(radius, centre)
         self.min_angle = min_angle
