@@ -44,6 +44,7 @@ class Editor(object):
     def __init__(self, squid):
         self.squid = squid
         self.background = Sprite(loader.image('data/sprites/editor-bg.png'))
+        self.squid.attachments[0].selected = True
     
     def update(self, dt):
         pass

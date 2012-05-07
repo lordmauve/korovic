@@ -2,6 +2,7 @@ from pyglet.text import Label
 
 from .constants import SEA_LEVEL
 
+
 class GameHud(object):
     def __init__(self, world):
         self.world = world

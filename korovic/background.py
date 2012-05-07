@@ -2,6 +2,7 @@ import pyglet
 from pyglet.gl import gl
 
 from .vector import v
+from .primitives import walk
 
 
 # This was extracted from source/sky.svg using tools/svg_to_gradient.py
@@ -45,11 +46,6 @@ class Gradient(object):
 
 
 sky = Gradient(SKY, SKY_TOP)
-
-def walk(list):
-    for i in list:
-        for j in i:
-            yield j
 
 
 class GradientPainter(object):

@@ -1,15 +1,19 @@
 import json
 import pyglet
+from pyglet import gl
 import pymunk
 import math
 
+from .constants import SELECTED_COLOUR, WHITE
 from .vector import v
 from .controllers import PressController
 from . import loader
+from .primitives import Protractor
 
 
 class Component(object):
     MASS = 50.0
+    selected = False
 
     @classmethod
     def load(cls):
@@ -73,6 +77,17 @@ class Component(object):
 
     rotation = property(get_rotation, set_rotation)
 
+    def draw(self):
+        if self.selected:
+            self.draw_selected()
+        else:
+            self.draw_component()
+
+    def draw_selected(self):
+        gl.glColor3f(0, 1, 0)
+        self.draw_component()
+        gl.glColor3f(1, 1, 1)
+
 
 class Susie(Component):
     ANGULAR_VELOCITY_DAMPING = 0.8
@@ -104,7 +119,7 @@ class Susie(Component):
             a.update(dt)
         self.body.angular_velocity *= self.ANGULAR_VELOCITY_DAMPING
 
-    def draw(self):
+    def draw_component(self):
         self.sprite.set_position(*self.body.position)
         self.sprite.rotation = -180 / math.pi * self.body.angle
         self.sprite.draw()
@@ -122,9 +137,13 @@ class JetEngine(Component):
 
     def set_active(self, active):
         self.active = active
-    
-    def draw(self):
-        self.sprite.set_position(*self.squid.body.local_to_world(self.attachment_point))
+
+    @property
+    def position(self):
+        return v(self.squid.body.local_to_world(self.attachment_point))
+
+    def draw_component(self):
+        self.sprite.set_position(*self.position)
         self.sprite.rotation = -180 / math.pi * (self.angle + self.squid.body.angle)
         self.sprite.draw()
 
@@ -137,3 +156,10 @@ class JetEngine(Component):
     def controller(self):
         return PressController(self)
 
+    def draw_selected(self):
+        self.sprite.color = SELECTED_COLOUR
+        self.draw_component()
+        gl.glColor3f(*SELECTED_COLOUR)
+        Protractor(centre=self.position, radius=60, angle=self.angle * (180 / math.pi)).draw()
+        gl.glColor3f(*WHITE)
+        self.sprite.color = WHITE
