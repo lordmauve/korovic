@@ -1,0 +1,3 @@
+include run_game.py
+include README
+recursive-include korovic/data *
