@@ -150,6 +150,7 @@ class World(object):
     def __init__(self):
         self.space = pymunk.Space()
         self.space.gravity = (0.0, -900.0)
+        self.space.damping = 0.9
         self.create_floor(self.space, 20)
 
         Susie.load()
@@ -161,8 +162,10 @@ class World(object):
 
     def create_floor(self, space, y=0):
         body = pymunk.Body()
-        self.floor = pymunk.Segment(body, (0, y), (200, y), 50)
-        space.add_static(self.floor)
+        floor = pymunk.Segment(body, (0, y), (200, y), 50)
+        wall = pymunk.Segment(body, (-50, 0), (-50, 10000), 50)
+        space.add_static(floor)
+        space.add_static(wall)
 
     def update(self, dt):
         self.squid.update(dt)
