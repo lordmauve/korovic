@@ -1,4 +1,5 @@
 import pyglet.resource
+from pyglet import font
 from pkg_resources import resource_stream
 
 
@@ -12,4 +13,5 @@ loader = Loader()
 image = loader.image
 texture = loader.texture
 file = loader.file
-add_font = loader.add_font
+
+font.add_file(resource_stream(__name__, 'data/fonts/atomic-clock-radio.ttf'))

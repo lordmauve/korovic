@@ -11,7 +11,7 @@ SKY = [
     (1.0, (0.0, 0.0, 0.0)),
 ]
 
-SKY_TOP = 10000
+SKY_TOP = 50000
 
 
 def lerp(frac, a, b):

@@ -15,7 +15,7 @@ class World(object):
         Susie.load()
         JetEngine.load()
 
-        self.squid = Susie((150, 200))
+        self.squid = Susie((150, 56))
         self.squid.attach(JetEngine)
         self.squid.attach(JetEngine, 1)
         self.space.add(self.squid.body, *self.squid.shapes)
@@ -24,7 +24,7 @@ class World(object):
         body = pymunk.Body()
         space.add_static(pymunk.Segment(body, (0, y), (676, y), SEA_LEVEL))
         space.add_static(pymunk.Segment(body, (676, y), (876, y - 100), SEA_LEVEL))
-        space.add_static(pymunk.Segment(body, (-50, 0), (-50, 10000), 50))
+        space.add_static(pymunk.Segment(body, (-50, 0), (-50, 100000), 50))
 
     def update(self, dt):
         self.squid.update(dt)

@@ -21,6 +21,66 @@
    inkscape:export-ydpi="90">
   <defs
      id="defs6464">
+    <pattern
+       inkscape:collect="always"
+       xlink:href="#pattern4859"
+       id="pattern4902"
+       patternTransform="matrix(1,0,0,0.74044268,-61.9999,-65.32597)" />
+    <pattern
+       inkscape:collect="always"
+       xlink:href="#pattern4853"
+       id="pattern4900"
+       patternTransform="matrix(1,0,0,0.42372881,-141.9999,10.40678)" />
+    <pattern
+       inkscape:collect="always"
+       xlink:href="#pattern4847"
+       id="pattern4898"
+       patternTransform="matrix(1,0,0,0.23809523,-141.9999,0)" />
+    <pattern
+       inkscape:collect="always"
+       xlink:href="#pattern4863"
+       id="pattern4896"
+       patternTransform="matrix(1,0,0,0.63333333,-59.9999,-34.7)" />
+    <pattern
+       inkscape:collect="always"
+       xlink:href="#pattern4871"
+       id="pattern4880"
+       patternTransform="translate(1064.9999,515)" />
+    <pattern
+       inkscape:collect="always"
+       xlink:href="#pattern4855"
+       id="pattern4863"
+       patternTransform="matrix(1,0,0,0.63333333,1005,480.3)" />
+    <pattern
+       inkscape:collect="always"
+       xlink:href="#pattern4855"
+       id="pattern4859"
+       patternTransform="matrix(1,0,0,0.74044268,1003,449.67403)" />
+    <pattern
+       inkscape:collect="always"
+       xlink:href="#pattern4849"
+       id="pattern4855"
+       patternTransform="translate(1005,440)" />
+    <pattern
+       inkscape:collect="always"
+       xlink:href="#pattern4849"
+       id="pattern4853"
+       patternTransform="matrix(1,0,0,0.42372881,923,525.40678)" />
+    <pattern
+       inkscape:collect="always"
+       xlink:href="#pattern4837"
+       id="pattern4849"
+       patternTransform="translate(923,515)" />
+    <pattern
+       inkscape:collect="always"
+       xlink:href="#pattern4837"
+       id="pattern4847"
+       patternTransform="matrix(1,0,0,0.23809523,923,515)" />
+    <pattern
+       inkscape:collect="always"
+       xlink:href="#pattern4110"
+       id="pattern4837"
+       patternTransform="translate(923,515)" />
     <linearGradient
        inkscape:collect="always"
        id="linearGradient7874">
@@ -89,7 +149,8 @@
        y1="595.25403"
        x2="411.66666"
        y2="105.57361"
-       gradientUnits="userSpaceOnUse" />
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="translate(0,-5)" />
     <linearGradient
        inkscape:collect="always"
        xlink:href="#linearGradient7396"
@@ -131,6 +192,157 @@
        fx="46.801899"
        fy="594.76642"
        r="184.14873" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient6980-9"
+       id="linearGradient6986-7"
+       x1="411.66666"
+       y1="595.25403"
+       x2="411.66666"
+       y2="105.57361"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="translate(0,-5)" />
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient6980-9">
+      <stop
+         style="stop-color:#d3efff;stop-opacity:1;"
+         offset="0"
+         id="stop6982-7" />
+      <stop
+         style="stop-color:#92bfff;stop-opacity:1"
+         offset="1"
+         id="stop6984-9" />
+    </linearGradient>
+    <linearGradient
+       y2="105.57361"
+       x2="411.66666"
+       y1="595.25403"
+       x1="411.66666"
+       gradientTransform="translate(500.83334,0)"
+       gradientUnits="userSpaceOnUse"
+       id="linearGradient4028"
+       xlink:href="#linearGradient6980-9"
+       inkscape:collect="always" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient6980-9"
+       id="linearGradient4069"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="translate(0,-5)"
+       x1="411.66666"
+       y1="595.25403"
+       x2="411.66666"
+       y2="105.57361" />
+    <filter
+       id="filter4092"
+       inkscape:label="Seawater"
+       x="0"
+       y="0"
+       height="1"
+       width="1">
+      <feTurbulence
+         id="feTurbulence4094"
+         baseFrequency="0.013245033112582783 0.034782608695652174"
+         numOctaves="2" />
+      <feColorMatrix
+         id="feColorMatrix4102"
+         values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 " />
+      <feSpecularLighting
+         id="feSpecularLighting4839"
+         specularExponent="66.5"
+         surfaceScale="10"
+         specularConstant="0.5">
+        <feDistantLight
+           id="feDistantLight4841"
+           azimuth="270"
+           elevation="45" />
+      </feSpecularLighting>
+      <feColorMatrix
+         id="feColorMatrix4843"
+         values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1 0 " />
+    </filter>
+    <pattern
+       patternUnits="userSpaceOnUse"
+       width="512"
+       height="512"
+       patternTransform="translate(-388,729)"
+       id="pattern4110">
+      <g
+         id="g4104"
+         transform="translate(388,-729)">
+        <rect
+           y="729"
+           x="-388"
+           height="256"
+           width="256"
+           id="rect4090"
+           style="color:#000000;fill:#7fc9ff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2;marker:none;visibility:visible;display:inline;overflow:visible;filter:url(#filter4092);enable-background:accumulate" />
+        <use
+           x="0"
+           y="0"
+           xlink:href="#rect4090"
+           id="use4096"
+           transform="matrix(-1,0,0,1,-264,0)"
+           width="800"
+           height="600" />
+        <use
+           height="600"
+           width="800"
+           transform="matrix(-1,0,0,-1,-264,1970)"
+           id="use4098"
+           xlink:href="#rect4090"
+           y="0"
+           x="0" />
+        <use
+           x="0"
+           y="0"
+           xlink:href="#rect4090"
+           id="use4100"
+           transform="matrix(1,0,0,-1,0,1970)"
+           width="800"
+           height="600" />
+      </g>
+    </pattern>
+    <pattern
+       patternUnits="userSpaceOnUse"
+       width="512"
+       height="84"
+       patternTransform="translate(1065,515)"
+       id="pattern4871">
+      <g
+         id="g4865"
+         transform="translate(-1065,-515)">
+        <rect
+           id="rect4835"
+           y="562"
+           x="1065"
+           height="19"
+           width="512"
+           style="fill:url(#pattern4863);stroke:none" />
+        <rect
+           style="fill:url(#pattern4847);stroke:none"
+           width="512"
+           height="20"
+           x="1065"
+           y="515"
+           id="rect4845" />
+        <rect
+           style="fill:url(#pattern4853);stroke:none"
+           width="512"
+           height="25"
+           x="1065"
+           y="536"
+           id="rect4851" />
+        <rect
+           style="fill:url(#pattern4859);stroke:none"
+           width="512"
+           height="20"
+           x="1065"
+           y="579"
+           id="rect4857" />
+      </g>
+    </pattern>
   </defs>
   <sodipodi:namedview
      id="base"
@@ -140,9 +352,9 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1"
-     inkscape:cx="336.78486"
-     inkscape:cy="78.121156"
-     inkscape:current-layer="layer1"
+     inkscape:cx="532.23614"
+     inkscape:cy="-120.05089"
+     inkscape:current-layer="layer3"
      inkscape:document-units="px"
      showgrid="false"
      inkscape:window-width="1680"
@@ -163,23 +375,50 @@
     </rdf:RDF>
   </metadata>
   <g
-     id="layer1"
-     inkscape:label="Layer 1"
-     inkscape:groupmode="layer">
+     inkscape:groupmode="layer"
+     id="layer3"
+     inkscape:label="Background"
+     style="display:inline">
     <rect
-       style="color:#000000;fill:url(#linearGradient6986);stroke:none;stroke-width:2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;fill-opacity:1"
+       style="color:#000000;fill:url(#linearGradient4069);fill-opacity:1;stroke:none;stroke-width:2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
        id="rect6470"
        width="800"
        height="600"
-       x="0"
-       y="0" />
+       x="3.5058592e-06"
+       y="-5" />
     <rect
-       style="opacity:0.5;color:#000000;fill:#0093ff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       style="opacity:1;color:#000000;fill:#7fc9ff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
        id="rect7042"
-       width="1300.8333"
+       width="2077.8333"
        height="85"
        x="-500.83334"
        y="515" />
+    <rect
+       style="stroke:none;fill:url(#pattern4110)"
+       width="512"
+       height="512"
+       x="-388"
+       y="729"
+       id="rect4117" />
+    <rect
+       style="fill:url(#pattern4880);stroke:none"
+       width="1223"
+       height="84"
+       x="354"
+       y="515"
+       id="rect4878" />
+    <rect
+       id="rect4882"
+       y="731"
+       x="354"
+       height="84"
+       width="1223"
+       style="fill:none;stroke:none" />
+  </g>
+  <g
+     id="layer1"
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer">
     <g
        id="g7004">
       <path
@@ -730,7 +969,7 @@
        sodipodi:nodetypes="cccc"
        inkscape:connector-curvature="0"
        id="path7650"
-       d="m 444.16667,524.5 c 57.15819,7.50127 81.22535,44.44253 83.33333,76.66667 l -11.66667,0 C 516.28345,548.43105 479.60617,530.66533 444.16667,524.5 z"
+       d="m 444.16667,522.5 c 60.58768,7.69696 86.09887,45.6019 88.33333,78.66667 l -12.36667,0 C 520.61046,547.05534 481.73254,528.82616 444.16667,522.5 z"
        style="color:#000000;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
     <g
        id="g7745"
@@ -924,7 +1163,7 @@
            sodipodi:cy="404.5"
            sodipodi:rx="6.5"
            sodipodi:ry="7.25"
-           d="m 114.5,404.5 a 6.5,7.25 0 1 1 -13,0 6.5,7.25 0 1 1 13,0 z"
+           d="m 114.5,404.5 c 0,4.00406 -2.91015,7.25 -6.5,7.25 -3.58985,0 -6.5,-3.24594 -6.5,-7.25 0,-4.00406 2.91015,-7.25 6.5,-7.25 3.58985,0 6.5,3.24594 6.5,7.25 z"
            transform="matrix(0.74263457,-0.47899343,0.72673576,0.87781849,-269.41915,103.40371)" />
         <path
            style="color:#000000;fill:#e6e6e6;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
@@ -940,11 +1179,11 @@
            sodipodi:cy="406.34375"
            sodipodi:rx="0.53125"
            sodipodi:ry="0.65625"
-           d="m 105.25,406.34375 a 0.53125,0.65625 0 1 1 -1.0625,0 0.53125,0.65625 0 1 1 1.0625,0 z"
+           d="m 105.25,406.34375 c 0,0.36244 -0.23785,0.65625 -0.53125,0.65625 -0.2934,0 -0.53125,-0.29381 -0.53125,-0.65625 0,-0.36244 0.23785,-0.65625 0.53125,-0.65625 0.2934,0 0.53125,0.29381 0.53125,0.65625 z"
            transform="matrix(1.952381,0,-1.4875283,-1.952381,506.71229,1201.6413)" />
         <path
            transform="matrix(1.952381,0,-1.4875283,1.952381,506.33729,-386.90933)"
-           d="m 105.25,406.34375 a 0.53125,0.65625 0 1 1 -1.0625,0 0.53125,0.65625 0 1 1 1.0625,0 z"
+           d="m 105.25,406.34375 c 0,0.36244 -0.23785,0.65625 -0.53125,0.65625 -0.2934,0 -0.53125,-0.29381 -0.53125,-0.65625 0,-0.36244 0.23785,-0.65625 0.53125,-0.65625 0.2934,0 0.53125,0.29381 0.53125,0.65625 z"
            sodipodi:ry="0.65625"
            sodipodi:rx="0.53125"
            sodipodi:cy="406.34375"
@@ -1266,7 +1505,7 @@
          height="600" />
     </g>
     <g
-       transform="matrix(0.47617405,0,0,0.47617405,284.80038,439.2739)"
+       transform="matrix(0.47617405,0,0,0.47617405,263.80038,439.2739)"
        id="g4645">
       <g
          id="g4177">
@@ -1512,8 +1751,18 @@
     </g>
     <path
        style="color:#000000;fill:none;stroke:#000000;stroke-width:0.5;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
-       d="m 322.125,490.375 1.875,0"
+       d="m 590.125,490.375 1.875,0"
        id="path8002"
        inkscape:connector-curvature="0" />
+    <rect
+       style="opacity:0;color:#000000;fill:#ff00ff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.50000000000000000;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect4071"
+       width="676"
+       height="233"
+       x="-142"
+       y="367"
+       inkscape:export-filename="/home/mauve/dev/flying/korovic/data/sprites/island-lair.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
   </g>
 </svg>

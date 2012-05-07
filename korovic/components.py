@@ -51,9 +51,27 @@ class Component(object):
         self.shapes = []
         for centre, radius in self.circles:
             c = pymunk.Circle(self.body, radius, centre)
-            c.friction = 1.0
+            c.friction = 50000.0
             c.elasticity = 0.01
             self.shapes.append(c)
+
+    def set_position(self, pos):
+        self.body.position = pos
+        self.sprite.position = pos
+
+    def get_position(self):
+        return self.body.position
+
+    position = property(get_position, set_position)
+
+    def set_rotation(self, angle):
+        self.body.angle = angle
+        self.sprite.rotation = -180 / math.pi * self.body.angle
+
+    def get_rotation(self):
+        return self.body.angle
+
+    rotation = property(get_rotation, set_rotation)
 
 
 class Susie(Component):
