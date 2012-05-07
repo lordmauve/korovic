@@ -1,6 +1,4 @@
-import pyglet
 from pyglet.gl import gl
-from vector import v
 
 
 # This was extracted from source/sky.svg using tools/svg_to_gradient.py
@@ -12,14 +10,36 @@ SKY = [
 
 SKY_TOP = 10000
 
+
+def lerp(frac, a, b):
+    """Linear interpolation"""
+    ifrac = (1 - frac)
+    return tuple(ifrac * ca + frac * cb for ca, cb in zip(a, b))
+    
+
+
 class Gradient(object):
     def __init__(self, gradient, scale):
-        self.gradient = [(alt * scale, colour) for (alt, colour) in gradient]
+        self.gradient = [
+            (float(alt * scale), colour) for (alt, colour) in gradient
+        ]
 
-    def colour(self, frac):
-        col = self.gradient[0][0]
-        # TODO
-        return col
+    def colour(self, pos):
+        """Get the colour at position `pos` in the gradient."""
+        lastv, lastc = None, None
+        for v, c in self.gradient:
+            if v >= pos:
+                if lastc is None:
+                    return c
+                else:
+                    frac = (pos - lastv) / (v - lastv)
+                    return lerp(frac, lastc, c)
+            else:
+                lastv = v
+                lastc = c
+        else:
+            return lastc
+
 
 
 class GradientPainter(object):
