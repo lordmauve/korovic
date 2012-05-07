@@ -1,11 +1,14 @@
+import pyglet
 from pyglet.gl import gl
+
+from .vector import v
 
 
 # This was extracted from source/sky.svg using tools/svg_to_gradient.py
 SKY = [
-    (0.0, (0.0, 0.0, 0.0)),
-    (0.40000001, (0.0, 0.5333333333333333, 0.6666666666666666)),
-    (1.0, (0.6862745098039216, 0.9137254901960784, 0.8980392156862745))
+    (0.0, (0.686, 0.914, 0.898)),
+    (0.6, (0.0, 0.533, 0.667)),
+    (1.0, (0.0, 0.0, 0.0)),
 ]
 
 SKY_TOP = 10000
@@ -41,12 +44,86 @@ class Gradient(object):
             return lastc
 
 
+sky = Gradient(SKY, SKY_TOP)
+
+def walk(list):
+    for i in list:
+        for j in i:
+            yield j
+
 
 class GradientPainter(object):
-    def draw(self, alt, viewport):
+    def __init__(self, gradient):
+        self.gradient = gradient
+
+    def draw(self, viewport):
         gl.glClear(gl.GL_COLOR_BUFFER_BIT | gl.GL_DEPTH_BUFFER_BIT)
         gl.glEnable(gl.GL_BLEND)
         gl.glBlendFunc(gl.GL_SRC_ALPHA, gl.GL_ONE_MINUS_SRC_ALPHA)
 
-        #TODO - call gradient to implement this
+        alt = viewport.bl.y
+        h = viewport.height 
+        w = viewport.width
+        c1 = self.gradient.colour(alt)
+        c2 = self.gradient.colour(alt + h)
 
+        o = v(0, 0)
+        x = v(w, 0)
+        y = v(0, h)
+
+        vs = [o, x, x + y, y]
+        cs = [c1, c1, c2, c2]
+        
+        pyglet.graphics.draw(4, gl.GL_QUADS,
+            ('v2f', list(walk(vs))),
+            ('c3f', list(walk(cs)))
+        )
+
+
+class HorizonPainter(object):
+    def __init__(self, height, colour):
+        self.height = height
+        self.colour = colour
+
+    def draw(self, viewport):
+        alt = viewport.bl.y
+
+        if alt > self.height:
+            return
+        h = max(0, min(self.height - alt, viewport.height))
+        w = viewport.width
+        
+        o = v(0, 0)
+        x = v(w, 0)
+        y = v(0, h)
+
+        return self.draw_quad([o, x, x + y, y])
+
+    def draw_quad(self, vs):
+        """Draw a quad defined by vs"""
+        gl.glColor3f(*self.colour)
+        pyglet.graphics.draw(4, gl.GL_QUADS,
+            ('v2f', list(walk(vs))),
+        )
+
+
+class ForegroundSeaPainter(HorizonPainter):
+    def __init__(self, height, colour, x):
+        super(ForegroundSeaPainter, self).__init__(height, colour)
+        self.x = x
+
+    def draw(self, viewport):
+        alt = viewport.bl.y
+
+        if alt > self.height:
+            return
+        h = max(0, min(self.height - alt, viewport.height))
+        w = viewport.width
+        x = viewport.bl.x
+        startx = max(0, self.x - x)
+
+        o = v(startx, 0)
+        x = v(w, 0)
+        y = v(startx, h)
+
+        return self.draw_quad([o, x, x + y, y])

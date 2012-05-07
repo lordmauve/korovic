@@ -2,6 +2,7 @@ import pymunk
 
 from .components import Susie, JetEngine
 from .controllers import NullController
+from .constants import TARGET_FPS, SEA_LEVEL
 
 
 class World(object):
@@ -13,6 +14,7 @@ class World(object):
 
         Susie.load()
         JetEngine.load()
+
         self.squid = Susie((150, 200))
         self.squid.attach(JetEngine)
         self.squid.attach(JetEngine, 1)
@@ -20,13 +22,11 @@ class World(object):
 
     def create_floor(self, space, y=0):
         body = pymunk.Body()
-        floor = pymunk.Segment(body, (0, y), (200, y), 50)
-        wall = pymunk.Segment(body, (-50, 0), (-50, 10000), 50)
-        space.add_static(floor)
-        space.add_static(wall)
+        space.add_static(pymunk.Segment(body, (0, y), (676, y), SEA_LEVEL))
+        space.add_static(pymunk.Segment(body, (676, y), (876, y - 100), SEA_LEVEL))
+        space.add_static(pymunk.Segment(body, (-50, 0), (-50, 10000), 50))
 
     def update(self, dt):
-        from .game import TARGET_FPS
         self.squid.update(dt)
         self.space.step(1.0/TARGET_FPS)
 

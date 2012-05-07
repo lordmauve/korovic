@@ -81,6 +81,7 @@ class Susie(Component):
             yield a.controller()
 
     def update(self, dt):
+        self.body.reset_forces()
         for a in self.attachments:
             a.update(dt)
         self.body.angular_velocity *= self.ANGULAR_VELOCITY_DAMPING
@@ -111,7 +112,7 @@ class JetEngine(Component):
 
     def update(self, dt):
         if self.active:
-            force = v(500, 0).rotated((self.angle + self.squid.body.angle) * 180 / math.pi)
+            force = v(60000, 0).rotated((self.angle + self.squid.body.angle) * 180 / math.pi)
             pos = self.squid.body.local_to_world(self.attachment_point) - self.squid.body.position
             self.squid.body.apply_force(f=force, r=pos)
 

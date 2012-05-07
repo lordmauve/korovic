@@ -3,11 +3,10 @@ from pyglet import gl
 from pyglet.window import key
 
 from .world import World
+from .scene import Scene
 
 
-NAME = 'Susie'
-TARGET_FPS = 30.0
-SCREEN_SIZE = (800, 600)
+from .constants import SCREEN_SIZE, TARGET_FPS, NAME
 
 
 class Game(object):
@@ -15,6 +14,7 @@ class Game(object):
         w, h = SCREEN_SIZE
         self.window = pyglet.window.Window(width=w, height=h, caption=NAME)
         self.world = World()
+        self.scene = Scene(self.world)
 
         self.fps_display = pyglet.clock.ClockDisplay()
 
@@ -28,9 +28,7 @@ class Game(object):
         pyglet.app.run()
 
     def draw(self):
-        gl.glClearColor(0.7, 0.7, 1, 1)
-        gl.glClear(gl.GL_COLOR_BUFFER_BIT)
-        self.world.draw()
+        self.scene.draw()
 
     def update(self, dt):
         self.world.update(dt)

@@ -1,0 +1,6 @@
+NAME = 'Doctor Korovic and The Squid'
+SCREEN_SIZE = 800, 600
+TARGET_FPS = 30.0
+
+SEA_LEVEL = 15
+HORIZON_LEVEL = 84
