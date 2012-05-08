@@ -5,7 +5,7 @@ from pyglet.event import EVENT_HANDLED
 from .vector import v
 
 from .background import GradientPainter, sky
-from .background import Clouds
+from .background import Clouds, Stars
 from .background import HorizonPainter, ForegroundSeaPainter
 
 from .camera import Camera
@@ -21,9 +21,11 @@ from .components import Susie
 class Scene(object):
     def __init__(self, world):
         Clouds.load()
+        Stars.load()
         self.camera = Camera()
         self.background = GradientPainter(sky)
         self.clouds = Clouds()
+        self.stars = Stars()
         self.horizon = HorizonPainter(HORIZON_LEVEL, (0.5, 0.8, 1))
         self.fgsea = ForegroundSeaPainter(SEA_LEVEL, (0.5, 0.8, 1), x=676)
         self.world = world
@@ -39,8 +41,10 @@ class Scene(object):
         self.background.draw(vp)
         self.horizon.draw(vp)
         self.clouds.set_viewport(vp)
+        self.stars.set_viewport(vp)
 
         with self.camera.modelview():
+            self.stars.draw()
             self.clouds.draw()
             self.lair.draw()
             self.world.draw()

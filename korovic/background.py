@@ -230,3 +230,21 @@ class Clouds(SpatialSparseHash):
 
     def draw(self):
         self.batch.draw()
+
+
+class Stars(Clouds):
+    """Generate random clouds in a sparse but persistent way."""
+    @classmethod
+    def load(cls):
+        cls.image = loader.image('data/sprites/star.png')
+
+    def _get(self, rect, random):
+        cs = []
+        if rect.bottom > 20000:
+            for i in range(int(random.uniform(0, (rect.bottom - 20000) * 0.0001))):
+                x = random.uniform(rect.left, rect.right)
+                y = random.uniform(rect.bottom, rect.top)
+                c = pyglet.sprite.Sprite(self.image, x=x, y=y, batch=self.batch)
+                c.rotation = random.randint(0, 60)
+                cs.append(c)
+        return cs
