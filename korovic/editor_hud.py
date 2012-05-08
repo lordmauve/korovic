@@ -13,6 +13,7 @@ Item = namedtuple('Item', 'name price component')
 
 SHOP = [
     Item('Jet Engine', 750, components.JetEngine),
+    Item('Wing', 200, components.Wing),
 ]
 
 

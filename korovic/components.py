@@ -49,6 +49,16 @@ class Component(object):
         cls.image.anchor_y = int(cls.image.height + offset.y + 0.5)
         cls.moi = moi  # moment of intertia
 
+    def __init__(self, squid, attachment_point, angle=0):
+        self.squid = squid
+        self.attachment_point = attachment_point
+        self.angle = angle
+        self.sprite = pyglet.sprite.Sprite(self.image, 0, 0)
+
+    @property
+    def position(self):
+        return v(self.squid.body.local_to_world(self.attachment_point))
+
     def create_body(self):
         self.body = pymunk.Body(self.MASS, self.moi)
         self.shapes = []
@@ -57,15 +67,6 @@ class Component(object):
             c.friction = 50000.0
             c.elasticity = 0.01
             self.shapes.append(c)
-
-    def set_position(self, pos):
-        self.body.position = pos
-        self.sprite.position = pos
-
-    def get_position(self):
-        return self.body.position
-
-    position = property(get_position, set_position)
 
     def set_rotation(self, angle):
         self.body.angle = angle
@@ -87,6 +88,23 @@ class Component(object):
         self.draw_component()
         gl.glColor3f(1, 1, 1)
 
+    def velocity(self):
+        """The velocity of the component through space."""
+        # FIXME: take into account angular momentum
+        return v(self.squid.body.velocity)
+
+    def wind(self):
+        """The wind velocity over the component."""
+        vel = -self.velocity()
+        a = self.squid.body.angle + self.angle
+        return vel.rotated(math.degrees(-a))
+
+    def apply_force(self, f):
+        """Apply force f (relative to the component) at the attachment point"""
+        f = f.rotated(math.degrees(self.squid.body.angle + self.angle))
+        pos = self.squid.body.local_to_world(self.attachment_point) - self.squid.body.position
+        self.squid.body.apply_force(f=f, r=pos)
+
 
 class Susie(Component):
     ANGULAR_VELOCITY_DAMPING = 0.8
@@ -101,6 +119,15 @@ class Susie(Component):
         ]
         self.attachments = []
 
+    def set_position(self, pos):
+        self.body.position = pos
+        self.sprite.position = pos
+
+    def get_position(self):
+        return self.body.position
+
+    position = property(get_position, set_position)
+
     def total_weight(self):
         return sum([c.MASS for c in self.attachments], self.MASS)
 
@@ -113,7 +140,9 @@ class Susie(Component):
 
     def controllers(self):
         for a in self.attachments:
-            yield a.controller()
+            c = a.controller()
+            if c:
+                yield c
 
     def update(self, dt):
         self.body.reset_forces()
@@ -142,9 +171,9 @@ class Susie(Component):
             for a in self.attachments:
                 a.draw()
 
-
 class JetEngine(Component):
     def __init__(self, squid, attachment_point, angle=math.pi * 0.5):
+        super(JetEngine, self).__init__(squid, attachment_point, angle)
         self.squid = squid
         self.attachment_point = attachment_point
         self.angle = angle
@@ -153,10 +182,6 @@ class JetEngine(Component):
 
     def set_active(self, active):
         self.active = active
-
-    @property
-    def position(self):
-        return v(self.squid.body.local_to_world(self.attachment_point))
 
     def draw_component(self):
         self.sprite.set_position(*self.position)
@@ -174,3 +199,23 @@ class JetEngine(Component):
 
     def editor(self):
         return AngleEditor(self)
+
+
+class Wing(Component):
+    def draw_component(self):
+        self.sprite.set_position(*self.position)
+        self.sprite.rotation = -180 / math.pi * (self.angle + self.squid.body.angle)
+        self.sprite.draw()
+
+    def update(self, dt):
+        wind = self.wind()
+        drag = v(wind.x * -0.1, wind.y * -0.5)
+        lift = v(0, min(50000, abs(wind.x) * 100))
+        # FIXME: make lift vary with angle of attack
+        self.apply_force(lift + drag)
+
+    def controller(self):
+        return None
+
+    def editor(self):
+        return AngleEditor(self, max_angle=20)

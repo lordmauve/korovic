@@ -1,6 +1,6 @@
 import pymunk
 
-from .components import Susie, JetEngine
+from .components import Susie, JetEngine, Wing
 from .controllers import NullController
 from .constants import TARGET_FPS, SEA_LEVEL
 
@@ -14,9 +14,10 @@ class World(object):
 
         Susie.load()
         JetEngine.load()
+        Wing.load()
 
         self.squid = Susie((150, 56))
-        self.squid.attach(JetEngine)
+        self.squid.attach(Wing)
         self.squid.attach(JetEngine, 1)
         self.space.add(self.squid.body, *self.squid.shapes)
 
