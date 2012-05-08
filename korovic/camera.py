@@ -16,6 +16,14 @@ class Rect(object):
         return 'Rect(%r, %r)' % (tuple(self.bl), tuple(self.tr))
 
     @property
+    def br(self):
+        return v(self.tr.x, self.bl.y)
+
+    @property
+    def tl(self):
+        return v(self.bl.x, self.tr.y)
+
+    @property
     def height(self):
         return (self.tr - self.bl).y
 

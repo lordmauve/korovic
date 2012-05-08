@@ -141,9 +141,9 @@
      inkscape:pageopacity="0.80784314"
      inkscape:pageshadow="2"
      inkscape:zoom="1"
-     inkscape:cx="715.49144"
-     inkscape:cy="253.1824"
-     inkscape:current-layer="g7629"
+     inkscape:cx="721.77365"
+     inkscape:cy="457.49768"
+     inkscape:current-layer="layer1"
      inkscape:document-units="px"
      showgrid="false"
      inkscape:window-width="1680"
@@ -175,7 +175,10 @@
        width="800"
        height="600"
        x="-1"
-       y="0" />
+       y="0"
+       inkscape:export-filename="/home/mauve/dev/flying/korovic/data/sprites/editor-bg.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
     <path
        sodipodi:type="arc"
        style="opacity:0.25;color:#000000;fill:url(#radialGradient5331);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
@@ -476,42 +479,42 @@
     <text
        xml:space="preserve"
        style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-indent:0;text-align:start;text-decoration:none;line-height:160.00000238%;letter-spacing:2.4131794;word-spacing:normal;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:start;baseline-shift:baseline;color:#000000;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Atomic Clock Radio;-inkscape-font-specification:Atomic Clock Radio"
-       x="-215.36287"
+       x="22.637131"
        y="34.604202"
        id="text5523"
        sodipodi:linespacing="160%"><tspan
          sodipodi:role="line"
          id="tspan5525"
-         x="-215.36287"
+         x="22.637131"
          y="34.604202">Money: $120</tspan><tspan
          sodipodi:role="line"
-         x="-215.36287"
+         x="22.637131"
          y="66.604202"
          id="tspan5527">Weight: 63kg</tspan><tspan
          sodipodi:role="line"
-         x="-215.36287"
+         x="22.637131"
          y="98.604202"
          id="tspan5529">Power: 177kW</tspan><tspan
          sodipodi:role="line"
-         x="-215.36287"
+         x="22.637131"
          y="130.6042"
          id="tspan5531" /></text>
     <g
        id="g5696"
-       transform="translate(380,0)">
+       transform="translate(-11,0)">
       <rect
          y="44"
          x="449"
-         height="82"
+         height="79"
          width="343"
          id="rect5694"
          style="opacity:0.25;color:#000000;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
       <g
-         transform="translate(153.60157,26.547639)"
+         transform="translate(156.60157,26.547639)"
          id="g3780">
         <path
            style="color:#000000;fill:#ff0000;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
-           d="m 331.52061,82.200756 c 10.47561,0 -17.41403,-13.639487 -17.41403,-30.86634 0,-11.858795 7.79653,-21.472237 17.41403,-21.472237 9.6175,0 17.41403,9.613442 17.41403,21.472237 0,16.555846 -27.88964,30.86634 -17.41403,30.86634 z"
+           d="m 331.52061,83.200756 c 10.47561,0 -17.41403,-13.639487 -17.41403,-30.86634 0,-11.858795 7.79653,-21.472237 17.41403,-21.472237 9.6175,0 17.41403,9.613442 17.41403,21.472237 0,16.555846 -27.88964,30.86634 -17.41403,30.86634 z"
            id="path2998"
            inkscape:connector-curvature="0"
            sodipodi:nodetypes="zsssz" />
@@ -523,39 +526,17 @@
            sodipodi:cy="42.613697"
            sodipodi:rx="4.2426405"
            sodipodi:ry="4.2426405"
-           d="m 330.92596,42.613697 a 4.2426405,4.2426405 0 1 1 -8.48528,0 4.2426405,4.2426405 0 1 1 8.48528,0 z"
+           d="m 330.92596,42.613697 c 0,2.343146 -1.8995,4.242641 -4.24264,4.242641 -2.34315,0 -4.24264,-1.899495 -4.24264,-4.242641 0,-2.343146 1.89949,-4.24264 4.24264,-4.24264 2.34314,0 4.24264,1.899494 4.24264,4.24264 z"
            transform="matrix(1.1666667,0,0,1.1666667,-55.154329,-7.8093899)" />
       </g>
-      <text
-         xml:space="preserve"
-         style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-indent:0;text-align:start;text-decoration:none;line-height:160.00000238%;letter-spacing:2.4131794;word-spacing:normal;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:start;baseline-shift:baseline;color:#000000;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Atomic Clock Radio;-inkscape-font-specification:Atomic Clock Radio"
-         x="530.63715"
-         y="71.604202"
-         id="text5635"
-         sodipodi:linespacing="160%"><tspan
-           style="font-size:16px;font-weight:normal;-inkscape-font-specification:Atomic Clock Radio"
-           sodipodi:role="line"
-           x="530.63715"
-           y="71.604202"
-           id="tspan5643">Balloon   $3</tspan><tspan
-           id="tspan5656"
-           style="font-size:10px"
-           sodipodi:role="line"
-           x="530.63715"
-           y="90.215263">Deploy at the right moment</tspan><tspan
-           id="tspan5660"
-           style="font-size:10px"
-           sodipodi:role="line"
-           x="530.63715"
-           y="106.21526">for a boost in lift</tspan></text>
     </g>
     <g
        id="g5706"
-       transform="translate(380,-10)">
+       transform="translate(-11,93)">
       <rect
          style="opacity:0.25;color:#000000;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
          id="rect5692"
-         width="343"
+         width="341"
          height="82"
          x="449"
          y="145" />
@@ -599,32 +580,10 @@
              style="color:#000000;fill:none;stroke:#000000;stroke-width:1;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
         </g>
       </g>
-      <text
-         sodipodi:linespacing="160%"
-         id="text5662"
-         y="172.6042"
-         x="530.63715"
-         style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-indent:0;text-align:start;text-decoration:none;line-height:160.00000238%;letter-spacing:2.4131794;word-spacing:normal;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:start;baseline-shift:baseline;color:#000000;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Atomic Clock Radio;-inkscape-font-specification:Atomic Clock Radio"
-         xml:space="preserve"><tspan
-           id="tspan5664"
-           y="172.6042"
-           x="530.63715"
-           sodipodi:role="line"
-           style="font-size:16px;font-weight:normal;-inkscape-font-specification:Atomic Clock Radio">Aerolon   $72</tspan><tspan
-           y="191.21526"
-           x="530.63715"
-           sodipodi:role="line"
-           style="font-size:10px"
-           id="tspan5668">Gives Susie steerage if she</tspan><tspan
-           id="tspan5672"
-           y="207.21527"
-           x="530.63715"
-           sodipodi:role="line"
-           style="font-size:10px">is moving through the air</tspan></text>
     </g>
     <g
        id="g5720"
-       transform="translate(380,-19)">
+       transform="translate(-11,84)">
       <rect
          y="246"
          x="449"
@@ -653,28 +612,6 @@
              sodipodi:nodetypes="csc" />
         </g>
       </g>
-      <text
-         xml:space="preserve"
-         style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-indent:0;text-align:start;text-decoration:none;line-height:160.00000238%;letter-spacing:2.4131794;word-spacing:normal;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:start;baseline-shift:baseline;color:#000000;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Atomic Clock Radio;-inkscape-font-specification:Atomic Clock Radio"
-         x="530.63715"
-         y="271.60419"
-         id="text5674"
-         sodipodi:linespacing="160%"><tspan
-           style="font-size:16px;font-weight:normal;-inkscape-font-specification:Atomic Clock Radio"
-           sodipodi:role="line"
-           x="530.63715"
-           y="271.60419"
-           id="tspan5676">Wing   $117</tspan><tspan
-           style="font-size:10px"
-           sodipodi:role="line"
-           x="530.63715"
-           y="290.21524"
-           id="tspan5680">Gives Susie lift if she is</tspan><tspan
-           id="tspan5684"
-           style="font-size:10px"
-           sodipodi:role="line"
-           x="530.63715"
-           y="306.21524">moving through the air</tspan></text>
     </g>
     <g
        transform="matrix(1.1833354,0,0,1.1833354,-214.37902,423.68927)"
@@ -983,5 +920,247 @@
     <g
        transform="translate(380,76)"
        id="g7629" />
+    <g
+       transform="translate(433,0)"
+       id="g3716">
+      <rect
+         style="opacity:0.25;color:#000000;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+         id="rect3718"
+         width="343"
+         height="82"
+         x="449"
+         y="44" />
+      <g
+         id="g3720"
+         transform="translate(153.60157,26.547639)">
+        <path
+           sodipodi:nodetypes="zsssz"
+           inkscape:connector-curvature="0"
+           id="path3722"
+           d="m 331.52061,82.200756 c 10.47561,0 -17.41403,-13.639487 -17.41403,-30.86634 0,-11.858795 7.79653,-21.472237 17.41403,-21.472237 9.6175,0 17.41403,9.613442 17.41403,21.472237 0,16.555846 -27.88964,30.86634 -17.41403,30.86634 z"
+           style="color:#000000;fill:#ff0000;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+        <path
+           transform="matrix(1.1666667,0,0,1.1666667,-55.154329,-7.8093899)"
+           d="m 330.92596,42.613697 a 4.2426405,4.2426405 0 1 1 -8.48528,0 4.2426405,4.2426405 0 1 1 8.48528,0 z"
+           sodipodi:ry="4.2426405"
+           sodipodi:rx="4.2426405"
+           sodipodi:cy="42.613697"
+           sodipodi:cx="326.68332"
+           id="path3724"
+           style="opacity:0.75;color:#000000;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+           sodipodi:type="arc" />
+      </g>
+      <text
+         sodipodi:linespacing="160%"
+         id="text3726"
+         y="71.604202"
+         x="530.63715"
+         style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-indent:0;text-align:start;text-decoration:none;line-height:160.00000238%;letter-spacing:2.4131794;word-spacing:normal;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:start;baseline-shift:baseline;color:#000000;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Atomic Clock Radio;-inkscape-font-specification:Atomic Clock Radio"
+         xml:space="preserve"><tspan
+           id="tspan3728"
+           y="71.604202"
+           x="530.63715"
+           sodipodi:role="line"
+           style="font-size:16px;font-weight:normal;-inkscape-font-specification:Atomic Clock Radio">Balloon   $3</tspan><tspan
+           y="90.215263"
+           x="530.63715"
+           sodipodi:role="line"
+           style="font-size:10px"
+           id="tspan3730">Deploy at the right moment</tspan><tspan
+           y="106.21526"
+           x="530.63715"
+           sodipodi:role="line"
+           style="font-size:10px"
+           id="tspan3732">for a boost in lift</tspan></text>
+    </g>
+    <g
+       transform="translate(433,-10)"
+       id="g3734">
+      <rect
+         y="145"
+         x="449"
+         height="82"
+         width="343"
+         id="rect3736"
+         style="opacity:0.25;color:#000000;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+      <g
+         id="g3738"
+         transform="translate(388.60157,-295.45236)">
+        <g
+           transform="matrix(0.99719907,0.07479313,-0.07479313,0.99719907,-256.6575,267.38585)"
+           id="g3740">
+          <path
+             sodipodi:nodetypes="sscscs"
+             inkscape:connector-curvature="0"
+             id="path3742"
+             transform="matrix(0.99719907,-0.07479313,0.07479313,0.99719907,235.94,-285.83314)"
+             d="m 108.21875,472.9375 c -0.33654,-0.004 -1.46694,-0.023 -3.09375,-0.0312 -4.88043,-0.0248 -14.277956,0.0643 -20.484375,1.20312 0,0 -11.251182,12.79324 -1.203125,13.54688 10.048047,0.75364 16.134039,-2.18472 28.26562,-11.34375 1.1754,-1.21347 -0.87477,-3.34253 -3.48437,-3.375 z"
+             style="color:#000000;fill:#dbe3e2;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:1;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+          <path
+             style="color:#000000;fill:#dbe3e2;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:2;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+             d="m 382.90639,181.13396 c -11.49048,10.04658 -17.32411,13.44261 -27.40038,13.44261 -10.07628,0 0.17677,-13.45271 0.17677,-13.45271"
+             id="path3744"
+             inkscape:connector-curvature="0"
+             sodipodi:nodetypes="csc" />
+          <path
+             transform="matrix(0.99719907,-0.07479313,0.07479313,0.99719907,235.94,-285.83314)"
+             inkscape:connector-curvature="0"
+             id="path3746"
+             d="m 81.25,480.98718 c 3.5,0.125 5.625,0 5.625,0 l 5.75,-7.5"
+             style="color:#000000;fill:none;stroke:#000000;stroke-width:1;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+          <path
+             sodipodi:nodetypes="cc"
+             transform="matrix(0.99719907,-0.07479313,0.07479313,0.99719907,235.94,-285.83314)"
+             inkscape:connector-curvature="0"
+             id="path3748"
+             d="m 84.125,475.67468 2.125,0"
+             style="color:#000000;fill:none;stroke:#000000;stroke-width:1;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+          <path
+             style="color:#000000;fill:none;stroke:#000000;stroke-width:1;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+             d="m 354.43431,184.29578 2.11905,-0.15894"
+             id="path3750"
+             inkscape:connector-curvature="0"
+             sodipodi:nodetypes="cc" />
+        </g>
+      </g>
+      <text
+         xml:space="preserve"
+         style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-indent:0;text-align:start;text-decoration:none;line-height:160.00000238%;letter-spacing:2.4131794;word-spacing:normal;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:start;baseline-shift:baseline;color:#000000;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Atomic Clock Radio;-inkscape-font-specification:Atomic Clock Radio"
+         x="530.63715"
+         y="172.6042"
+         id="text3752"
+         sodipodi:linespacing="160%"><tspan
+           style="font-size:16px;font-weight:normal;-inkscape-font-specification:Atomic Clock Radio"
+           sodipodi:role="line"
+           x="530.63715"
+           y="172.6042"
+           id="tspan3754">Aerolon   $72</tspan><tspan
+           id="tspan3756"
+           style="font-size:10px"
+           sodipodi:role="line"
+           x="530.63715"
+           y="191.21526">Gives Susie steerage if she</tspan><tspan
+           style="font-size:10px"
+           sodipodi:role="line"
+           x="530.63715"
+           y="207.21527"
+           id="tspan3758">is moving through the air</tspan></text>
+    </g>
+    <g
+       transform="translate(433,-19)"
+       id="g3760">
+      <rect
+         style="opacity:0.25;color:#000000;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+         id="rect3762"
+         width="343"
+         height="82"
+         x="449"
+         y="246" />
+      <g
+         transform="matrix(1.6659602,0,0,1.6659602,328.87133,-513.38913)"
+         id="g3764">
+        <g
+           id="g3766"
+           transform="matrix(0.99719907,0.07479313,-0.07479313,0.99719907,-256.6575,267.38585)">
+          <path
+             style="color:#000000;fill:#dbe3e2;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:0.60025448;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+             d="m 108.21875,472.9375 c -0.33654,-0.004 -1.46694,-0.023 -3.09375,-0.0312 -4.88043,-0.0248 -14.277956,0.0643 -20.484375,1.20312 0,0 -11.251182,12.79324 -1.203125,13.54688 10.048047,0.75364 16.134039,-2.18472 28.26562,-11.34375 1.1754,-1.21347 -0.87477,-3.34253 -3.48437,-3.375 z"
+             transform="matrix(0.99719907,-0.07479313,0.07479313,0.99719907,235.94,-285.83314)"
+             id="path3768"
+             inkscape:connector-curvature="0"
+             sodipodi:nodetypes="sscscs" />
+          <path
+             sodipodi:nodetypes="csc"
+             inkscape:connector-curvature="0"
+             id="path3770"
+             d="m 382.90639,181.13396 c -11.49048,10.04658 -17.32411,13.44261 -27.40038,13.44261 -10.07628,0 0.17677,-13.45271 0.17677,-13.45271"
+             style="color:#000000;fill:#dbe3e2;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:1.20050895;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+        </g>
+      </g>
+      <text
+         sodipodi:linespacing="160%"
+         id="text3772"
+         y="271.60419"
+         x="530.63715"
+         style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-indent:0;text-align:start;text-decoration:none;line-height:160.00000238%;letter-spacing:2.4131794;word-spacing:normal;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:start;baseline-shift:baseline;color:#000000;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Atomic Clock Radio;-inkscape-font-specification:Atomic Clock Radio"
+         xml:space="preserve"><tspan
+           id="tspan3774"
+           y="271.60419"
+           x="530.63715"
+           sodipodi:role="line"
+           style="font-size:16px;font-weight:normal;-inkscape-font-specification:Atomic Clock Radio">Wing   $117</tspan><tspan
+           id="tspan3776"
+           y="290.21524"
+           x="530.63715"
+           sodipodi:role="line"
+           style="font-size:10px">Gives Susie lift if she is</tspan><tspan
+           y="306.21524"
+           x="530.63715"
+           sodipodi:role="line"
+           style="font-size:10px"
+           id="tspan3778">moving through the air</tspan></text>
+    </g>
+    <text
+       sodipodi:linespacing="160%"
+       id="text3726-1"
+       y="73.848473"
+       x="519.66736"
+       style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-indent:0;text-align:start;text-decoration:none;line-height:160.00000238%;letter-spacing:2.4131794;word-spacing:normal;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:start;baseline-shift:baseline;color:#000000;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Atomic Clock Radio;-inkscape-font-specification:Atomic Clock Radio"
+       xml:space="preserve"><tspan
+         y="73.848473"
+         x="519.66736"
+         sodipodi:role="line"
+         style="font-size:16px;font-weight:normal;-inkscape-font-specification:Atomic Clock Radio"
+         id="tspan3811">Balloon</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-indent:0;text-align:end;text-decoration:none;line-height:160.00000238%;letter-spacing:2.4131794;word-spacing:normal;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:end;baseline-shift:baseline;color:#000000;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Atomic Clock Radio;-inkscape-font-specification:Atomic Clock Radio"
+       x="544.4198"
+       y="100.84847"
+       id="text3815"
+       sodipodi:linespacing="160%"><tspan
+         id="tspan3817"
+         style="font-size:16px;font-weight:normal;text-align:end;text-anchor:end;-inkscape-font-specification:Atomic Clock Radio"
+         sodipodi:role="line"
+         x="546.83301"
+         y="100.84847">$3</tspan></text>
+    <text
+       sodipodi:linespacing="160%"
+       id="text3825"
+       y="74.848473"
+       x="741.53979"
+       style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-indent:0;text-align:center;text-decoration:none;line-height:160.00000238000001218%;letter-spacing:2.41317940000000020;word-spacing:normal;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:middle;baseline-shift:baseline;color:#000000;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Atomic Clock Radio;-inkscape-font-specification:Atomic Clock Radio;opacity:0.25"
+       xml:space="preserve"><tspan
+         y="74.848473"
+         x="742.7464"
+         sodipodi:role="line"
+         style="font-size:16px;font-weight:normal;text-align:center;text-anchor:middle;-inkscape-font-specification:Atomic Clock Radio"
+         id="tspan3827">-</tspan><tspan
+         id="tspan3829"
+         y="100.44847"
+         x="742.7464"
+         sodipodi:role="line"
+         style="font-size:16px;font-weight:normal;text-align:center;text-anchor:middle;-inkscape-font-specification:Atomic Clock Radio">Sell</tspan></text>
+    <g
+       id="g3952"
+       style="fill:#ffffff">
+      <text
+         sodipodi:linespacing="160%"
+         id="text3819"
+         y="74.848473"
+         x="669.53979"
+         style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-indent:0;text-align:center;text-decoration:none;line-height:160.00000238000001218%;letter-spacing:2.41317940000000020;word-spacing:normal;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:middle;baseline-shift:baseline;color:#000000;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Atomic Clock Radio;-inkscape-font-specification:Atomic Clock Radio"
+         xml:space="preserve"><tspan
+           y="74.848473"
+           x="670.7464"
+           sodipodi:role="line"
+           style="font-size:16px;font-weight:normal;text-align:center;text-anchor:middle;-inkscape-font-specification:Atomic Clock Radio;fill:#ffffff"
+           id="tspan3821">+</tspan><tspan
+           id="tspan3823"
+           y="100.44847"
+           x="670.7464"
+           sodipodi:role="line"
+           style="font-size:16px;font-weight:normal;text-align:center;text-anchor:middle;-inkscape-font-specification:Atomic Clock Radio;fill:#ffffff">Buy</tspan></text>
+    </g>
   </g>
 </svg>

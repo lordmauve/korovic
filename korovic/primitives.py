@@ -1,6 +1,6 @@
 import pyglet.graphics
 from pyglet import gl
-from pyglet.text import Label
+import pyglet.text
 
 
 from .vector import v
@@ -29,6 +29,25 @@ class Circle(object):
         pyglet.graphics.draw(len(self.vs) // 2, gl.GL_LINE_STRIP,
             ('v2f', self.vs),
         )
+
+
+class Rectangle(object):
+    def __init__(self, rect, colours):
+        self.vertices = list(walk([rect.bl, rect.br, rect.tr, rect.tl]))
+        if len(colours) == 1:
+            colours = colours * 4
+        elif len(colours) == 2:
+            a, b = colours
+            colours = [a, a, b, b]
+        cl = len(colours[0])
+        self.colours = list(walk(colours))
+        self.vertex_list = pyglet.graphics.vertex_list(4,
+            ('v2f', self.vertices),
+            ('c%df' % cl, self.colours)
+        )
+        
+    def draw(self):
+        self.vertex_list.draw(gl.GL_QUADS)
 
 
 class Protractor(object):
@@ -99,3 +118,22 @@ class Protractor(object):
             self.label.anchor_x = 'right' if self.label.x < centre.x else 'left'
             self.label.draw()
 
+
+class Label(pyglet.text.Label):
+    DEFAULTS = dict(
+        text='Label',
+        font_name='Atomic Clock Radio',
+        font_size=16,
+        x=0,
+        y=0
+    )
+    def __init__(self, pos=None, **kwargs):
+        params = self.DEFAULTS.copy()
+        params.update(kwargs)
+        if pos:
+            x, y = pos
+            params.update({
+                'x': x,
+                'y': y
+            })
+        super(Label, self).__init__(**params)

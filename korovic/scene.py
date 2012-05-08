@@ -12,7 +12,9 @@ from .camera import Camera
 from . import loader
 from .constants import SEA_LEVEL, HORIZON_LEVEL
 
+from .editor_hud import EditorHud
 from .hud import GameHud
+
 from .components import Susie
 
 
@@ -86,6 +88,7 @@ class Editor(object):
         self.background = Sprite(loader.image('data/sprites/editor-bg.png'))
         #self.squid.attachments[0].selected = True
         self.editor = None
+        self.hud = EditorHud(squid, 1000)
     
     def update(self, dt):
         pass
@@ -96,6 +99,7 @@ class Editor(object):
             self.squid.draw_selected(editor=self.editor)
         else:
             self.squid.draw()
+        self.hud.draw()
 
     def get_handlers(self):
         return {

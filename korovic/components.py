@@ -101,6 +101,9 @@ class Susie(Component):
         ]
         self.attachments = []
 
+    def total_weight(self):
+        return sum([c.MASS for c in self.attachments], self.MASS)
+
     def attach(self, component_class, pos=0):
         inst = component_class(self, self.attachment_points[pos])
         self.attachments.append(
