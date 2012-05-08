@@ -1,6 +1,7 @@
 import pyglet
 from pyglet.window import key
 from pyglet.event import EVENT_HANDLED
+import pyglet.clock
 
 from .world import World
 from .scene import Scene, Editor
@@ -21,6 +22,7 @@ class Game(object):
         self.fps_display = pyglet.clock.ClockDisplay()
 
         pyglet.clock.schedule_interval(self.update, 1/TARGET_FPS)
+        pyglet.clock.set_fps_limit(TARGET_FPS)
         self.window.push_handlers(
             on_key_press=self.on_key_press
         )

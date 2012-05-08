@@ -5,6 +5,7 @@ import pyglet.graphics
 import pyglet.sprite
 from pyglet.gl import gl
 
+
 from . import loader
 from .camera import Rect
 from .vector import v
@@ -198,9 +199,10 @@ class Clouds(SpatialSparseHash):
             loader.image('data/sprites/cloud3.png'),
         ]
 
-    def __init__(self, cell_size=300):
+    def __init__(self, cell_size=500):
         super(Clouds, self).__init__(cell_size)
         self.batch = pyglet.graphics.Batch()
+        self.current = {}  # current cells
 
     def _get(self, rect, random):
         if rect.bottom < 400 or rect.top > 50000:
@@ -212,3 +214,19 @@ class Clouds(SpatialSparseHash):
             c = pyglet.sprite.Sprite(img, x=x, y=y, batch=self.batch)
             return [c]
         return []
+
+    def set_viewport(self, vp):
+        vp = vp.extend(256)
+        cs = set(self._cells(vp))
+        keys = set(self.current.keys())
+
+        # Compute new
+        for coord in (cs - keys):
+            self.current[coord] = self.get(coord)
+
+        # Delete existing
+        for coord in (keys - cs):
+            del(self.current[coord])
+
+    def draw(self):
+        self.batch.draw()

@@ -38,11 +38,10 @@ class Scene(object):
         vp = self.camera.viewport()
         self.background.draw(vp)
         self.horizon.draw(vp)
+        self.clouds.set_viewport(vp)
 
         with self.camera.modelview():
-            clouds = self.clouds.for_viewport(vp.extend(256))
-            self.clouds.batch.draw()
-            del clouds
+            self.clouds.draw()
             self.lair.draw()
             self.world.draw()
 
