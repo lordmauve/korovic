@@ -16,6 +16,10 @@ class Susie(Component):
         ]
         self.attachments = []
 
+    def next_attachment_point(self):
+        # FIXME: maintain a list of free/occupied slots
+        return 0
+
     def set_position(self, pos):
         self.body.position = pos
         self.sprite.position = pos
@@ -28,12 +32,31 @@ class Susie(Component):
     def total_weight(self):
         return sum([c.MASS for c in self.attachments], self.MASS)
 
-    def attach(self, component_class, pos=0):
+    def attach(self, component_class, pos=None):
+        if pos is None:
+            pos = self.next_attachment_point()
         inst = component_class(self, self.attachment_points[pos])
         self.attachments.append(
            inst 
         )
         return inst
+
+    def has(self, class_):
+        """Determine if this squid has an instance of a component class attached.
+        """
+        for a in self.attachments:
+            if a.__class__ is class_:
+                return True
+        return False
+
+    def remove(self, class_):
+        """Remove an instance of class_ from the attached components.
+        """
+        for a in self.attachments[:]:
+            if a.__class__ is class_:
+                self.attachments.remove(a)
+                return a
+        raise ValueError("%s is not attached" % class_)
 
     def controllers(self):
         for a in self.attachments:

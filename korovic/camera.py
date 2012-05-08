@@ -56,10 +56,19 @@ class Rect(object):
             self.tr == ano.tr
         )
 
+    def __contains__(self, point):
+        return (
+            self.left <= point.x < self.right and
+            self.bottom <= point.y < self.top
+        )
+
     def extend(self, dist):
         """Compute a new rect bigger than this by dist in each direction."""
         o = v(dist, dist)
         return Rect(self.bl - o, self.tr + o)
+
+    def translate(self, dv):
+        return Rect(self.bl + dv, self.tr + dv)
         
 
 class Camera(object):

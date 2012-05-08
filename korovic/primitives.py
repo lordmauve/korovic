@@ -72,7 +72,8 @@ class Protractor(object):
 
     def set_angle(self, angle):
         self.angle = angle
-        self.label.document.text = '%ddeg' % self.angle
+        if self.angle is not None:
+            self.label.document.text = '%ddeg' % self.angle
 
     def _build(self):
         vs = []
@@ -102,7 +103,7 @@ class Protractor(object):
             ('v2f', self.vs),
         )
 
-        if self.angle:
+        if self.angle is not None:
             centre = self.circle.centre
             radius = self.circle.radius
             l = 10

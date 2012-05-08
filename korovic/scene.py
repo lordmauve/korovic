@@ -124,6 +124,11 @@ class Editor(object):
     def on_mouse_release(self, x, y, button, modifiers):
         mpos = v(x, y)
 
+        for b in self.hud.buttons():
+            if mpos in b.rect:
+                b.callback()
+                return
+            
         closest_dist = 300 ** 2
         closest = None
 

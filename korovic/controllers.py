@@ -30,6 +30,22 @@ class ToggleController(object):
         pass
 
 
+class OneTimeController(object):
+    """Start a component, never stop it.
+
+    """
+    def __init__(self, component):
+        self.component = component
+
+    def on_press(self):
+        active = self.component.is_active()
+        if not active:
+            self.component.set_active(True)
+
+    def on_release(self):
+        pass
+
+
 class NullController(object):
     """Doesn't do anything.
 

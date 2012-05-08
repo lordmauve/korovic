@@ -101,3 +101,15 @@ class Component(object):
         f = f.rotated(math.degrees(self.squid.body.angle + self.angle))
         pos = self.squid.body.local_to_world(self.attachment_point) - self.squid.body.position
         self.squid.body.apply_force(f=f, r=pos)
+
+
+class ActivateableComponent(Component):
+    def __init__(self, squid, attachment_point, angle=0):
+        super(ActivateableComponent, self).__init__(squid, attachment_point, angle)
+        self.active = False
+
+    def set_active(self, active):
+        self.active = active
+
+    def is_active(self):
+        return self.active

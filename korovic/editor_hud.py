@@ -10,25 +10,47 @@ from .constants import SCREEN_SIZE
 
 
 Item = namedtuple('Item', 'name price component')
+Button = namedtuple('Button', 'rect callback')
 
 SHOP = [
     Item('Jet Engine', 750, components.JetEngine),
+    Item('Rocket', 350, components.Rocket),
     Item('Wing', 200, components.Wing),
+
 ]
 
+GREY = (90, 90, 90, 255)
+WHITE = (255, 255, 255, 255)
 
 class ListItem(object):
     def __init__(self, hud, item):
-        self.r = Rectangle(Rect(v(0, 0), hud.tile_size), [(0, 0, 0, 0.33)])
+        self.rect = Rect(v(0, 0), hud.tile_size)
+        self.r = Rectangle(self.rect, [(0, 0, 0, 0.33)])
+        self.hud = hud
+        self.item = item
 
         self.label = Label(
             text=item.name,
             pos=(85, 46),
-            font_size=14,
+            font_size=12,
         )
         self.pricelabel = Label(
             text='$%d' % item.price,
             pos=(85, 16),
+            font_size=10
+        )
+        
+        self.buy = Label(
+            text='Buy',
+            anchor_x='center',
+            pos=(230, 19),
+            font_size=12
+        )
+
+        self.sell = Label(
+            text='Sell',
+            anchor_x='center',
+            pos=(300, 19),
             font_size=12
         )
 
@@ -36,6 +58,41 @@ class ListItem(object):
         self.r.draw()
         self.label.draw()
         self.pricelabel.draw()
+        if not self.can_buy():
+            self.buy.color = GREY
+        else:
+            self.buy.color = WHITE
+        self.buy.draw()
+
+        if not self.can_sell():
+            self.sell.color = GREY
+        else:
+            self.sell.color = WHITE
+        self.sell.draw()
+
+    def can_buy(self):
+        return self.hud.money >= self.item.price
+
+    def can_sell(self):
+        return self.hud.squid.has(self.item.component)
+
+    def on_buy(self):
+        print "Buy", self.item.name
+        self.hud.squid.attach(self.item.component)
+        self.hud.money -= self.item.price
+
+    def on_sell(self):
+        print "Sell", self.item.name
+        self.hud.squid.remove(self.item.component)
+        self.hud.money += self.item.price
+
+    def buttons(self):
+        bs = []
+        if self.can_buy():
+            bs.append(Button(Rect(v(195, 0), v(195 + 65, 80)), self.on_buy))
+        if self.can_sell():
+            bs.append(Button(Rect(v(268, 0), v(268 + 65, 80)), self.on_sell))
+        return bs
 
 
 class EditorHud(object):
@@ -58,6 +115,19 @@ class EditorHud(object):
         for item in SHOP:
             items.append(ListItem(self, item))
         self.items = items
+
+    def buttons(self):
+        tr = v(SCREEN_SIZE)
+        pos = tr - self.tile_size - v(10, 10)
+        buttons = []
+        for item in self.items:
+            for b in item.buttons():
+                buttons.append(Button(
+                    b.rect.translate(pos),
+                    b.callback
+                ))
+            pos -= v(0, self.tile_size.y + 10)
+        return buttons
 
     def draw(self):
         self.moneylabel.document.text = 'Money: $%d' % self.money

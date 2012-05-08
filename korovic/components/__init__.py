@@ -1,3 +1,3 @@
-from .squid import Susie
-from .engines import JetEngine
-from .wings import Wing
+from .squid import *
+from .engines import *
+from .wings import *

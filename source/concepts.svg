@@ -26,8 +26,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1"
-     inkscape:cx="425.16742"
-     inkscape:cy="694.42585"
+     inkscape:cx="745.16742"
+     inkscape:cy="494.42585"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -47,7 +47,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -423,63 +423,69 @@
          sodipodi:role="line"
          id="tspan4072">Aerolon</tspan></text>
     <g
-       transform="matrix(0.77969988,0,0,0.77969988,-116.71056,264.42429)"
-       id="g4185"
-       style="stroke-width:1">
-      <rect
-         style="color:#000000;fill:#ff0000;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:1.28254485;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
-         id="rect4187"
-         width="72"
-         height="36"
-         x="377"
-         y="294.36218" />
-      <rect
-         y="-331.65509"
-         x="350.83704"
-         height="3.7677746"
-         width="98.162949"
-         id="rect4212"
-         style="color:#000000;fill:#ffb380;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:1.28254485;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
-         transform="scale(1,-1)" />
-      <rect
-         style="opacity:0.25;color:#000000;fill:#ffffff;stroke:none;stroke-width:2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
-         id="rect4228"
-         width="63.485966"
-         height="8.657177"
-         x="379.58267"
-         y="297.15009" />
-      <rect
-         y="292.86218"
-         x="403.84741"
-         height="42.535534"
-         width="14.363961"
-         id="rect4191"
-         style="color:#000000;fill:#dbe3e2;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:1.28254485;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
-    </g>
-    <path
-       sodipodi:type="star"
-       style="color:#000000;fill:#ff0000;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:1.10393035;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
-       id="path4193"
-       sodipodi:sides="3"
-       sodipodi:cx="254.55844"
-       sodipodi:cy="504.35443"
-       sodipodi:r1="20.862646"
-       sodipodi:r2="10.431323"
-       sodipodi:arg1="-1.5707963"
-       sodipodi:arg2="-0.52359878"
-       inkscape:flatsided="true"
-       inkscape:rounded="0"
-       inkscape:randomized="0"
-       d="m 254.55844,483.49179 18.06758,31.29396 -36.13516,0 z"
-       transform="matrix(0,0.99614882,-0.82374443,0,654.21004,254.78735)"
-       inkscape:transform-center-x="-1.4929788" />
-    <path
-       style="color:#000000;fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
-       d="M 230.15625 490.375 L 230.15625 493.9375 L 209.375 493.9375 L 209.375 492.78125 L 198.15625 492.78125 L 198.15625 493.9375 L 177.25 493.9375 L 177.25 520.0625 L 156.84375 520.0625 L 156.84375 523.03125 L 198.15625 523.03125 L 198.15625 525.9375 L 209.375 525.9375 L 209.375 523.03125 L 230.15625 523.03125 L 230.15625 526.375 L 255.9375 508.375 L 230.15625 490.375 z "
-       id="rect4216"
-       inkscape:export-filename="/home/mauve/dev/flying/source/rocket.png"
+       id="g4757"
+       inkscape:export-filename="/home/mauve/dev/flying/korovic/data/sprites/rocket.png"
        inkscape:export-xdpi="90"
-       inkscape:export-ydpi="90" />
+       inkscape:export-ydpi="90">
+      <g
+         style="stroke-width:1"
+         id="g4185"
+         transform="matrix(0.77969988,0,0,0.77969988,-116.71056,264.42429)">
+        <rect
+           y="294.36218"
+           x="377"
+           height="36"
+           width="72"
+           id="rect4187"
+           style="color:#000000;fill:#ff0000;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:1.28254485;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+        <rect
+           transform="scale(1,-1)"
+           style="color:#000000;fill:#ffb380;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:1.28254485;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+           id="rect4212"
+           width="98.162949"
+           height="3.7677746"
+           x="350.83704"
+           y="-331.65509" />
+        <rect
+           y="297.15009"
+           x="379.58267"
+           height="8.657177"
+           width="63.485966"
+           id="rect4228"
+           style="opacity:0.25;color:#000000;fill:#ffffff;stroke:none;stroke-width:2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+        <rect
+           style="color:#000000;fill:#dbe3e2;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:1.28254485;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+           id="rect4191"
+           width="14.363961"
+           height="42.535534"
+           x="403.84741"
+           y="292.86218" />
+      </g>
+      <path
+         inkscape:transform-center-x="-1.4929788"
+         transform="matrix(0,0.99614882,-0.82374443,0,654.21004,254.78735)"
+         d="m 254.55844,483.49179 18.06758,31.29396 -36.13516,0 z"
+         inkscape:randomized="0"
+         inkscape:rounded="0"
+         inkscape:flatsided="true"
+         sodipodi:arg2="-0.52359878"
+         sodipodi:arg1="-1.5707963"
+         sodipodi:r2="10.431323"
+         sodipodi:r1="20.862646"
+         sodipodi:cy="504.35443"
+         sodipodi:cx="254.55844"
+         sodipodi:sides="3"
+         id="path4193"
+         style="color:#000000;fill:#ff0000;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:1.10393035;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+         sodipodi:type="star" />
+      <path
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="/home/mauve/dev/flying/source/rocket.png"
+         id="rect4216"
+         d="M 230.15625 490.375 L 230.15625 493.9375 L 209.375 493.9375 L 209.375 492.78125 L 198.15625 492.78125 L 198.15625 493.9375 L 177.25 493.9375 L 177.25 520.0625 L 156.84375 520.0625 L 156.84375 523.03125 L 198.15625 523.03125 L 198.15625 525.9375 L 209.375 525.9375 L 209.375 523.03125 L 230.15625 523.03125 L 230.15625 526.375 L 255.9375 508.375 L 230.15625 490.375 z "
+         style="color:#000000;fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+    </g>
     <text
        xml:space="preserve"
        style="font-size:12.5061903px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-indent:0;text-align:center;text-decoration:none;line-height:125%;letter-spacing:0.70030206;word-spacing:normal;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:middle;baseline-shift:baseline;color:#000000;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Arial;-inkscape-font-specification:Arial"

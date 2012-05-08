@@ -1,6 +1,6 @@
 import pymunk
 
-from .components import Susie, JetEngine, Wing
+from .components import Susie, JetEngine, Wing, Rocket
 from .controllers import NullController
 from .constants import TARGET_FPS, SEA_LEVEL
 
@@ -12,9 +12,11 @@ class World(object):
         self.space.damping = 0.9
         self.create_floor(self.space, 20)
 
+        # FIXME: do loading somewhere sensible
         Susie.load()
         JetEngine.load()
         Wing.load()
+        Rocket.load()
 
         self.squid = Susie((150, 56))
         self.squid.attach(Wing)
