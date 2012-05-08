@@ -6,18 +6,52 @@ from .vector import v
 
 
 class Rect(object):
+    __slots__ = 'bl', 'tr'
+
     def __init__(self, bl, tr):
-        self.bl = bl
-        self.tr = tr
+        self.bl = v(bl)
+        self.tr = v(tr)
+
+    def __repr__(self):
+        return 'Rect(%r, %r)' % (tuple(self.bl), tuple(self.tr))
 
     @property
     def height(self):
         return (self.tr - self.bl).y
 
     @property
+    def left(self):
+        return self.bl.x
+
+    @property
+    def right(self):
+        return self.tr.x
+
+    @property
+    def bottom(self):
+        return self.bl.y
+
+    @property
+    def top(self):
+        return self.tr.y
+
+    @property
     def width(self):
         return (self.tr - self.bl).x
 
+    def __hash__(self):
+        return hash((self.tr, self.bl))
+
+    def __eq__(self, ano):
+        return (
+            self.bl == ano.bl and 
+            self.tr == ano.tr
+        )
+
+    def extend(self, dist):
+        """Compute a new rect bigger than this by dist in each direction."""
+        o = v(dist, dist)
+        return Rect(self.bl - o, self.tr + o)
         
 
 class Camera(object):

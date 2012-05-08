@@ -1,6 +1,12 @@
+import math
+import random
 import pyglet
+import pyglet.graphics
+import pyglet.sprite
 from pyglet.gl import gl
 
+from . import loader
+from .camera import Rect
 from .vector import v
 from .primitives import walk
 
@@ -123,3 +129,86 @@ class ForegroundSeaPainter(HorizonPainter):
         y = v(startx, h)
 
         return self.draw_quad([o, x, x + y, y])
+
+
+class SpatialSparseHash(object):
+    """A spatial hash in which the contents of the cells is computed procedurally."""
+    def __init__(self, cell_size=100):
+        self.cell_size = cell_size
+        self._cs = v(self.cell_size, self.cell_size)
+
+    def _cells(self, viewport):
+        def mod(x, y):
+            r = math.fmod(x, y)
+            if r < 0:
+                return r + y
+            return r
+
+        cs = self.cell_size
+        l = viewport.left - mod(viewport.left, cs)
+        r = viewport.right
+
+        b = viewport.bottom - mod(viewport.bottom, cs)
+        t = viewport.top
+
+        cx = l
+        while cx < r:
+            cy = b
+            while cy < t:
+                yield v(cx, cy)
+                cy += cs
+            cx += cs
+
+    def _cell_rects(self, viewport):
+        for bl in self._cells(viewport):
+            yield Rect(bl, bl + self._cs)
+
+    def _get(self, rect, random):
+        """Subclasses should implement this method."""
+        return []
+
+    def get(self, coord):
+        """Get the contents of the cell given by coord.
+
+        NB. this is not the CELL *at* coord, coord must correspond to an extant
+        cell!
+
+        """
+        return self._get(*self._params_for_coord(coord))
+
+    def _params_for_coord(self, c):
+        rand = random.Random()
+        rand.seed(hash(c))
+        return (Rect(c, c + self._cs), rand) 
+
+    def for_viewport(self, viewport):
+        res = []
+        for c in self._cells(viewport):
+            res.extend(self.get(c))
+        return res
+
+
+class Clouds(SpatialSparseHash):
+    """Generate random clouds in a sparse but persistent way."""
+    @classmethod
+    def load(cls):
+        cls.images = [
+            loader.image('data/sprites/cloud1.png'),
+            loader.image('data/sprites/cloud2.png'),
+            loader.image('data/sprites/cloud3.png'),
+        ]
+
+    def __init__(self, cell_size=300):
+        super(Clouds, self).__init__(cell_size)
+        self.batch = pyglet.graphics.Batch()
+
+    def _get(self, rect, random):
+        if rect.bottom < 400 or rect.top > 50000:
+            return []
+        if random.uniform(0, rect.bottom * 0.0001) < 0.5:
+            img = random.choice(self.images)
+            x = random.uniform(rect.left, rect.right)
+            y = random.uniform(rect.bottom, rect.top)
+            c = pyglet.sprite.Sprite(img, x=x, y=y, batch=self.batch)
+            return [c]
+        return []
