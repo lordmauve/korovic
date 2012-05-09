@@ -8,6 +8,8 @@ from .camera import Rect
 from .primitives import Rectangle, Label
 from .constants import SCREEN_SIZE
 
+from .components import IncompatibleComponent
+
 
 Item = namedtuple('Item', 'name price component')
 Button = namedtuple('Button', 'rect callback')
@@ -16,6 +18,7 @@ SHOP = [
     Item('Jet Engine', 750, components.JetEngine),
     Item('Rocket', 350, components.Rocket),
     Item('Wing', 200, components.Wing),
+    Item('Propeller', 100, components.Propeller),
 
 ]
 
@@ -71,7 +74,13 @@ class ListItem(object):
         self.sell.draw()
 
     def can_buy(self):
-        return self.hud.money >= self.item.price
+        if self.hud.money < self.item.price:
+            return False
+        try:
+            self.hud.slots.find_slot(self.item.component)
+        except IncompatibleComponent:
+            return False
+        return True
 
     def can_sell(self):
         return self.hud.slots.has(self.item.component)

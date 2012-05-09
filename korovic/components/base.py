@@ -10,8 +10,11 @@ from .. import loader
 
 class Component(object):
     MASS = 50.0
-    selected = False
     slot_mask = 1
+
+    selected = False
+    angle = 0
+    abstract = True
 
     @classmethod
     def load(cls):
@@ -47,10 +50,9 @@ class Component(object):
         cls.image.anchor_y = int(cls.image.height + offset.y + 0.5)
         cls.moi = moi  # moment of intertia
 
-    def __init__(self, squid, attachment_point, angle=0):
+    def __init__(self, squid, attachment_point):
         self.squid = squid
         self.attachment_point = attachment_point
-        self.angle = angle
         self.sprite = pyglet.sprite.Sprite(self.image, 0, 0)
 
     @property
@@ -108,8 +110,10 @@ class Component(object):
 
 
 class ActivateableComponent(Component):
-    def __init__(self, squid, attachment_point, angle=0):
-        super(ActivateableComponent, self).__init__(squid, attachment_point, angle)
+    abstract = True
+
+    def __init__(self, squid, attachment_point):
+        super(ActivateableComponent, self).__init__(squid, attachment_point)
         self.active = False
 
     def set_active(self, active):

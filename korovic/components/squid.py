@@ -18,8 +18,9 @@ class Slot(object):
         self.flags = flags
         self.component = None
 
+
 class IncompatibleComponent(Exception):
-    """A component was incompatible with the slot."""
+    """A component was incompatible with the slot or the slot was full."""
 
 
 class Slots(object):
@@ -30,9 +31,9 @@ class Slots(object):
         self.components = []
 
     def add_slot(self, pos, flags):
-        self.slots.append(
-            Slot(pos, flags)
-        )
+        s = Slot(pos, flags)
+        s.id = len(self.slots)
+        self.slots.append(s)
 
     def can_attach(self, id, component):
         s = self.slots[id]
@@ -52,6 +53,7 @@ class Slots(object):
         self.slots[id].component = component
         self.components.append(component)
         self.components.sort(key=lambda c: bool(c.slot_mask & Slot.SIDE))
+        component.slot = self.slots[id]
 
     def attach_new(self, id, component_class):
         """Attach a new instance of component_class at id"""
@@ -65,6 +67,7 @@ class Slots(object):
             if s.component is component:
                 s.component = None
         self.components.remove(component)
+        component.slot = None
 
     def has(self, class_):
         """Determine if this squid has an instance of a component class attached.
@@ -96,13 +99,11 @@ class Susie(Component):
         self.slots.add_slot(self.circles[2][0], Slot.SIDE)
         self.slots.add_slot(self.circles[3][0], Slot.SIDE)
         self.slots.add_slot(self.circles[2][0] + foff, Slot.TOP)
-        self.slots.add_slot(self.circles[2][0] - foff, Slot.BOTTOM)
-        self.slots.add_slot(self.circles[2][0] + v(80, 0), Slot.NOSE)
-
-        foff2 = v(0, 20)
-        self.slots.add_slot(self.circles[3][0] + foff2, Slot.TOP)
-        self.slots.add_slot(self.circles[3][0] - foff2, Slot.BOTTOM)
-        self.slots.add_slot(self.circles[3][0] - v(33, 0), Slot.NOSE)
+        self.slots.add_slot(self.circles[2][0] - v(0, 28), Slot.BOTTOM)
+        self.slots.add_slot(self.circles[2][0] + v(85, 0), Slot.NOSE)
+        self.slots.add_slot(self.circles[3][0] + v(0, 15), Slot.TOP)
+        self.slots.add_slot(self.circles[3][0] - v(0, 24), Slot.BOTTOM)
+        self.slots.add_slot(self.circles[3][0] - v(38, 4), Slot.NOSE)
 
     def set_position(self, pos):
         self.body.position = pos

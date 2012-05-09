@@ -30,6 +30,7 @@ class JetEngine(ActivateableComponent):
 
 
 class Rocket(JetEngine):
+    MASS = 10
     BURN_TIME = 3
     FORCE = v(100000, 0)
 
@@ -48,3 +49,25 @@ class Rocket(JetEngine):
         super(Rocket, self).update(dt)
 
 
+class Propeller(JetEngine):
+    MASS = 3
+    slot_mask = Slot.TOP | Slot.BOTTOM | Slot.NOSE
+    FORCE = v(60000, 0)
+    angles = {
+        Slot.TOP: math.pi * 0.5,
+        Slot.BOTTOM: math.pi * 1.5,
+        Slot.NOSE: 0
+    }
+
+    def set_angle(self):
+        """Angle is not user modifiable"""
+
+    @property
+    def angle(self):
+        return self.angles[self.slot.flags]
+
+    def controller(self):
+        return PressController(self)
+
+    def editor(self):
+        return None

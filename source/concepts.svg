@@ -27,7 +27,7 @@
      inkscape:pageshadow="2"
      inkscape:zoom="1"
      inkscape:cx="745.16742"
-     inkscape:cy="494.42585"
+     inkscape:cy="814.42585"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -57,7 +57,10 @@
      id="layer1">
     <g
        id="g3827"
-       transform="translate(182,189.77817)">
+       transform="matrix(0.81796047,0,0,0.81796047,274.83549,240.37155)"
+       inkscape:export-filename="/home/mauve/dev/flying/korovic/data/sprites/propeller.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90">
       <g
          transform="matrix(1,0,0,0.75904974,0,47.111935)"
          id="g3823">
@@ -75,8 +78,8 @@
            style="color:#000000;fill:#c78e36;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:2.29559302;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
       </g>
       <rect
-         ry="1.802025"
-         rx="3.1539035"
+         ry="2.2030709"
+         rx="3.855814"
          y="191.10612"
          x="514.06665"
          height="8.8388348"
