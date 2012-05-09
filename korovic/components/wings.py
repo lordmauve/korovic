@@ -4,9 +4,12 @@ from ..vector import v
 from ..editor import AngleEditor
 
 from .base import Component
+from .squid import Slot
 
 
 class Wing(Component):
+    slot_mask = Slot.SIDE
+
     def draw_component(self):
         self.sprite.set_position(*self.position)
         self.sprite.rotation = -180 / math.pi * (self.angle + self.squid.body.angle)

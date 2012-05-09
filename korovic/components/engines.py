@@ -5,9 +5,11 @@ from ..editor import AngleEditor
 from ..controllers import PressController, OneTimeController
 
 from .base import ActivateableComponent
+from .squid import Slot
 
 
 class JetEngine(ActivateableComponent):
+    slot_mask = Slot.SIDE
     FORCE = v(60000, 0)
     def draw_component(self):
         self.sprite.set_position(*self.position)

@@ -2,6 +2,87 @@ import math
 import pyglet.sprite
 from .base import Component
 
+from ..vector import v
+
+
+class Slot(object):
+    # Bit flags to determine what can be attached where
+    SIDE = 1
+    BOTTOM = 2
+    TOP = 4
+    NOSE = 8
+    TAIL = 16
+
+    def __init__(self, pos, flags):
+        self.pos = pos
+        self.flags = flags
+        self.component = None
+
+class IncompatibleComponent(Exception):
+    """A component was incompatible with the slot."""
+
+
+class Slots(object):
+    """Manage a list of slots"""
+    def __init__(self, squid):
+        self.squid = squid
+        self.slots = []
+        self.components = []
+
+    def add_slot(self, pos, flags):
+        self.slots.append(
+            Slot(pos, flags)
+        )
+
+    def can_attach(self, id, component):
+        s = self.slots[id]
+        if s.component:
+            return False
+        return bool(s.flags & component.slot_mask)
+
+    def find_slot(self, component):
+        for i, s in enumerate(self.slots):
+            if self.can_attach(i, component):
+                return i
+        raise IncompatibleComponent("No slot available for %s" % component)
+
+    def attach(self, id, component):
+        if not self.can_attach(id, component):
+            raise IncompatibleComponent('%s not compatible with slot %d' % component, id)
+        self.slots[id].component = component
+        self.components.append(component)
+        self.components.sort(key=lambda c: bool(c.slot_mask & Slot.SIDE))
+
+    def attach_new(self, id, component_class):
+        """Attach a new instance of component_class at id"""
+        if not self.can_attach(id, component_class):
+            raise IncompatibleComponent('%s not compatible with slot %d' % (component_class, id))
+        inst = component_class(self.squid, self.slots[id].pos)
+        self.attach(id, inst)
+
+    def remove(self, component):
+        for s in self.slots:
+            if s.component is component:
+                s.component = None
+        self.components.remove(component)
+
+    def has(self, class_):
+        """Determine if this squid has an instance of a component class attached.
+        """
+        for a in self.components:
+            if a.__class__ is class_:
+                return True
+        return False
+
+    def remove_any(self, class_):
+        """Remove an instance of class_ from the attached components.
+        """
+        for a in self.components[:]:
+            if a.__class__ is class_:
+                self.remove(a)
+                return a
+        raise ValueError("%s is not attached" % class_)
+
 
 class Susie(Component):
     ANGULAR_VELOCITY_DAMPING = 0.8
@@ -10,15 +91,18 @@ class Susie(Component):
         self.sprite = pyglet.sprite.Sprite(self.image, 0, 0)
         self.body.position = pos
         self.body.angular_velocity_limit = 1.5  # Ensure Susie can't spin too fast
-        self.attachment_points = [
-            self.circles[2][0],
-            self.circles[3][0],
-        ]
-        self.attachments = []
+        self.slots = Slots(self)
+        foff = v(0, 20)
+        self.slots.add_slot(self.circles[2][0], Slot.SIDE)
+        self.slots.add_slot(self.circles[3][0], Slot.SIDE)
+        self.slots.add_slot(self.circles[2][0] + foff, Slot.TOP)
+        self.slots.add_slot(self.circles[2][0] - foff, Slot.BOTTOM)
+        self.slots.add_slot(self.circles[2][0] + v(80, 0), Slot.NOSE)
 
-    def next_attachment_point(self):
-        # FIXME: maintain a list of free/occupied slots
-        return 0
+        foff2 = v(0, 20)
+        self.slots.add_slot(self.circles[3][0] + foff2, Slot.TOP)
+        self.slots.add_slot(self.circles[3][0] - foff2, Slot.BOTTOM)
+        self.slots.add_slot(self.circles[3][0] - v(33, 0), Slot.NOSE)
 
     def set_position(self, pos):
         self.body.position = pos
@@ -30,43 +114,22 @@ class Susie(Component):
     position = property(get_position, set_position)
 
     def total_weight(self):
-        return sum([c.MASS for c in self.attachments], self.MASS)
+        return sum([c.MASS for c in self.slots.components], self.MASS)
 
     def attach(self, component_class, pos=None):
         if pos is None:
-            pos = self.next_attachment_point()
-        inst = component_class(self, self.attachment_points[pos])
-        self.attachments.append(
-           inst 
-        )
-        return inst
-
-    def has(self, class_):
-        """Determine if this squid has an instance of a component class attached.
-        """
-        for a in self.attachments:
-            if a.__class__ is class_:
-                return True
-        return False
-
-    def remove(self, class_):
-        """Remove an instance of class_ from the attached components.
-        """
-        for a in self.attachments[:]:
-            if a.__class__ is class_:
-                self.attachments.remove(a)
-                return a
-        raise ValueError("%s is not attached" % class_)
+            pos = self.slots.find_slot(component_class)
+        self.slots.attach_new(pos, component_class)
 
     def controllers(self):
-        for a in self.attachments:
+        for a in self.slots.components:
             c = a.controller()
             if c:
                 yield c
 
     def update(self, dt):
         self.body.reset_forces()
-        for a in self.attachments:
+        for a in self.slots.components:
             a.update(dt)
         self.body.angular_velocity *= self.ANGULAR_VELOCITY_DAMPING
 
@@ -77,16 +140,16 @@ class Susie(Component):
 
     def draw(self):
         self.draw_component()
-        for a in self.attachments:
+        for a in self.slots.components:
             a.draw()
 
     def draw_selected(self, editor=None):
         self.draw_component()
         if editor is not None:
-            for a in self.attachments:
+            for a in self.slots.components:
                 if a is not editor.component:
                     a.draw()
-                editor.draw()
+            editor.draw()
         else:
-            for a in self.attachments:
+            for a in self.slots.components:
                 a.draw()

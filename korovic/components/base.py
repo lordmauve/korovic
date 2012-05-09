@@ -11,6 +11,7 @@ from .. import loader
 class Component(object):
     MASS = 50.0
     selected = False
+    slot_mask = 1
 
     @classmethod
     def load(cls):

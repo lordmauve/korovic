@@ -74,7 +74,7 @@ class ListItem(object):
         return self.hud.money >= self.item.price
 
     def can_sell(self):
-        return self.hud.squid.has(self.item.component)
+        return self.hud.slots.has(self.item.component)
 
     def on_buy(self):
         print "Buy", self.item.name
@@ -83,7 +83,7 @@ class ListItem(object):
 
     def on_sell(self):
         print "Sell", self.item.name
-        self.hud.squid.remove(self.item.component)
+        self.hud.slots.remove_any(self.item.component)
         self.hud.money += self.item.price
 
     def buttons(self):
@@ -102,6 +102,7 @@ class EditorHud(object):
 
     def __init__(self, squid, money):
         self.squid = squid
+        self.slots = squid.slots
         self.money = money
 
         self.moneylabel = Label((20, 565))

@@ -85,13 +85,16 @@ class Editor(object):
     def __init__(self, window, squid):
         self.window = window
         self.squid = squid
+        self.slots = squid.slots
         self.background = Sprite(loader.image('data/sprites/editor-bg.png'))
         #self.squid.attachments[0].selected = True
         self.editor = None
         self.hud = EditorHud(squid, 1000)
     
     def update(self, dt):
-        pass
+        if self.editor:
+            if self.editor.component not in self.slots.components:
+                self.editor = None
 
     def draw(self):
         self.background.draw()
@@ -132,7 +135,7 @@ class Editor(object):
         closest_dist = 1000
         closest = None
 
-        for a in self.squid.attachments:
+        for a in self.slots.components:
             dist = (a.position - mpos).length
             if dist < a.radius() and dist < closest_dist:
                 closest = a
