@@ -22,6 +22,7 @@ SHOP = [
     Item('Propeller', 100, components.Propeller),
     Item('Small Fuel Tank', 60, components.SmallFuelTank),
     Item('Large Fuel Tank', 100, components.LargeFuelTank),
+    Item('Pulsejet', 150, components.PulseJet),
 ]
 
 GREY = (90, 90, 90, 255)
@@ -121,17 +122,27 @@ class EditorHud(object):
         self.fuellabel = Label((20, 495))
 
         self.tile_size = v(340, 80)
+        self.height = 0
+        self.scroll = 0
         self.build()
+
+    def scroll_rows(self, dy):
+        self.scroll_by(dy * 20)
+
+    def scroll_by(self, dy):
+        max_scroll = max(0, self.height - SCREEN_SIZE[1])
+        self.scroll = max(0, min(self.scroll - dy, max_scroll))
 
     def build(self):
         items = []
         for item in SHOP:
             items.append(ListItem(self, item))
         self.items = items
+        self.height = (self.tile_size.y + 10) * len(self.items) + 10
 
     def buttons(self):
         tr = v(SCREEN_SIZE)
-        pos = tr - self.tile_size - v(10, 10)
+        pos = tr - self.tile_size - v(10, 10) + v(0, self.scroll)
         buttons = []
         for item in self.items:
             for b in item.buttons():
@@ -154,7 +165,7 @@ class EditorHud(object):
         tr = v(SCREEN_SIZE)
         pos = tr - self.tile_size - v(10, 10)
         gl.glPushMatrix(gl.GL_MODELVIEW)
-        gl.glTranslatef(pos.x, pos.y, 0)
+        gl.glTranslatef(pos.x, pos.y + self.scroll, 0)
         for item in self.items:
             item.draw()
             gl.glTranslatef(0, -self.tile_size.y - 10, 0)

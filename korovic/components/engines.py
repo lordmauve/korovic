@@ -67,3 +67,12 @@ class Propeller(JetEngine):
 
     def editor(self):
         return None
+
+
+class PulseJet(JetEngine):
+    MASS = 20
+    slot_mask = Slot.TOP
+    FORCE = v(40000, 0)
+
+    def editor(self):
+        return AngleEditor(self, min_angle=-5, max_angle=30)

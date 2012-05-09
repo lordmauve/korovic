@@ -10,7 +10,7 @@ from .background import HorizonPainter, ForegroundSeaPainter
 
 from .camera import Camera
 from . import loader
-from .constants import SEA_LEVEL, HORIZON_LEVEL
+from .constants import SEA_LEVEL, HORIZON_LEVEL, SCREEN_SIZE
 
 from .editor_hud import EditorHud
 from .hud import GameHud
@@ -89,6 +89,7 @@ class Editor(object):
         self.background = Sprite(loader.image('data/sprites/editor-bg.png'))
         #self.squid.attachments[0].selected = True
         self.editor = None
+        self.scroll_state = 0
         self.hud = EditorHud(squid, 2000)
     
     def update(self, dt):
@@ -107,7 +108,10 @@ class Editor(object):
     def get_handlers(self):
         return {
             'on_draw': self.draw,
-            'on_mouse_release': self.on_mouse_release
+            'on_mouse_press': self.on_mouse_press,
+            'on_mouse_scroll': self.on_mouse_scroll,
+            'on_mouse_release': self.on_mouse_release,
+            'on_mouse_drag': self.on_mouse_drag
         }
 
     def set_editor(self, editor):
@@ -125,7 +129,32 @@ class Editor(object):
     def stop(self):
         self.clear_editor()
 
+    def on_mouse_press(self, x, y, button, modifiers):
+        if x > SCREEN_SIZE[0] - self.hud.tile_size.x - 10:
+            self.clear_editor()
+            self.scroll_state = 1
+            self.scroll_start = v(x, y)
+
+    def on_mouse_scroll(self, x, y, scroll_x, scroll_y):
+        if x > SCREEN_SIZE[0] - self.hud.tile_size.x - 10:
+            self.hud.scroll_rows(scroll_y)
+            return EVENT_HANDLED
+
+    def on_mouse_drag(self, x, y, dx, dy, buttons, modifiers):
+        if self.scroll_state == 2:
+            self.hud.scroll_by(-dy)
+            return EVENT_HANDLED
+
+        p = v(x, y) - self.scroll_start
+        if p.length2 > 64:
+            self.scroll_state = 2
+            self.hud.scroll_by(-p.y)
+            return EVENT_HANDLED
+    
     def on_mouse_release(self, x, y, button, modifiers):
+        if self.scroll_state == 2:
+            self.scroll_state = 0
+            return EVENT_HANDLED
         mpos = v(x, y)
 
         for b in self.hud.buttons():
