@@ -14,7 +14,7 @@ class World(object):
 
         components.load_all()
 
-        self.squid = components.Susie((150, 56))
+        self.squid = components.Susie((250, 80))
         self.squid.attach(components.Wing)
         self.squid.attach(components.JetEngine)
         self.space.add(self.squid.body, *self.squid.shapes)

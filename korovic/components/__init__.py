@@ -2,6 +2,7 @@ from .base import Component
 from .squid import *
 from .engines import *
 from .wings import *
+from .fuel import *
 
 
 def load_all():

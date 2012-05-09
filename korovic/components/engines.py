@@ -11,10 +11,6 @@ from .squid import Slot
 class JetEngine(ActivateableComponent):
     slot_mask = Slot.SIDE
     FORCE = v(60000, 0)
-    def draw_component(self):
-        self.sprite.set_position(*self.position)
-        self.sprite.rotation = -180 / math.pi * (self.angle + self.squid.body.angle)
-        self.sprite.draw()
 
     def update(self, dt):
         if self.active:

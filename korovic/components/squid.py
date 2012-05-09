@@ -95,14 +95,14 @@ class Susie(Component):
         self.body.position = pos
         self.body.angular_velocity_limit = 1.5  # Ensure Susie can't spin too fast
         self.slots = Slots(self)
-        foff = v(0, 20)
+
         self.slots.add_slot(self.circles[2][0], Slot.SIDE)
         self.slots.add_slot(self.circles[3][0], Slot.SIDE)
-        self.slots.add_slot(self.circles[2][0] + foff, Slot.TOP)
-        self.slots.add_slot(self.circles[2][0] - v(0, 28), Slot.BOTTOM)
+        self.slots.add_slot(self.circles[2][0] + v(0, 20), Slot.TOP)
+        self.slots.add_slot(self.circles[2][0] - v(0, 20), Slot.BOTTOM)
         self.slots.add_slot(self.circles[2][0] + v(85, 0), Slot.NOSE)
         self.slots.add_slot(self.circles[3][0] + v(0, 15), Slot.TOP)
-        self.slots.add_slot(self.circles[3][0] - v(0, 24), Slot.BOTTOM)
+        self.slots.add_slot(self.circles[3][0] - v(0, 15), Slot.BOTTOM)
         self.slots.add_slot(self.circles[3][0] - v(38, 4), Slot.NOSE)
 
     def set_position(self, pos):
@@ -113,6 +113,14 @@ class Susie(Component):
         return self.body.position
 
     position = property(get_position, set_position)
+
+    def get_rotation(self):
+        return self.body.angle
+
+    def set_rotation(self, a):
+        self.body.angle = a
+
+    rotation = property(get_rotation, set_rotation)
 
     def total_weight(self):
         return sum([c.MASS for c in self.slots.components], self.MASS)

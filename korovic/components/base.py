@@ -48,7 +48,8 @@ class Component(object):
 
         cls.image.anchor_x = -int(offset.x + 0.5)
         cls.image.anchor_y = int(cls.image.height + offset.y + 0.5)
-        cls.moi = moi  # moment of intertia
+        cls.insertion_point = -cog
+        cls.moi = moi  # moment of inertia
 
     def __init__(self, squid, attachment_point):
         self.squid = squid
@@ -57,7 +58,14 @@ class Component(object):
 
     @property
     def position(self):
-        return v(self.squid.body.local_to_world(self.attachment_point))
+        """World position of the component."""
+        p = self.attachment_point + self.insertion_point.rotated(math.degrees(self.angle))  # position of the insertion point in body space
+        return v(self.squid.body.local_to_world(p))
+    
+    @property
+    def rotation(self):
+        """World rotation of the component."""
+        return self.angle + self.squid.body.angle
 
     def radius(self):
         return (self.sprite.width + self.sprite.height) * 0.5
@@ -71,20 +79,22 @@ class Component(object):
             c.elasticity = 0.01
             self.shapes.append(c)
 
-    def set_rotation(self, angle):
-        self.body.angle = angle
-        self.sprite.rotation = -180 / math.pi * self.body.angle
-
-    def get_rotation(self):
-        return self.body.angle
-
-    rotation = property(get_rotation, set_rotation)
+    def draw_component(self):
+        self.sprite.set_position(*self.position)
+        self.sprite.rotation = -math.degrees(self.rotation)
+        self.sprite.draw()
 
     def draw(self):
         if self.selected:
             self.draw_selected()
         else:
             self.draw_component()
+
+    def update(self, dt):
+        """Components can override this to add behaviour."""
+
+    def controller(self):
+        """Components can return a controller here that can respond to input events."""
 
     def draw_selected(self):
         gl.glColor3f(0, 1, 0)

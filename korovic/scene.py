@@ -114,7 +114,8 @@ class Editor(object):
         if self.editor:
             self.window.pop_handlers()
         self.editor = editor
-        self.window.push_handlers(**editor.get_handlers())
+        if editor:
+            self.window.push_handlers(**editor.get_handlers())
 
     def clear_editor(self):
         if self.editor:
