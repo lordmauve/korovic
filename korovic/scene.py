@@ -129,12 +129,12 @@ class Editor(object):
                 b.callback()
                 return
             
-        closest_dist = 300 ** 2
+        closest_dist = 1000
         closest = None
 
         for a in self.squid.attachments:
-            dist = (a.position - mpos).length2
-            if dist < closest_dist:
+            dist = (a.position - mpos).length
+            if dist < a.radius() and dist < closest_dist:
                 closest = a
                 closest_dist = dist
 

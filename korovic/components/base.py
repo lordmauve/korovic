@@ -56,6 +56,9 @@ class Component(object):
     def position(self):
         return v(self.squid.body.local_to_world(self.attachment_point))
 
+    def radius(self):
+        return (self.sprite.width + self.sprite.height) * 0.5
+
     def create_body(self):
         self.body = pymunk.Body(self.MASS, self.moi)
         self.shapes = []
