@@ -117,6 +117,7 @@ class EditorHud(object):
 
         self.moneylabel = Label((20, 565))
         self.weightlabel = Label((20, 530))
+        self.fuellabel = Label((20, 495))
 
         self.tile_size = v(340, 80)
         self.build()
@@ -143,6 +144,12 @@ class EditorHud(object):
     def draw(self):
         self.moneylabel.document.text = 'Money: $%d' % self.money
         self.weightlabel.document.text = 'Weight: %dkg' % self.squid.total_weight()
+        cap = self.squid.fuel_capacity()
+
+        if cap:
+            self.fuellabel.document.text = 'Fuel Capacity: %dkg' % cap
+        else:
+            self.fuellabel.document.text = 'Fuel Capacity: -'
         tr = v(SCREEN_SIZE)
         pos = tr - self.tile_size - v(10, 10)
         gl.glPushMatrix(gl.GL_MODELVIEW)
@@ -153,3 +160,4 @@ class EditorHud(object):
         gl.glPopMatrix(gl.GL_MODELVIEW)
         self.moneylabel.draw()
         self.weightlabel.draw()
+        self.fuellabel.draw()

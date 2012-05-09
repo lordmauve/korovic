@@ -125,6 +125,9 @@ class Susie(Component):
     def total_weight(self):
         return sum([c.MASS for c in self.slots.components], self.MASS)
 
+    def fuel_capacity(self):
+        return sum([c.CAPACITY for c in self.slots.components], self.CAPACITY)
+
     def attach(self, component_class, pos=None):
         if pos is None:
             pos = self.slots.find_slot(component_class)

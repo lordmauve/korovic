@@ -10,6 +10,7 @@ from .. import loader
 
 class Component(object):
     MASS = 50.0
+    CAPACITY = 0
     slot_mask = 1
 
     selected = False
