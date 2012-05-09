@@ -12,14 +12,21 @@ class GameHud(object):
             font_name='Atomic Clock Radio',
             font_size=16,
             x=10,
-            y=575
+            y=565
         )
         self.distlabel = Label(
             text='Distance:',
             font_name='Atomic Clock Radio',
             font_size=16,
             x=10,
-            y=550
+            y=530
+        )
+        self.fuellabel = Label(
+            text='',
+            font_name='Atomic Clock Radio',
+            font_size=16,
+            x=10,
+            y=495
         )
 
     def draw(self):
@@ -31,5 +38,7 @@ class GameHud(object):
         else:
             self.altlabel.document.text = 'Altitude: %dm' % alt
         self.distlabel.document.text = 'Distance: %dm' % dist
+        self.fuellabel.document.text = 'Fuel: %dkg' % self.world.squid.fuel
         self.altlabel.draw()
         self.distlabel.draw()
+        self.fuellabel.draw()

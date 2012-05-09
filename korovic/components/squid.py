@@ -89,13 +89,10 @@ class Slots(object):
 
 class Susie(Component):
     ANGULAR_VELOCITY_DAMPING = 0.8
-    def __init__(self, pos=(0, 0)):
-        self.create_body()
+    def __init__(self):
         self.sprite = pyglet.sprite.Sprite(self.image, 0, 0)
-        self.body.position = pos
-        self.body.angular_velocity_limit = 1.5  # Ensure Susie can't spin too fast
+        
         self.slots = Slots(self)
-
         self.slots.add_slot(self.circles[2][0], Slot.SIDE)
         self.slots.add_slot(self.circles[3][0], Slot.SIDE)
         self.slots.add_slot(self.circles[2][0] + v(0, 20), Slot.TOP)
@@ -104,6 +101,17 @@ class Susie(Component):
         self.slots.add_slot(self.circles[3][0] + v(0, 15), Slot.TOP)
         self.slots.add_slot(self.circles[3][0] - v(0, 15), Slot.BOTTOM)
         self.slots.add_slot(self.circles[3][0] - v(38, 4), Slot.NOSE)
+
+        self.reset()
+
+    def reset(self):
+        self.create_body()
+        self.body.angular_velocity_limit = 1.5  # Ensure Susie can't spin too fast
+        self.body.mass = self.total_weight()
+        self.fuel = self.fuel_capacity()
+        self.body.position = (250, 80)
+        for a in self.slots.components:
+            a.reset()
 
     def set_position(self, pos):
         self.body.position = pos

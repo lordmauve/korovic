@@ -44,7 +44,7 @@ class Game(object):
         self.start_scene(self.editor)
 
     def start_game(self):
-        self.squid.position = (150, 200)
+        self.world.reset()
         self.start_scene(self.game)
 
     def toggle_editor(self):

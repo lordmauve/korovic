@@ -89,7 +89,7 @@ class Editor(object):
         self.background = Sprite(loader.image('data/sprites/editor-bg.png'))
         #self.squid.attachments[0].selected = True
         self.editor = None
-        self.hud = EditorHud(squid, 1000)
+        self.hud = EditorHud(squid, 2000)
     
     def update(self, dt):
         if self.editor:

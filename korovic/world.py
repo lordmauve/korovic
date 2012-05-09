@@ -14,7 +14,14 @@ class World(object):
 
         components.load_all()
 
-        self.squid = components.Susie((250, 80))
+        self.squid = components.Susie()
+
+    def reset(self):
+        try:
+            self.space.remove(self.squid.body, *self.squid.shapes)
+        except KeyError:
+            pass
+        self.squid.reset()
         self.space.add(self.squid.body, *self.squid.shapes)
 
     def create_floor(self, space, y=0):

@@ -107,28 +107,49 @@ class Component(object):
         # FIXME: take into account angular momentum
         return v(self.squid.body.velocity)
 
-    def wind(self):
-        """The wind velocity over the component."""
+    def relative_wind(self):
+        """The wind velocity over the component in component space."""
         vel = -self.velocity()
         a = self.squid.body.angle + self.angle
         return vel.rotated(math.degrees(-a))
 
-    def apply_force(self, f):
-        """Apply force f (relative to the component) at the attachment point"""
+    wind = relative_wind
+
+    def absolute_wind(self):
+        """The wind velocity over the component in world space"""
+        return self.velocity()
+
+    def apply_force_absolute(self, f):
+        """Apply force f (in world space) at the attachment point"""
+        pos = self.squid.body.local_to_world(self.attachment_point) - self.squid.body.position
+        self.squid.body.apply_force(f=f, r=pos)
+
+    def apply_force_relative(self, f):
+        """Apply force f (in component space) at the attachment point"""
         f = f.rotated(math.degrees(self.squid.body.angle + self.angle))
         pos = self.squid.body.local_to_world(self.attachment_point) - self.squid.body.position
         self.squid.body.apply_force(f=f, r=pos)
 
+    apply_force = apply_force_relative
+
+    def reset(self):
+        """Reset the state of the component."""
+
 
 class ActivateableComponent(Component):
     abstract = True
+    initial = False
 
     def __init__(self, squid, attachment_point):
         super(ActivateableComponent, self).__init__(squid, attachment_point)
-        self.active = False
+        self.reset()
 
     def set_active(self, active):
         self.active = active
 
     def is_active(self):
         return self.active
+
+    def reset(self):
+        """Reset the state of the component."""
+        self.active = self.initial

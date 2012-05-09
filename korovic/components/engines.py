@@ -10,7 +10,7 @@ from .squid import Slot
 
 class JetEngine(ActivateableComponent):
     slot_mask = Slot.SIDE
-    FORCE = v(60000, 0)
+    FORCE = v(100000, 0)
 
     def update(self, dt):
         if self.active:
@@ -34,15 +34,15 @@ class Rocket(JetEngine):
         return OneTimeController(self)
 
     def set_active(self, _):
-        self.time_left = self.BURN_TIME
-        self.active = True
+        if not self.active:
+            self.time_left = self.BURN_TIME
+            self.active = True
 
     def update(self, dt):
         if self.active:
             self.time_left -= dt
-            if self.time_left < 0:
-                self.active = False
-        super(Rocket, self).update(dt)
+            if self.time_left > 0:
+                super(Rocket, self).update(dt)
 
 
 class Propeller(JetEngine):
