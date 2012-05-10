@@ -1,11 +1,22 @@
 import math
+from pyglet import gl
+import pyglet.sprite
+
+from lepton import Particle, ParticleGroup
+from lepton.emitter import StaticEmitter
+from lepton import texturizer
+from lepton import renderer
+from lepton import controller
+from lepton import domain
 
 from ..vector import v
 from ..editor import AngleEditor
 from ..controllers import PressController, OneTimeController
 
-from .base import ActivateableComponent
+from .base import Component, ActivateableComponent
 from .squid import Slot
+
+from .. import loader
 
 
 class JetEngine(ActivateableComponent):
@@ -31,10 +42,45 @@ class JetEngine(ActivateableComponent):
 
 
 class Rocket(JetEngine):
+    @classmethod
+    def load(cls):
+        super(Rocket, cls).load()
+        cls.particle_texture = loader.texture('data/sprites/rocket-spark.png')
+        cls.particle_controllers = [
+            controller.Lifetime(max_age=3),
+            controller.Growth(300, 0.8),
+            controller.ColorBlender([
+                (1, (1.0, 0.9, 0.0, 0.0)),
+                (3, (0.0, 0.0, 0.0, 0)),
+            ])
+        ]
+        cls.particle_renderer = renderer.PointRenderer(20,
+            texturizer=texturizer.SpriteTexturizer(cls.particle_texture.id)
+        )
+        cls.particle_renderer = renderer.BillboardRenderer(
+            texturizer=texturizer.SpriteTexturizer(cls.particle_texture.id)
+        )
+
     MASS = 10
     BURN_TIME = 3
     FORCE = v(100000, 0)
     FUEL_CONSUMPTION = 0
+
+    def __init__(self, *args):
+        super(Rocket, self).__init__(*args)
+        self.particlegroup = ParticleGroup(
+            renderer=self.particle_renderer,
+            controllers=[
+                controller.Lifetime(max_age=3),
+                controller.Growth(100, 0.8),
+#                controller.ColorBlender([
+#                    (1, (1.0, 0.9, 0.0, 0.0)),
+#                    (3, (0.0, 0.0, 0.0, 0)),
+#                ])
+            ]
+        )
+
+        self.emitter = None
 
     def controller(self):
         return OneTimeController(self)
@@ -46,12 +92,47 @@ class Rocket(JetEngine):
         if not self.active:
             self.time_left = self.BURN_TIME
             self.active = True
+            vel = v(-200, 0).rotated(math.degrees(self.rotation))
+            
+            self.vel_domain = domain.Disc(
+                (vel.x, vel.y, 0),
+                (0, 0, 1),
+                100
+            )
+            self.pos_domain = domain.Disc(
+                (self.position.x, self.position.y, 0),
+                (0, 0, 1),
+                30
+            )
+            self.template = Particle(
+                size=(30, 30, 0),
+                rotation=(0, 0, 1.5),
+                color=(1, 1, 1),
+            )
+            self.emitter = StaticEmitter(
+                position=self.pos_domain,
+                velocity=self.vel_domain,
+                template=self.template,
+                rate=30,
+                time_to_live=self.BURN_TIME,
+            )
+            self.particlegroup.bind_controller(self.emitter)
 
     def update(self, dt):
         if self.active:
             self.time_left -= dt
             if self.time_left > 0:
+                p = (self.position.x, self.position.y, 0)
+                self.pos_domain.center = p
                 super(Rocket, self).update(dt)
+        self.particlegroup.update(dt)
+
+    def draw_particles(self):
+        self.particlegroup.draw()
+
+    def draw(self):
+        self.draw_particles()
+        super(Rocket, self).draw()
 
 
 class Propeller(JetEngine):

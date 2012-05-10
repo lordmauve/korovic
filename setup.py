@@ -6,7 +6,8 @@ setup(
     packages=find_packages(),
     install_requires=[
         'pyglet>=1.1.4',
-        'pymunk==2.1.0'
+        'pymunk==2.1.0',
+        'lepton==1.0b2'
     ],
     package_data={
         'gamename': ['data/*'],
