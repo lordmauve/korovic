@@ -88,6 +88,7 @@ class Slots(object):
 
 
 class Susie(Component):
+    MASS = 25
     ANGULAR_VELOCITY_DAMPING = 0.8
     def __init__(self):
         self.sprite = pyglet.sprite.Sprite(self.image, 0, 0)
