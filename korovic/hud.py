@@ -1,34 +1,34 @@
-from pyglet.text import Label
 from pyglet import gl
 
 from .constants import SEA_LEVEL, SCREEN_SIZE
-
+from .primitives import Label, Rectangle
+from .camera import Rect
+from .vector import v
 
 
 class GameHud(object):
     def __init__(self, world):
         self.world = world
 
+        w, h = SCREEN_SIZE
+        r = Rect(v(0, 0), v(250, 113))
+        r = r.translate(v(8, h - r.height - 8))
+        self.infobox = Rectangle(r, [(0, 0, 0, 0.33)])
+
         self.altlabel = Label(
             text='Altitude:',
-            font_name='Atomic Clock Radio',
-            font_size=16,
-            x=10,
-            y=565
+            x=20,
+            y=h - 35
         )
         self.distlabel = Label(
             text='Distance:',
-            font_name='Atomic Clock Radio',
-            font_size=16,
-            x=10,
-            y=530
+            x=20,
+            y=h - 70
         )
         self.fuellabel = Label(
             text='',
-            font_name='Atomic Clock Radio',
-            font_size=16,
-            x=10,
-            y=495
+            x=20,
+            y=h - 105
         )
 
         self.controllers = []
@@ -46,6 +46,7 @@ class GameHud(object):
             self.altlabel.document.text = 'Altitude: %dm' % alt
         self.distlabel.document.text = 'Distance: %dm' % dist
         self.fuellabel.document.text = 'Fuel: %dkg' % self.world.squid.fuel
+        self.infobox.draw()
         self.altlabel.draw()
         self.distlabel.draw()
         self.fuellabel.draw()
