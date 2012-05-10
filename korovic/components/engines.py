@@ -1,6 +1,7 @@
 import math
 from pyglet import gl
-import pyglet.sprite
+from pyglet.graphics import Batch
+from pyglet.sprite import Sprite
 
 from lepton import Particle, ParticleGroup
 from lepton.emitter import StaticEmitter
@@ -9,6 +10,7 @@ from lepton import renderer
 from lepton import controller
 from lepton import domain
 
+from ..constants import SEA_LEVEL
 from ..vector import v
 from ..editor import AngleEditor
 from ..controllers import PressController, OneTimeController
@@ -41,25 +43,53 @@ class JetEngine(ActivateableComponent):
         return AngleEditor(self)
 
 
+class Renderer(object):
+    """A replacement for lepton's billboard renderer."""
+    def __init__(self, image):
+        self.image = image
+
+    def draw(self, group):
+        batch = Batch()
+        ss = []
+        for particle in group:
+            s = Sprite(self.image, batch=batch)
+            s.position = list(particle.position)[:2]
+            s.color = [c * 255 for c in list(particle.color)[:3]]
+            s.scale = particle.size[0] / 64.0
+            s.rotation = particle.age * 720
+            s.opacity = particle.color[3] * 255
+            ss.append(s)
+        batch.draw()
+            
+
 class Rocket(JetEngine):
     @classmethod
     def load(cls):
         super(Rocket, cls).load()
-        cls.particle_texture = loader.texture('data/sprites/rocket-spark.png')
+        img = loader.image('data/sprites/rocket-spark.png')
+        cls.particle_texture = img 
+        w = img.width
+        h = img.height
+        img.anchor_x = w * 0.5
+        img.anchor_y = h * 0.5
         cls.particle_controllers = [
-            controller.Lifetime(max_age=3),
-            controller.Growth(300, 0.8),
+            controller.Movement(),
+            controller.Lifetime(max_age=2),
+            controller.Growth(50.0),
             controller.ColorBlender([
-                (1, (1.0, 0.9, 0.0, 0.0)),
-                (3, (0.0, 0.0, 0.0, 0)),
-            ])
+                (0, (1.0, 0.9, 0.0, 1.0)),
+                (1, (0.0, 0.0, 0.0, 0.2)),
+                (3, (0.0, 0.0, 0.0, 0.0)),
+            ]),
+            controller.Bounce(
+                domain=domain.Plane(
+                    (0, SEA_LEVEL, 0),
+                    (0, 1, 0)
+                ),
+                bounce=0.02
+            )
         ]
-        cls.particle_renderer = renderer.PointRenderer(20,
-            texturizer=texturizer.SpriteTexturizer(cls.particle_texture.id)
-        )
-        cls.particle_renderer = renderer.BillboardRenderer(
-            texturizer=texturizer.SpriteTexturizer(cls.particle_texture.id)
-        )
+        cls.particle_renderer = Renderer(cls.particle_texture)
 
     MASS = 10
     BURN_TIME = 3
@@ -70,14 +100,7 @@ class Rocket(JetEngine):
         super(Rocket, self).__init__(*args)
         self.particlegroup = ParticleGroup(
             renderer=self.particle_renderer,
-            controllers=[
-                controller.Lifetime(max_age=3),
-                controller.Growth(100, 0.8),
-#                controller.ColorBlender([
-#                    (1, (1.0, 0.9, 0.0, 0.0)),
-#                    (3, (0.0, 0.0, 0.0, 0)),
-#                ])
-            ]
+            controllers=self.particle_controllers
         )
 
         self.emitter = None
@@ -92,38 +115,50 @@ class Rocket(JetEngine):
         if not self.active:
             self.time_left = self.BURN_TIME
             self.active = True
-            vel = v(-200, 0).rotated(math.degrees(self.rotation))
             
+            # Stuff in any numbers for now, update later
             self.vel_domain = domain.Disc(
-                (vel.x, vel.y, 0),
+                (0, 0, 0),
                 (0, 0, 1),
                 100
             )
-            self.pos_domain = domain.Disc(
-                (self.position.x, self.position.y, 0),
-                (0, 0, 1),
-                30
+            self.pos_domain = domain.Cone(
+                (0, 0, 0),
+                (-1, 0, 0),
+                1
             )
             self.template = Particle(
-                size=(30, 30, 0),
-                rotation=(0, 0, 1.5),
-                color=(1, 1, 1),
+                size=(10.0, 10.0, 0),
+                color=(1.0, 0.5, 0.0, 1.0),
             )
             self.emitter = StaticEmitter(
                 position=self.pos_domain,
                 velocity=self.vel_domain,
                 template=self.template,
-                rate=30,
+                rate=50,
                 time_to_live=self.BURN_TIME,
             )
             self.particlegroup.bind_controller(self.emitter)
 
+    def update_emitter(self, dt):
+        tv = v(-600, 0).rotated(math.degrees(self.rotation))  # thrust vel
+        bv = v(self.squid.body.velocity)  # body vel
+
+        ve = tv + bv  # velocity of emitted particles
+        self.vel_domain.center = (ve.x, ve.y, 0)
+
+        pos = self.position
+        cone = ve * dt
+        base = pos + cone
+        self.pos_domain.apex = (pos.x, pos.y, 0)
+        self.pos_domain.base = (base.x, base.y, 0)
+        self.pos_domain.outer_radius = cone.length * 0.2
+    
     def update(self, dt):
         if self.active:
             self.time_left -= dt
             if self.time_left > 0:
-                p = (self.position.x, self.position.y, 0)
-                self.pos_domain.center = p
+                self.update_emitter(dt)
                 super(Rocket, self).update(dt)
         self.particlegroup.update(dt)
 

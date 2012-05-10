@@ -14,6 +14,7 @@ class World(object):
         components.load_all()
 
         self.squid = components.Susie()
+        self.squid.attach(components.Rocket)
 
     def reset(self):
         try:
