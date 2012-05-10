@@ -45,6 +45,7 @@ class ControllerIcon(object):
         self.icon.opacity = 100 if disabled else 255
         if disabled:
             self.r = self.r_disabled
+            self.set_active(False)
         else:
             self.set_active(self.active)
 
