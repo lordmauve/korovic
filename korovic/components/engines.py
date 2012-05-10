@@ -75,7 +75,7 @@ class Rocket(JetEngine):
         cls.particle_controllers = [
             controller.Movement(),
             controller.Lifetime(max_age=2),
-            controller.Growth(50.0),
+            controller.Growth(30.0),
             controller.ColorBlender([
                 (0, (1.0, 0.9, 0.0, 1.0)),
                 (1, (0.0, 0.0, 0.0, 0.2)),
@@ -128,7 +128,7 @@ class Rocket(JetEngine):
                 1
             )
             self.template = Particle(
-                size=(10.0, 10.0, 0),
+                size=(20.0, 20.0, 0),
                 color=(1.0, 0.5, 0.0, 1.0),
             )
             self.emitter = StaticEmitter(
@@ -141,14 +141,16 @@ class Rocket(JetEngine):
             self.particlegroup.bind_controller(self.emitter)
 
     def update_emitter(self, dt):
-        tv = v(-600, 0).rotated(math.degrees(self.rotation))  # thrust vel
+        tv = v(-200, 0).rotated(math.degrees(self.rotation))  # thrust vel
         bv = v(self.squid.body.velocity)  # body vel
 
-        ve = tv + bv  # velocity of emitted particles
+        ve = tv  # velocity of emitted particles
         self.vel_domain.center = (ve.x, ve.y, 0)
 
         pos = self.position
-        cone = ve * dt
+        cone = bv * dt
+        if cone.length2 < 0.001:
+            cone = tv * 0.1
         base = pos + cone
         self.pos_domain.apex = (pos.x, pos.y, 0)
         self.pos_domain.base = (base.x, base.y, 0)
