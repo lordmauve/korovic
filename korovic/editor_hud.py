@@ -34,6 +34,9 @@ class ListItem(object):
         self.r = Rectangle(self.rect, [(0, 0, 0, 0.33)])
         self.hud = hud
         self.item = item
+        self.icon = item.component.get_icon()
+        p = int(hud.tile_size.y * 0.5 + 0.5)
+        self.icon.position = (p, p)
 
         self.label = Label(
             text=item.name,
@@ -75,6 +78,7 @@ class ListItem(object):
         else:
             self.sell.color = WHITE
         self.sell.draw()
+        self.icon.draw()
 
     def can_buy(self):
         if self.hud.money < self.item.price:

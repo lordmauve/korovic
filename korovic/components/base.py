@@ -57,6 +57,18 @@ class Component(object):
         self.attachment_point = attachment_point
         self.sprite = pyglet.sprite.Sprite(self.image, 0, 0)
 
+    @classmethod
+    def get_icon(cls, size=48):
+        w, h = cls.image.width, cls.image.height
+        s = max(w, h)
+        img = cls.image.get_texture()
+        img.anchor_x = w * 0.5
+        img.anchor_y = h * 0.5
+        icon = pyglet.sprite.Sprite(img)
+        if s > size:
+            icon.scale = float(size) / s
+        return icon
+
     @property
     def position(self):
         """World position of the component."""
