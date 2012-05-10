@@ -1,6 +1,8 @@
 from pyglet.text import Label
+from pyglet import gl
 
-from .constants import SEA_LEVEL
+from .constants import SEA_LEVEL, SCREEN_SIZE
+
 
 
 class GameHud(object):
@@ -29,6 +31,11 @@ class GameHud(object):
             y=495
         )
 
+        self.controllers = []
+
+    def set_controllers(self, controllers):
+        self.controllers = controllers
+
     def draw(self):
         alt = (self.world.squid.position.y - SEA_LEVEL - 15) * 0.1
         dist = (self.world.squid.position.x - 150) * 0.1
@@ -42,3 +49,11 @@ class GameHud(object):
         self.altlabel.draw()
         self.distlabel.draw()
         self.fuellabel.draw()
+
+        if self.controllers:
+            gl.glPushMatrix(gl.GL_MODELVIEW)
+            gl.glTranslatef(SCREEN_SIZE[0] - 74, 10, 0)
+            for controller in reversed(self.controllers):
+                controller.draw()
+                gl.glTranslatef(-74, 0, 0)
+            gl.glPopMatrix(gl.GL_MODELVIEW)

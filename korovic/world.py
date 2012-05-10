@@ -1,7 +1,6 @@
 import pymunk
 
 from . import components
-from .controllers import NullController
 from .constants import TARGET_FPS, SEA_LEVEL
 
 
@@ -39,11 +38,3 @@ class World(object):
 
     def controllers(self):
         return list(self.squid.controllers())
-
-    def get_controller(self, num):
-        cs = self.controllers()
-        try:
-            return cs[(num - 1) % 10]
-        except IndexError:
-            return NullController()
-

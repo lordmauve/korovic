@@ -16,6 +16,7 @@ from .editor_hud import EditorHud
 from .hud import GameHud
 
 from .components import Susie
+from .controllers import NullController
 
 
 
@@ -33,6 +34,21 @@ class Scene(object):
         self.world = world
         self.lair = Sprite(loader.image('data/sprites/island-lair.png')) 
         self.hud = GameHud(world)
+        self.update_controllers()
+
+    def update_controllers(self):
+        cs = self.world.controllers()
+        for i, c in enumerate(cs):
+            c.set_key(key._0 + (i + 1) % 10)
+        self.controllers = cs
+        self.hud.set_controllers(cs)
+
+    def get_controller(self, num):
+        cs = self.controllers
+        try:
+            return cs[(num - 1) % 10]
+        except IndexError:
+            return NullController()
     
     def update(self, dt):
         self.world.update(dt)
@@ -64,7 +80,7 @@ class Scene(object):
     def on_key_press(self, symbol, modifiers):
         if key._0 <= symbol <= key._9:
             controller = symbol - key._0
-            self.world.get_controller(controller).on_press()
+            self.get_controller(controller).on_press()
             return EVENT_HANDLED
 
 
@@ -74,7 +90,7 @@ class Scene(object):
         """
         if key._0 <= symbol <= key._9:
             controller = symbol - key._0
-            self.world.get_controller(controller).on_release()
+            self.get_controller(controller).on_release()
             return EVENT_HANDLED
 
     def stop(self):
@@ -134,6 +150,8 @@ class Editor(object):
             self.clear_editor()
             self.scroll_state = 1
             self.scroll_start = v(x, y)
+        else:
+            self.scroll_state = 0
 
     def on_mouse_scroll(self, x, y, scroll_x, scroll_y):
         if x > SCREEN_SIZE[0] - self.hud.tile_size.x - 10:
@@ -141,6 +159,9 @@ class Editor(object):
             return EVENT_HANDLED
 
     def on_mouse_drag(self, x, y, dx, dy, buttons, modifiers):
+        if not self.scroll_state:
+            return
+
         if self.scroll_state == 2:
             self.hud.scroll_by(-dy)
             return EVENT_HANDLED

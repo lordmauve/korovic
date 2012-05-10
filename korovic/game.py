@@ -45,6 +45,7 @@ class Game(object):
 
     def start_game(self):
         self.world.reset()
+        self.game.update_controllers()
         self.start_scene(self.game)
 
     def toggle_editor(self):
