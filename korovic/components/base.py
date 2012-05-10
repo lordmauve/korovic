@@ -61,7 +61,7 @@ class Component(object):
     def get_icon(cls, size=48):
         w, h = cls.image.width, cls.image.height
         s = max(w, h)
-        img = cls.image.get_texture()
+        img = cls.image.get_region(0, 0, w, h)
         img.anchor_x = w * 0.5
         img.anchor_y = h * 0.5
         icon = pyglet.sprite.Sprite(img)
