@@ -90,6 +90,7 @@ class Slots(object):
 class Susie(Component):
     MASS = 25
     ANGULAR_VELOCITY_DAMPING = 0.8
+
     def __init__(self):
         self.sprite = pyglet.sprite.Sprite(self.image, 0, 0)
         
@@ -113,6 +114,20 @@ class Susie(Component):
         self.body.position = (250, 80)
         for a in self.slots.components:
             a.reset()
+
+    def draw_fuel(self, amount):
+        if amount == 0:
+            return True
+        if self.has_fuel():
+            drawn = min(self.fuel, amount)
+            self.body.mass -= drawn
+            self.fuel -= drawn
+            return True
+        else:
+            return False
+
+    def has_fuel(self):
+        return self.fuel > 0
 
     def set_position(self, pos):
         self.body.position = pos

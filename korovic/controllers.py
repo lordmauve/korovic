@@ -68,6 +68,7 @@ class Controller(object):
 
     def draw(self):
         self.icon.set_active(self.component.active)
+        self.icon.set_disabled(not self.component.is_enabled())
         self.icon.draw()
 
 
@@ -114,7 +115,7 @@ class NullController(Controller):
     This is used for keys that aren't bound to components.
 
     """
-    def __init__(self, component):
+    def __init__(self):
         pass
 
     def noop(self, *args, **kwargs):

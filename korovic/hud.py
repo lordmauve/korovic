@@ -45,7 +45,7 @@ class GameHud(object):
         else:
             self.altlabel.document.text = 'Altitude: %dm' % alt
         self.distlabel.document.text = 'Distance: %dm' % dist
-        self.fuellabel.document.text = 'Fuel: %dkg' % self.world.squid.fuel
+        self.fuellabel.document.text = 'Fuel: %0.1fkg' % self.world.squid.fuel
         self.infobox.draw()
         self.altlabel.draw()
         self.distlabel.draw()

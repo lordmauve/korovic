@@ -57,6 +57,9 @@ class Component(object):
         self.attachment_point = attachment_point
         self.sprite = pyglet.sprite.Sprite(self.image, 0, 0)
 
+    def is_enabled(self):
+        return True
+
     @classmethod
     def get_icon(cls, size=48):
         w, h = cls.image.width, cls.image.height

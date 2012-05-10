@@ -11,12 +11,17 @@ from .squid import Slot
 class JetEngine(ActivateableComponent):
     slot_mask = Slot.SIDE
     FORCE = v(100000, 0)
+    FUEL_CONSUMPTION = 6
 
     def update(self, dt):
         if self.active:
-            force = self.FORCE.rotated((self.angle + self.squid.body.angle) * 180 / math.pi)
-            pos = self.squid.body.local_to_world(self.attachment_point) - self.squid.body.position
-            self.squid.body.apply_force(f=force, r=pos)
+            if self.squid.draw_fuel(self.FUEL_CONSUMPTION * dt):
+                force = self.FORCE.rotated((self.angle + self.squid.body.angle) * 180 / math.pi)
+                pos = self.squid.body.local_to_world(self.attachment_point) - self.squid.body.position
+                self.squid.body.apply_force(f=force, r=pos)
+
+    def is_enabled(self):
+        return self.squid.has_fuel()
 
     def controller(self):
         return PressController(self)
@@ -29,9 +34,13 @@ class Rocket(JetEngine):
     MASS = 10
     BURN_TIME = 3
     FORCE = v(100000, 0)
+    FUEL_CONSUMPTION = 0
 
     def controller(self):
         return OneTimeController(self)
+
+    def is_enabled(self):
+        return not self.active
 
     def set_active(self, _):
         if not self.active:
@@ -48,12 +57,13 @@ class Rocket(JetEngine):
 class Propeller(JetEngine):
     MASS = 3
     slot_mask = Slot.TOP | Slot.BOTTOM | Slot.NOSE
-    FORCE = v(60000, 0)
+    FORCE = v(40000, 0)
     angles = {
         Slot.TOP: math.pi * 0.5,
         Slot.BOTTOM: math.pi * 1.5,
         Slot.NOSE: 0
     }
+    FUEL_CONSUMPTION = 2
 
     def set_angle(self):
         """Angle is not user modifiable"""
@@ -72,7 +82,8 @@ class Propeller(JetEngine):
 class PulseJet(JetEngine):
     MASS = 20
     slot_mask = Slot.TOP
-    FORCE = v(40000, 0)
+    FORCE = v(60000, 0)
+    FUEL_CONSUMPTION = 1
 
     def editor(self):
         return AngleEditor(self, min_angle=-5, max_angle=30)
