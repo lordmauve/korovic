@@ -135,20 +135,20 @@ class Rocket(JetEngine):
                 position=self.pos_domain,
                 velocity=self.vel_domain,
                 template=self.template,
-                rate=50,
+                rate=30,
                 time_to_live=self.BURN_TIME,
             )
             self.particlegroup.bind_controller(self.emitter)
 
     def update_emitter(self, dt):
-        tv = v(-200, 0).rotated(math.degrees(self.rotation))  # thrust vel
+        tv = v(-100, 0).rotated(math.degrees(self.rotation))  # thrust vel
         bv = v(self.squid.body.velocity)  # body vel
 
-        ve = tv  # velocity of emitted particles
+        ve = (tv + bv) * 0.5  # velocity of emitted particles
         self.vel_domain.center = (ve.x, ve.y, 0)
 
         pos = self.position
-        cone = bv * dt
+        cone = ve * dt
         if cone.length2 < 0.001:
             cone = tv * 0.1
         base = pos + cone
