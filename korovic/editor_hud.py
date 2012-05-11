@@ -19,6 +19,7 @@ SHOP = [
     Item('Rocket', 350, components.Rocket),
     Item('Wing', 200, components.Wing),
     Item('Biplane', 150, components.BiplaneWing),
+    Item('Aerolon', 150, components.Aerolon),
     Item('Propeller', 100, components.Propeller),
     Item('Small Fuel Tank', 60, components.SmallFuelTank),
     Item('Large Fuel Tank', 100, components.LargeFuelTank),

@@ -2,8 +2,9 @@ import math
 
 from ..vector import v
 from ..editor import AngleEditor
+from ..controllers import PressController
 
-from .base import Component
+from .base import Component, ActivateableComponent
 from .squid import Slot
 
 
@@ -11,7 +12,7 @@ class Wing(Component):
     MASS = 15
     slot_mask = Slot.SIDE
 
-    MAX_LIFT = 150000
+    MAX_LIFT = 100000
     LIFT_RATE = 5  # a number representing the relative wing area etc
     DRAG = 0.1
 
@@ -41,7 +42,31 @@ class Wing(Component):
 
 class BiplaneWing(Wing):
     MASS = 10
+    MAX_LIFT = 120000
 
     #FIXME: give biplane wing different properties
     LIFT_RATE = 10
     DRAG = 0.2
+
+
+class Aerolon(Wing, ActivateableComponent):
+    MASS = 2
+    LIFT_RATE = 1
+    DRAG = 0.05
+    
+    MAX_LIFT = 20000
+
+    def update(self, dt):
+        super(Aerolon, self).update(dt)
+        if self.active:
+            wind = self.relative_wind()
+            x2 = wind.x * wind.x
+            force = math.sin(-0.5 * math.radians(self.rotation % 180))
+            lift = max(self.MAX_LIFT, force * self.LIFT_RATE * x2)
+            self.apply_force_relative(v(0, lift)) 
+
+    def controller(self):
+        return PressController(self)
+
+    def editor(self):
+        return None
