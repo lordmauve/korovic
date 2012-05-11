@@ -21,7 +21,25 @@ from .squid import Slot
 from .. import loader
 
 
-class JetEngine(ActivateableComponent):
+class OnAnimation(Component):
+    abstract = True
+    @classmethod
+    def load(cls):
+        super(OnAnimation, cls).load()
+        cls.image_on = loader.image('data/sprites/%s-on.png' % cls.__name__.lower())
+        cls.image_on.anchor_x = cls.image.anchor_x
+        cls.image_on.anchor_y = cls.image.anchor_y
+
+    def draw(self):
+        if self.active and self.is_enabled():
+            self.sprite.image = self.image_on
+        else:
+            self.sprite.image = self.image
+        super(OnAnimation, self).draw()
+
+
+class Engine(ActivateableComponent):
+    abstract = True
     slot_mask = Slot.SIDE
     FORCE = v(100000, 0)
     FUEL_CONSUMPTION = 6
@@ -40,6 +58,10 @@ class JetEngine(ActivateableComponent):
 
     def editor(self):
         return AngleEditor(self)
+
+
+class JetEngine(OnAnimation, Engine):
+    """A jet engine."""
 
 
 class Renderer(object):
@@ -61,7 +83,7 @@ class Renderer(object):
         batch.draw()
             
 
-class Rocket(JetEngine):
+class Rocket(Engine):
     @classmethod
     def load(cls):
         super(Rocket, cls).load()
@@ -170,24 +192,8 @@ class Rocket(JetEngine):
         self.draw_particles()
         super(Rocket, self).draw()
 
-class OnAnimation(Component):
-    abstract = True
-    @classmethod
-    def load(cls):
-        super(OnAnimation, cls).load()
-        cls.image_on = loader.image('data/sprites/%s-on.png' % cls.__name__.lower())
-        cls.image_on.anchor_x = cls.image.anchor_x
-        cls.image_on.anchor_y = cls.image.anchor_y
 
-    def draw(self):
-        if self.active and self.is_enabled():
-            self.sprite.image = self.image_on
-        else:
-            self.sprite.image = self.image
-        super(OnAnimation, self).draw()
-
-
-class Propeller(OnAnimation, JetEngine):
+class Propeller(OnAnimation, Engine):
     MASS = 3
     slot_mask = Slot.TOP | Slot.BOTTOM | Slot.NOSE
     FORCE = v(40000, 0)
@@ -212,7 +218,7 @@ class Propeller(OnAnimation, JetEngine):
         return None
 
 
-class PulseJet(JetEngine):
+class PulseJet(Engine):
     MASS = 20
     slot_mask = Slot.TOP
     FORCE = v(60000, 0)
@@ -223,7 +229,7 @@ class PulseJet(JetEngine):
         return AngleEditor(self, min_angle=-5, max_angle=30)
 
 
-class Rotor(OnAnimation, JetEngine):
+class Rotor(OnAnimation, Engine):
     MASS = 30
     FORCE = v(0, 140000)
     OFFSET = v(0, 100)
