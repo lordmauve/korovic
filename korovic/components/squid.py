@@ -2,6 +2,9 @@ import math
 import pyglet.sprite
 from .base import Component
 
+from ..constants import SEA_LEVEL
+
+from .. import loader
 from ..vector import v
 
 
@@ -91,8 +94,17 @@ class Susie(Component):
     MASS = 25
     ANGULAR_VELOCITY_DAMPING = 0.8
 
+    @classmethod
+    def load(cls):
+        super(Susie, cls).load()
+        img = loader.image('data/sprites/squid-shadow.png') 
+        w = img.width
+        img.anchor_x = w * 0.5
+        cls.shadow_image = img
+
     def __init__(self):
         self.sprite = pyglet.sprite.Sprite(self.image, 0, 0)
+        self.shadow = pyglet.sprite.Sprite(self.shadow_image, 0, 0)
         
         self.slots = Slots(self)
         self.slots.add_slot(self.circles[2][0], Slot.SIDE)
@@ -174,7 +186,14 @@ class Susie(Component):
         self.sprite.rotation = -180 / math.pi * self.body.angle
         self.sprite.draw()
 
+    def draw_shadow(self):
+        if self.body.position.y > SEA_LEVEL:
+            self.shadow.set_position(self.body.position.x, SEA_LEVEL)
+            self.shadow.opacity = max(255 - self.body.position.y, 0)
+            self.shadow.draw()
+
     def draw(self):
+        self.draw_shadow()
         self.draw_component()
         for a in self.slots.components:
             a.draw()
