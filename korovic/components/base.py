@@ -128,21 +128,30 @@ class Component(object):
         a = self.squid.body.angle + self.angle
         return vel.rotated(math.degrees(-a))
 
+    def attachment_position(self):
+        return v(self.squid.body.local_to_world(self.attachment_point))
+    
     wind = relative_wind
 
     def absolute_wind(self):
         """The wind velocity over the component in world space"""
         return self.velocity()
 
-    def apply_force_absolute(self, f):
-        """Apply force f (in world space) at the attachment point"""
-        pos = self.squid.body.local_to_world(self.attachment_point) - self.squid.body.position
+    def apply_force_absolute(self, f, offset=v(0, 0)):
+        """Apply force f (in world space)
+        
+        offset if given is the offset of the force from the attachment point in component space.
+        """
+        pos = self.squid.body.local_to_world(self.attachment_point + offset) - self.squid.body.position
         self.squid.body.apply_force(f=f, r=pos)
 
-    def apply_force_relative(self, f):
-        """Apply force f (in component space) at the attachment point"""
+    def apply_force_relative(self, f, offset=v(0, 0)):
+        """Apply force f (in component space) at the attachment point
+        
+        offset if given is the offset of the force from the attachment point in component space.
+        """
         f = f.rotated(math.degrees(self.squid.body.angle + self.angle))
-        pos = self.squid.body.local_to_world(self.attachment_point) - self.squid.body.position
+        pos = self.squid.body.local_to_world(self.attachment_point + offset) - self.squid.body.position
         self.squid.body.apply_force(f=f, r=pos)
 
     apply_force = apply_force_relative

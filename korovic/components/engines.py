@@ -25,13 +25,12 @@ class JetEngine(ActivateableComponent):
     slot_mask = Slot.SIDE
     FORCE = v(100000, 0)
     FUEL_CONSUMPTION = 6
+    OFFSET = v(0, 0)
 
     def update(self, dt):
         if self.active:
             if self.squid.draw_fuel(self.FUEL_CONSUMPTION * dt):
-                force = self.FORCE.rotated((self.angle + self.squid.body.angle) * 180 / math.pi)
-                pos = self.squid.body.local_to_world(self.attachment_point) - self.squid.body.position
-                self.squid.body.apply_force(f=force, r=pos)
+                self.apply_force_relative(self.FORCE, self.OFFSET)
 
     def is_enabled(self):
         return self.squid.has_fuel()
@@ -202,6 +201,33 @@ class PulseJet(JetEngine):
     slot_mask = Slot.TOP
     FORCE = v(60000, 0)
     FUEL_CONSUMPTION = 1
+    OFFSET = v(0, 42)  # Offset of force from attachment point
 
     def editor(self):
         return AngleEditor(self, min_angle=-5, max_angle=30)
+
+
+class Rotor(JetEngine):
+    @classmethod
+    def load(cls):
+        super(Rotor, cls).load()
+        cls.rotor_on = loader.image('data/sprites/rotor-on.png')
+        cls.rotor_on.anchor_x = cls.image.anchor_x
+        cls.rotor_on.anchor_y = cls.image.anchor_y
+
+    MASS = 30
+    FORCE = v(0, 140000)
+    OFFSET = v(0, 100)
+    slot_mask = Slot.TOP
+
+    def draw(self):
+        if self.active:
+            self.sprite.image = self.rotor_on
+        else:
+            self.sprite.image = self.image
+        super(Rotor, self).draw()
+
+    FUEL_CONSUMPTION = 5
+
+    def editor(self):
+        return AngleEditor(self, min_angle=-10, max_angle=10)

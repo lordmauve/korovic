@@ -24,6 +24,7 @@ SHOP = [
     Item('Small Fuel Tank', 60, components.SmallFuelTank),
     Item('Large Fuel Tank', 100, components.LargeFuelTank),
     Item('Pulsejet', 150, components.PulseJet),
+    Item('Rotor', 500, components.Rotor),
 ]
 
 GREY = (90, 90, 90, 255)

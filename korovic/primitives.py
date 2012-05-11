@@ -70,6 +70,10 @@ class Protractor(object):
         )
         self.set_angle(angle)
 
+    @property
+    def centre(self):
+        return self.circle.centre
+
     def set_angle(self, angle):
         self.angle = angle
         if self.angle is not None:

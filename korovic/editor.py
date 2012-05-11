@@ -14,7 +14,7 @@ class AngleEditor(object):
         self.min_angle = min_angle
         self.max_angle = max_angle
         adeg = self.component.angle * (180 / math.pi)
-        pos = self.component.position
+        pos = self.component.attachment_position()
         self.protractor = Protractor(
             centre=pos,
             radius=60,
@@ -41,7 +41,7 @@ class AngleEditor(object):
 
     def on_mouse_press(self, x, y, button, modifiers):
         p = v(x, y)
-        self.dragging = (p - self.component.position).length <= 80
+        self.dragging = (p - self.protractor.centre).length <= 80
         if self.dragging:
             return EVENT_HANDLED
 
@@ -51,7 +51,7 @@ class AngleEditor(object):
     def on_mouse_drag(self, x, y, dx, dy, buttons, modifiers):
         if self.dragging:
             p = v(x, y)
-            angle = (p - self.component.position).angle
+            angle = (p - self.protractor.centre).angle
             angle = min(self.max_angle, max(self.min_angle, angle))
             self.component.angle = math.radians(angle)
             self.protractor.set_angle(angle)
