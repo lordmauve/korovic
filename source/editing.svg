@@ -141,8 +141,8 @@
      inkscape:pageopacity="0.80784314"
      inkscape:pageshadow="2"
      inkscape:zoom="1"
-     inkscape:cx="721.77365"
-     inkscape:cy="457.49768"
+     inkscape:cx="654.7"
+     inkscape:cy="297.49768"
      inkscape:current-layer="layer1"
      inkscape:document-units="px"
      showgrid="false"
@@ -1162,5 +1162,21 @@
            sodipodi:role="line"
            style="font-size:16px;font-weight:normal;text-align:center;text-anchor:middle;-inkscape-font-specification:Atomic Clock Radio;fill:#ffffff">Buy</tspan></text>
     </g>
+    <rect
+       style="opacity:0.25;color:#000000;fill:#ffffff;fill-opacity:0.24200912;fill-rule:nonzero;stroke:none;stroke-width:1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect4796"
+       width="268"
+       height="23"
+       x="-707"
+       y="98"
+       transform="scale(-1,1)" />
+    <rect
+       y="97"
+       x="-634"
+       height="24"
+       width="195"
+       id="rect4798"
+       style="opacity:0.25;color:#000000;fill:#ffffff;fill-opacity:0.24200912;fill-rule:nonzero;stroke:none;stroke-width:1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       transform="scale(-1,1)" />
   </g>
 </svg>
