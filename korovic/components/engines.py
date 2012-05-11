@@ -170,8 +170,24 @@ class Rocket(JetEngine):
         self.draw_particles()
         super(Rocket, self).draw()
 
+class OnAnimation(Component):
+    abstract = True
+    @classmethod
+    def load(cls):
+        super(OnAnimation, cls).load()
+        cls.image_on = loader.image('data/sprites/%s-on.png' % cls.__name__.lower())
+        cls.image_on.anchor_x = cls.image.anchor_x
+        cls.image_on.anchor_y = cls.image.anchor_y
 
-class Propeller(JetEngine):
+    def draw(self):
+        if self.active and self.is_enabled():
+            self.sprite.image = self.image_on
+        else:
+            self.sprite.image = self.image
+        super(OnAnimation, self).draw()
+
+
+class Propeller(OnAnimation, JetEngine):
     MASS = 3
     slot_mask = Slot.TOP | Slot.BOTTOM | Slot.NOSE
     FORCE = v(40000, 0)
@@ -207,25 +223,11 @@ class PulseJet(JetEngine):
         return AngleEditor(self, min_angle=-5, max_angle=30)
 
 
-class Rotor(JetEngine):
-    @classmethod
-    def load(cls):
-        super(Rotor, cls).load()
-        cls.rotor_on = loader.image('data/sprites/rotor-on.png')
-        cls.rotor_on.anchor_x = cls.image.anchor_x
-        cls.rotor_on.anchor_y = cls.image.anchor_y
-
+class Rotor(OnAnimation, JetEngine):
     MASS = 30
     FORCE = v(0, 140000)
     OFFSET = v(0, 100)
     slot_mask = Slot.TOP
-
-    def draw(self):
-        if self.active:
-            self.sprite.image = self.rotor_on
-        else:
-            self.sprite.image = self.image
-        super(Rotor, self).draw()
 
     FUEL_CONSUMPTION = 5
 
