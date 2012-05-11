@@ -3,6 +3,8 @@ from pyglet import gl
 import pyglet.text
 
 
+from .camera import Rect
+from . import loader
 from .vector import v
 
 
@@ -142,3 +144,37 @@ class Label(pyglet.text.Label):
                 'y': y
             })
         super(Label, self).__init__(**params)
+
+
+class SpeechBubble(object):
+    tail = None
+    @classmethod
+    def load(cls):
+        cls.tail = loader.image('data/cutscene/bubble-tail.png')
+
+    def __init__(self, pos, text):
+        if self.tail is None:
+            self.load()
+        self.pos = pos
+        self.text = text
+
+    def build(self):
+        self.label = Label(self.pos + v(-10, 84), self.text, font="Comic Sans MS")
+        w = self.label.width + 20
+        bl = self.pos + v(-29, 74)
+        tr = bl + v(w + 20, 40)
+        self.rect = Rect(bl, tr)
+
+        self.vertices = list(walk([self.rect.bl, self.rect.br, self.rect.tr, self.rect.tl, self.rect.bl]))
+        self.vertex_list = pyglet.graphics.vertex_list(4,
+            ('v2f', self.vertices),
+        )
+        self.tail = pyglet.sprite.Sprite(self.tail, x=self.pos.x, y=self.pos.y)
+        
+    def draw(self):
+        self.rectangle.draw()
+        gl.glColor4f(0.5, 0.5, 0.5, 1)
+        self.vertext_list.draw(gl.GL_LINE_STRIP) 
+        gl.glColor4f(1, 1, 1, 1)
+        self.tail.draw()
+        self.label.draw()
