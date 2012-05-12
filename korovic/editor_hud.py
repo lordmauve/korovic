@@ -118,10 +118,9 @@ class EditorHud(object):
     def load(cls):
         pass
 
-    def __init__(self, squid, money):
+    def __init__(self, squid):
         self.squid = squid
         self.slots = squid.slots
-        self.money = money
 
         self.moneylabel = Label((20, 565))
         self.weightlabel = Label((20, 530))
@@ -131,6 +130,14 @@ class EditorHud(object):
         self.height = 0
         self.scroll = 0
         self.build()
+
+    def money(self):
+        return self.squid.money
+
+    def set_money(self, m):
+        self.squid.money = m
+
+    money = property(money, set_money)
 
     def scroll_rows(self, dy):
         self.scroll_by(dy * 20)

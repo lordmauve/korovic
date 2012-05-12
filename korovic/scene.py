@@ -115,7 +115,7 @@ class Editor(object):
         self.editor = None
         self.scroll_state = 0
         self.bubble = None
-        self.hud = EditorHud(squid, 2000)
+        self.hud = EditorHud(squid)
     
     def update(self, dt):
         if self.editor:

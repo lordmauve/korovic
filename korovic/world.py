@@ -27,10 +27,11 @@ class World(EventDispatcher):
         self.batch = Batch()
 
         components.load_all()
+        self.squid = components.Susie(self)
+
         self.load('level1')
         self.create_wall()
         self.particles = ParticleSystem()
-        self.squid = components.Susie(self)
         self.crashed = False
 
     def create_sprite(self, img, x, y):
@@ -44,6 +45,7 @@ class World(EventDispatcher):
         self.batch = Batch()
         doc = parse(resource_stream(__name__, 'data/levels/%s.svg' % level))
         self.title = doc.find('.//{http://www.w3.org/2000/svg}title').text
+        self.squid.money = int(doc.find('.//{http://purl.org/dc/elements/1.1/}identifier').text)
         w = int(doc.getroot().get('width'))
         h = int(doc.getroot().get('height'))
         self.create_wall(w + 1000)
