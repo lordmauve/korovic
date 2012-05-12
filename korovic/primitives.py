@@ -154,6 +154,46 @@ class Label(pyglet.text.Label):
         super(Label, self).__init__(**params)
 
 
+class Button(object):
+    PADDING = 20, 12
+
+    def __init__(self, pos, text, align='left'):
+        self.pos = v(pos)
+        self.text = text
+        self.align = align
+        self.build()
+
+    def build(self):
+        pad_x, pad_y = self.PADDING
+        self.label = Label(
+            pos=self.pos + v(self.PADDING),
+            color=(255, 255, 255, 255),
+            text=self.text,
+            anchor_y='bottom'
+        )
+        self.label.content_valign = 'bottom'
+        w = self.label.content_width
+        h = self.label.content_height
+        bl = self.pos
+        tr = bl + v(w + pad_x * 2, h + pad_y * 2)
+        self.rect = Rect(bl, tr)
+
+        if self.align == 'center':
+            self.label.x -= int(w * 0.5 + pad_x)
+            t = int(self.rect.width * 0.5)
+            self.rect = self.rect.translate(v(-t, 0))
+        elif self.align == 'right':
+            self.label.x -= int(w + 2 * pad_x)
+            t = self.rect.width
+            self.rect = self.rect.translate(v(-t, 0))
+
+        self.rectangle = Rectangle(self.rect, [(0, 0, 0, 0.33)])
+
+    def draw(self):
+        self.rectangle.draw()
+        self.label.draw()
+
+
 class SpeechBubble(object):
     tail = None
 

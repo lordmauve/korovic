@@ -7,6 +7,7 @@ from . import components
 from .camera import Rect
 from .primitives import Rectangle, Label
 from .constants import SCREEN_SIZE
+from .primitives import Button as ButtonWidget
 
 from .components import IncompatibleComponent
 
@@ -125,6 +126,7 @@ class EditorHud(object):
         self.moneylabel = Label((20, 565))
         self.weightlabel = Label((20, 530))
         self.fuellabel = Label((20, 495))
+        self.startbutton = ButtonWidget((8, 8), 'Fly >>>')
 
         self.tile_size = v(340, 80)
         self.height = 0
@@ -189,3 +191,4 @@ class EditorHud(object):
         self.moneylabel.draw()
         self.weightlabel.draw()
         self.fuellabel.draw()
+        self.startbutton.draw()

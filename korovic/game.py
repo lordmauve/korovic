@@ -5,7 +5,7 @@ from pyglet.event import EVENT_HANDLED
 import pyglet.clock
 
 from .world import World
-from .scene import Scene, Editor
+from .scene import Scene, Editor, TitleScreen
 from .cutscene import intro, level_start
 
 
@@ -18,7 +18,7 @@ class Game(object):
         self.window = pyglet.window.Window(width=w, height=h, caption=NAME)
         self.game = self.scene = Scene(self, level=level)
         self.squid = self.game.world.squid
-        self.editor = Editor(self.window, self.game.world)
+        self.editor = Editor(self, self.game.world)
         gl.glEnable(gl.GL_DEPTH_TEST)
         gl.glDepthFunc(gl.GL_ALWAYS)
         gl.glMatrixMode(gl.GL_MODELVIEW)
@@ -35,7 +35,7 @@ class Game(object):
         )
         self.window.push_handlers()
         if level == 1:
-            self.start_intro()
+            self.title_screen()
         else:
             self.next_level()
 
@@ -51,6 +51,9 @@ class Game(object):
     def next_level(self):
         start = level_start(self.game.level, self.game.world.title, self, self.editor)
         self.start_scene(start)
+
+    def title_screen(self):
+        self.start_scene(TitleScreen(self))
 
     def start_intro(self):
         start = level_start(self.game.level, self.game.world.title, self, self.editor)
@@ -83,6 +86,6 @@ class Game(object):
             from .screenshot import take_screenshot
             take_screenshot(self.window)
             return EVENT_HANDLED
-        if symbol == key.F2:
+        if symbol == key.ESCAPE and self.scene is self.game:
             self.toggle_editor()
             return EVENT_HANDLED
