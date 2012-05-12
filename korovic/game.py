@@ -1,5 +1,4 @@
 import pyglet
-from pyglet import gl
 from pyglet.window import key
 from pyglet.event import EVENT_HANDLED
 import pyglet.clock
@@ -16,7 +15,6 @@ class Game(object):
     def start(self):
         w, h = SCREEN_SIZE
         self.window = pyglet.window.Window(width=w, height=h, caption=NAME)
-        gl.glEnable(gl.GL_LINE_SMOOTH)
         self.world = World()
         self.squid = self.world.squid
         self.game = self.scene = Scene(self.world)

@@ -1,4 +1,6 @@
 import pyglet.sprite
+from pyglet.event import EVENT_HANDLED
+from pyglet.window import key
 from .primitives import SpeechBubble
 
 from .vector import v
@@ -96,7 +98,9 @@ class Cutscene(object):
 
         @self.step
         def _move_sprite():
-            self.interpolators.append(interpolator())
+            i = iter(interpolator())
+            i.next()
+            self.interpolators.append(i)
 
     def do_delay(self, dt):
         if self.delay:
@@ -111,12 +115,12 @@ class Cutscene(object):
         interpolators = []
         for s in self.interpolators:
             try:
-                s.next(dt)
+                s.send(dt)
             except StopIteration:
                 pass
             else:
                 interpolators.append(s)
-        self.interpolators = []
+        self.interpolators = interpolators
 
     def expire_bubbles(self):
         self.bubbles = [b for b in self.bubbles if b.expiry > self.t]
@@ -135,7 +139,7 @@ class Cutscene(object):
             self.current += 1
             step()
         if self.is_finished():
-            self.game.set_scene(self.next)
+            self.game.start_scene(self.next)
 
     def draw(self):
         sprites = self.sprites.values()
@@ -146,10 +150,17 @@ class Cutscene(object):
             s.draw()
 
     def is_finished(self):
-        return self.current >= len(self.steps) and self.delay == 0
+        return (
+            self.current >= len(self.steps) and
+            self.delay == 0 and
+            not self.interpolators
+        )
 
-    def rewind(self):
+    def start(self):
         self.current = 0
+
+    def stop(self):
+        """Don't need to to anything."""
 
     def __del__(self):
         for s in self.sprites.values():
@@ -158,8 +169,17 @@ class Cutscene(object):
 
     def get_handlers(self):
         return {
-            'on_draw': self.draw
+            'on_draw': self.draw,
+            'on_key_press': self.on_key_press,
         }
+
+    def on_key_press(self, symbol, modifiers):
+        if symbol == key.ESCAPE:
+            self.game.start_scene(self.next)
+            return EVENT_HANDLED
+        elif symbol == key.SPACE:
+            self.t += self.delay
+            self.delay = 0
 
 
 def intro(game, next):
@@ -192,10 +212,24 @@ def intro(game, next):
     c.replace_sprite('korovic', 'cutscene/korovic-pointing')
     c.say('korovic', 'Now svim, my fantastisch cephalapod!', delay=False)
     c.pause(1)
-    c.move_sprite('susie', (118, 6), duration=5)
+    c.move_sprite('susie', (331, 6), duration=5)
     c.pause(1)
     c.replace_sprite('korovic', 'cutscene/korovic-elated')
     c.say('korovic', 'Lay vaste to ze cities and level ze towns!')
     c.replace_sprite('korovic', 'cutscene/korovic-standing')
+    c.pause(3)
+    c.replace_sprite('susie', 'cutscene/susie-dipping')
+    c.pause(1)
+    c.sprite('susie-speak', (515, 95), 'cutscene/exclamation')
+    c.pause(1)
+    c.remove_sprite('susie-speak')
+    c.replace_sprite('susie', 'cutscene/susie-puffing1')
+    c.pause(0.5)
+    c.replace_sprite('susie', 'cutscene/susie-puffing2')
+    c.say('korovic', 'Ah...!')
+    c.say('korovic', 'I vos afraid of zis.')
+    c.say('korovic', 'It vos a danger of ze atomicisink process.')
+    c.say('korovic', 'You may vell be allergic to SALT WATER.')
     c.pause(2)
+    c.say('korovic', 'No matter. Ve vill find another vay!')
     return c
