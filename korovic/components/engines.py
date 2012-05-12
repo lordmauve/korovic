@@ -216,9 +216,6 @@ class Propeller(OnAnimation, Engine):
     def controller(self):
         return PressController(self)
 
-    def editor(self):
-        return None
-
 
 class PulseJet(Engine):
     MASS = 20

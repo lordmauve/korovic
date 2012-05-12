@@ -3,6 +3,7 @@ from pyglet import gl
 import pyglet.text
 
 
+from .constants import SELECTED_COLOUR
 from .camera import Rect
 from . import loader
 from .vector import v
@@ -61,6 +62,7 @@ class Protractor(object):
     """
     def __init__(self, radius, centre=(0, 0), min_angle=0, max_angle=90, angle=None):
         self.circle = Circle(radius, centre)
+        self.inner_circle = Circle(radius - 30, centre)
         self.min_angle = min_angle
         self.max_angle = max_angle
         self._build()
@@ -104,6 +106,11 @@ class Protractor(object):
         self.vs = list(walk(vs))
     
     def draw(self):
+        gl.glEnable(gl.GL_BLEND)
+        gl.glBlendFunc(gl.GL_SRC_ALPHA, gl.GL_ONE_MINUS_SRC_ALPHA)
+        gl.glColor4f(*(list(SELECTED_COLOUR) + [0.5]))
+        self.inner_circle.draw()
+        gl.glColor3f(*SELECTED_COLOUR)
         self.circle.draw()
         pyglet.graphics.draw(len(self.vs) // 2, gl.GL_LINES,
             ('v2f', self.vs),
@@ -124,6 +131,7 @@ class Protractor(object):
             self.label.x, self.label.y = pos
             self.label.anchor_x = 'right' if self.label.x < centre.x else 'left'
             self.label.draw()
+            self.label.draw()  # Draw twice because it doesn't come out well
 
 
 class Label(pyglet.text.Label):

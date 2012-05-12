@@ -7,6 +7,8 @@ import math
 from ..vector import v
 from .. import loader
 
+from ..editor import SlotEditor
+
 
 class Component(object):
     MASS = 50.0
@@ -59,6 +61,9 @@ class Component(object):
 
     def is_enabled(self):
         return True
+
+    def editor(self):
+        return SlotEditor(self)
 
     @classmethod
     def get_icon(cls, size=48):

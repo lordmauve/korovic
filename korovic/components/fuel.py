@@ -19,9 +19,6 @@ class FuelTank(Component):
     def angle(self):
         return self.angles[self.slot.flags]
 
-    def editor(self):
-        return None
-
 
 class LargeFuelTank(FuelTank):
     MASS = 80

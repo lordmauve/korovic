@@ -67,6 +67,3 @@ class Aerolon(Wing, ActivateableComponent):
 
     def controller(self):
         return PressController(self)
-
-    def editor(self):
-        return None
