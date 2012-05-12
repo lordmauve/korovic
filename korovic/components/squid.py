@@ -38,6 +38,11 @@ class Slots(object):
         s.id = len(self.slots)
         self.slots.append(s)
 
+    def detach_all(self):
+        self.components = []
+        for s in self.slots:
+            s.component = None
+
     def slot_position(self, id):
         s = self.slots[id]
         return self.squid.body.local_to_world(s.pos)

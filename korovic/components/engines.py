@@ -204,7 +204,7 @@ class Propeller(OnAnimation, Engine):
         Slot.BOTTOM: math.pi * 1.5,
         Slot.NOSE: 0
     }
-    FUEL_CONSUMPTION = 2
+    FUEL_CONSUMPTION = 3
 
     def set_angle(self):
         """Angle is not user modifiable"""

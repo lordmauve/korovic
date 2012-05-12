@@ -39,10 +39,18 @@ class Scene(object):
         self.world.set_handler('on_goal', self.on_goal)
 
     def on_goal(self):
-        print "Success!"
+        pyglet.clock.schedule_once(self.on_next_level, 3)
 
     def on_crash(self, distance):
         pyglet.clock.schedule_once(self.on_death, 3)
+
+    def on_next_level(self, dt):
+        self.level += 1
+        try:
+            self.world.load('level%d' % self.level)
+        except IOError:
+            self.world.load('freeflight')
+        self.game.next_level()
 
     def on_death(self, dt):
         self.game.start_editor()

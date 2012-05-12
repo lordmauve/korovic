@@ -28,6 +28,7 @@ class World(EventDispatcher):
         self.sprites = []
         self.batch = Batch()
 
+        self.load_sprite('sprites/susie-destroy')
         components.load_all()
         self.squid = components.Susie(self)
 
@@ -35,19 +36,25 @@ class World(EventDispatcher):
         self.goal = None
 
         self.load(initial_level)
-        self.create_wall()
         self.particles = ParticleSystem()
         self.crashed = False
         self.won = False
 
-    def create_sprite(self, img, x, y):
+    def load_sprite(self, img):
         if img not in self.images:
             self.images[img] = loader.image('data/%s.png' % img)
+        return self.images[img]
+
+    def create_sprite(self, img, x, y):
+        s = self.load_sprite(img)
         self.sprites.append(
-            Sprite(self.images[img], x=x, y=y, batch=self.batch)
+            Sprite(s, x=x, y=y, batch=self.batch)
         )
 
     def load(self, level):
+        self.space.remove_static(*self.space.static_shapes)
+        self.squid.slots.detach_all()
+        self.create_wall()
         self.goal = None
         self.width = None
         self.batch = Batch()
@@ -81,7 +88,7 @@ class World(EventDispatcher):
                 self.create_goal(x, x + iw)
                 # Only if the city straddles the edge of the page
                 # Do we create a wall there
-                if w - x < iw:
+                if x + iw < w:
                     self.width = None
 
         if self.goal:
@@ -112,13 +119,13 @@ class World(EventDispatcher):
         self.space.add(self.squid.body, *self.squid.shapes)
 
     def create_wall(self, x=-500, width=500):
-        body = pymunk.Body()
+        body = self.space.static_body
         seg = pymunk.Segment(body, (x, 0), (x, 100000), width)
         seg.friction = 0
         self.space.add_static(seg)
 
     def create_island(self, x1, x2, y=20):
-        body = pymunk.Body()
+        body = self.space.static_body
         margin = 50  #  A little leeway to stop susie clipping badly into the sea
         p1 = (x1 - 200 - margin, y - 100)
         p2 = (x1 - margin, y)
@@ -129,7 +136,7 @@ class World(EventDispatcher):
         self.space.add_static(pymunk.Segment(body, p3, p4, SEA_LEVEL))
 
     def create_goal(self, x1, x2, y=20):
-        self.goal = Rect(v(x1, y), v(x2, y + 100))
+        self.goal = Rect(v(x1 + 200, y), v(x2 - 200, y + 100))
 
     def create_floor(self):
         self.create_island(0, 676)
@@ -143,12 +150,13 @@ class World(EventDispatcher):
             g = self.goal
             if g and self.squid.position in g:
                 self.won = True
+                self.create_sprite('sprites/susie-destroy', g.left + 200, g.bottom + 22)
                 self.dispatch_event('on_goal')
 
-        # We run the physics with very small time steps
-        # in order to give more sensitive collisions at speed
-        for i in xrange(5):
-            self.space.step(0.2 / TARGET_FPS)
+            # We run the physics with very small time steps
+            # in order to give more sensitive collisions at speed
+            for i in xrange(5):
+                self.space.step(0.2 / TARGET_FPS)
 
     def check_crash(self):
         p = self.squid.position
@@ -165,7 +173,7 @@ class World(EventDispatcher):
         if self.crashed:
             # Keep particles going
             self.particles.draw()
-        else:
+        elif not self.won:
             self.squid.draw()
         gl.glDepthFunc(gl.GL_ALWAYS)
 
