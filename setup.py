@@ -7,6 +7,7 @@ setup(
     install_requires=[
         'pyglet>=1.1.4',
         'pymunk==2.1.0',
+        'pygame>=1.9.1release',
         'lepton==1.0b2'
     ],
     package_data={

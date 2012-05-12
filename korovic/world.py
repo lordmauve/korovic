@@ -10,11 +10,13 @@ from pyglet.sprite import Sprite
 from lepton import ParticleSystem
 from lepton.emitter import StaticEmitter
 
+
 from .vector import v
 from .camera import Rect
 from . import components
 from . import loader
 from .constants import TARGET_FPS, SEA_LEVEL
+from .sound import load_sound
 
 
 class World(EventDispatcher):
@@ -24,6 +26,8 @@ class World(EventDispatcher):
         self.space.gravity = (0.0, -900.0)
         self.space.damping = 0.9
         self.space.iterations = 20
+
+        self.splash = load_sound('data/sounds/splash.wav')
 
         self.images = {}
         self.sprites = []
@@ -184,6 +188,7 @@ class World(EventDispatcher):
             self.distance = p.x * 0.1
             self.crashed = True
             self.remove_squid()
+            self.splash.play()
             self.dispatch_event('on_crash', self.distance)
 
     def draw(self, viewport):

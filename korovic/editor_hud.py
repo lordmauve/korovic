@@ -10,6 +10,7 @@ from .constants import SCREEN_SIZE
 from .primitives import Button as ButtonWidget
 
 from .components import IncompatibleComponent
+from .sound import load_sound
 
 
 Item = namedtuple('Item', 'name price component tooltip')
@@ -30,6 +31,11 @@ SHOP = [
 
 GREY = (90, 90, 90, 255)
 WHITE = (255, 255, 255, 255)
+
+
+buy_sound = load_sound('data/sounds/buy.wav')
+sell_sound = load_sound('data/sounds/beep.wav')
+
 
 class ListItem(object):
     def __init__(self, hud, item):
@@ -96,12 +102,12 @@ class ListItem(object):
         return self.hud.slots.has(self.item.component)
 
     def on_buy(self):
-        print "Buy", self.item.name
+        buy_sound.play()
         self.hud.squid.attach(self.item.component)
         self.hud.money -= self.item.price
 
     def on_sell(self):
-        print "Sell", self.item.name
+        sell_sound.play()
         self.hud.slots.remove_any(self.item.component)
         self.hud.money += self.item.price
 

@@ -6,6 +6,7 @@ from .vector import v
 
 from .constants import SELECTED_COLOUR, WHITE
 from .primitives import Protractor
+from .sound import load_sound
 
 
 class SlotEditor(object):
@@ -93,8 +94,14 @@ class SlotEditor(object):
 
 
 class AngleEditor(SlotEditor):
+    @classmethod
+    def load(cls):
+        if not hasattr(cls, 'click'):
+            cls.click = load_sound('data/sounds/click.wav')
+
     def __init__(self, component, min_angle=0, max_angle=135):
         super(AngleEditor, self).__init__(component)
+        self.load()
         self.min_angle = min_angle
         self.max_angle = max_angle
         self.adjusting = False
@@ -139,6 +146,7 @@ class AngleEditor(SlotEditor):
         ret = super(AngleEditor, self).on_mouse_drag(x, y, dx, dy, buttons, modifiers)
         if ret: return ret
         if self.adjusting:
+            self.click.play()
             p = v(x, y)
             angle = (p - self.protractor.centre).angle
             angle = min(self.max_angle, max(self.min_angle, angle))
