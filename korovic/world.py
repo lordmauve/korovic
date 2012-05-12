@@ -7,9 +7,12 @@ from pyglet import gl
 from pyglet.event import EventDispatcher
 from pyglet.graphics import Batch
 from pyglet.sprite import Sprite
-from lepton import ParticleSystem
+from lepton import ParticleSystem, ParticleGroup, Particle
+from lepton import domain
 from lepton.emitter import StaticEmitter
+from lepton import controller
 
+from .components.engines import Renderer
 
 from .vector import v
 from .camera import Rect
@@ -45,6 +48,38 @@ class World(EventDispatcher):
         self.particles = ParticleSystem()
         self.crashed = False
         self.won = False
+        self.splash_group = None
+
+    def particle_splash(self, pos, vel):
+        img = self.load_sprite('sprites/drip')
+        img.anchor_x = img.width / 2
+        img.anchor_y = img.height / 2
+        e = StaticEmitter(
+            position=domain.Disc(
+                (pos.x, SEA_LEVEL, 0),
+                (0, 0, 1),
+                50
+            ),
+            velocity=domain.Disc(
+                (vel.x, vel.y, 0),
+                (0, 0, 1),
+                200
+            ),
+            size=[(64.0, 64.0, 0), (80.0, 80.0, 0), (100.0, 100.0, 0)],
+            template=Particle(
+                color=(1.0, 1.0, 1.0, 1.0),
+            ),
+        )
+        self.splash_group = ParticleGroup(
+            controllers=[
+                controller.Movement(),
+                controller.Gravity((0, -900, 0)),
+                controller.Lifetime(max_age=2)
+            ],
+            renderer=Renderer(img),
+            system=self.particles
+        )
+        e.emit(30, self.splash_group)
 
     def load_sprite(self, img):
         if img not in self.images:
@@ -189,15 +224,20 @@ class World(EventDispatcher):
             self.crashed = True
             self.remove_squid()
             self.splash.play()
+            vx, vy = self.squid.body.velocity * 0.5
+            vy = max(20, vy * -1)
+            self.particle_splash(p, v(vx, vy))
             self.dispatch_event('on_crash', self.distance)
 
     def draw(self, viewport):
         for s in self.sprites:
             s.draw()
-        for a in self.actors:
-            a.draw()
         # Draw with depth testing
         gl.glDepthFunc(gl.GL_LEQUAL)
+        if self.splash_group:
+            self.splash_group.draw()
+        for a in self.actors:
+            a.draw()
         if self.crashed:
             # Keep particles going
             self.particles.draw()
