@@ -149,17 +149,18 @@ class Label(pyglet.text.Label):
 class SpeechBubble(object):
     tail = None
 
-    PADDING = 40, 20
+    PADDING = 30, 15
 
     @classmethod
     def load(cls):
         cls.tail = loader.image('data/cutscene/bubble-tail.png')
 
-    def __init__(self, pos, text):
+    def __init__(self, pos, text, width=None):
         if self.tail is None:
             self.load()
-        self.pos = pos
+        self.pos = v(pos)
         self.text = text
+        self.width = width
         self.build()
 
     def build(self):
@@ -169,10 +170,14 @@ class SpeechBubble(object):
             pos=self.pos + off + v(self.PADDING),
             color=(0, 0, 0, 255),
             text=self.text,
-            font_name="Comic Sans MS"
+            font_name="Comic Sans MS",
+            multiline=bool(self.width),
+            anchor_y='bottom',
+            width=self.width
         )
+        self.label.content_valign = 'bottom'
         w = self.label.content_width
-        h = self.label.content_height * 0.6
+        h = self.label.content_height
         bl = self.pos + off 
         tr = bl + v(w + pad_x * 2, h + pad_y * 2)
         self.rect = Rect(bl, tr)

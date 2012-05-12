@@ -17,6 +17,7 @@ from .hud import GameHud
 
 from .components import Susie
 from .controllers import NullController
+from .primitives import SpeechBubble
 
 
 
@@ -106,6 +107,7 @@ class Editor(object):
         #self.squid.attachments[0].selected = True
         self.editor = None
         self.scroll_state = 0
+        self.bubble = None
         self.hud = EditorHud(squid, 2000)
     
     def update(self, dt):
@@ -120,6 +122,8 @@ class Editor(object):
         else:
             self.squid.draw()
         self.hud.draw()
+        if self.bubble:
+            self.bubble.draw()
 
     def get_handlers(self):
         return {
@@ -127,7 +131,8 @@ class Editor(object):
             'on_mouse_press': self.on_mouse_press,
             'on_mouse_scroll': self.on_mouse_scroll,
             'on_mouse_release': self.on_mouse_release,
-            'on_mouse_drag': self.on_mouse_drag
+            'on_mouse_drag': self.on_mouse_drag,
+            'on_mouse_motion': self.on_mouse_motion
         }
 
     def set_editor(self, editor):
@@ -152,6 +157,15 @@ class Editor(object):
             self.scroll_start = v(x, y)
         else:
             self.scroll_state = 0
+
+    def on_mouse_motion(self, x, y, dx, dy):
+        mpos = v(x, y)
+        for b in self.hud.buttons():
+            if b.tooltip and mpos in b.rect:
+                self.bubble = SpeechBubble((90, 223), text=b.tooltip, width=300)
+                break
+        else:
+            self.bubble = None
 
     def on_mouse_scroll(self, x, y, scroll_x, scroll_y):
         if x > SCREEN_SIZE[0] - self.hud.tile_size.x - 10:

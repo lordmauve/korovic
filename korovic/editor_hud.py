@@ -11,20 +11,20 @@ from .constants import SCREEN_SIZE
 from .components import IncompatibleComponent
 
 
-Item = namedtuple('Item', 'name price component')
-Button = namedtuple('Button', 'rect callback')
+Item = namedtuple('Item', 'name price component tooltip')
+Button = namedtuple('Button', 'rect callback tooltip')
 
 SHOP = [
-    Item('Jet Engine', 750, components.JetEngine),
-    Item('Rocket', 350, components.Rocket),
-    Item('Wing', 200, components.Wing),
-    Item('Biplane', 150, components.BiplaneWing),
-    Item('Aerolon', 150, components.Aerolon),
-    Item('Propeller', 100, components.Propeller),
-    Item('Small Fuel Tank', 60, components.SmallFuelTank),
-    Item('Large Fuel Tank', 100, components.LargeFuelTank),
-    Item('Pulsejet', 150, components.PulseJet),
-    Item('Rotor', 500, components.Rotor),
+    Item('Jet Engine', 750, components.JetEngine, 'Lots of thrust, but heavy!'),
+    Item('Rocket', 350, components.Rocket, 'Vhen rockets are up, who cares vhere zey come down!'),
+    Item('Wing', 200, components.Wing, 'An aerofoil gives lift as it moves through ze air!'),
+    Item('Biplane', 150, components.BiplaneWing, 'Ah! Ze old days!'),
+    Item('Aerolon', 150, components.Aerolon, 'Control and stability, Susie!'),
+    Item('Propeller', 100, components.Propeller, 'Contact!'),
+    Item('Small Fuel Tank', 60, components.SmallFuelTank, 'A little fuel goes a long way!'),
+    Item('Large Fuel Tank', 100, components.LargeFuelTank, 'Is zis too much fuel for you?'),
+    Item('Pulsejet', 150, components.PulseJet, 'Vould you like to cruise like a V-1, Susie?'),
+    Item('Rotor', 500, components.Rotor, 'You are Susie, not Huey, yes?'),
 ]
 
 GREY = (90, 90, 90, 255)
@@ -107,9 +107,9 @@ class ListItem(object):
     def buttons(self):
         bs = []
         if self.can_buy():
-            bs.append(Button(Rect(v(195, 0), v(195 + 65, 80)), self.on_buy))
+            bs.append(Button(Rect(v(195, 0), v(195 + 65, 80)), self.on_buy, self.item.tooltip))
         if self.can_sell():
-            bs.append(Button(Rect(v(268, 0), v(268 + 65, 80)), self.on_sell))
+            bs.append(Button(Rect(v(268, 0), v(268 + 65, 80)), self.on_sell, None))
         return bs
 
 
@@ -154,7 +154,8 @@ class EditorHud(object):
             for b in item.buttons():
                 buttons.append(Button(
                     b.rect.translate(pos),
-                    b.callback
+                    b.callback,
+                    b.tooltip
                 ))
             pos -= v(0, self.tile_size.y + 10)
         return buttons
