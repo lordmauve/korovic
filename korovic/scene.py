@@ -31,8 +31,7 @@ class Scene(object):
         self.clouds = Clouds()
         self.stars = Stars()
         self.horizon = HorizonPainter(HORIZON_LEVEL, (0.5, 0.8, 1))
-        self.fgsea = ForegroundSeaPainter(SEA_LEVEL, (0.5, 0.8, 1), x=676)
-        self.lair = Sprite(loader.image('data/sprites/island-lair.png')) 
+        self.fgsea = ForegroundSeaPainter(SEA_LEVEL, (0.5, 0.8, 1))
         self.hud = GameHud(self.world)
 
         self.world.set_handler('on_crash', self.on_crash)
@@ -67,14 +66,12 @@ class Scene(object):
         self.horizon.draw(vp)
         self.clouds.set_viewport(vp)
         self.stars.set_viewport(vp)
+        self.fgsea.draw(vp)
 
         with self.camera.modelview():
             self.stars.draw()
             self.clouds.draw()
-            self.lair.draw()
-            self.world.draw()
-
-        self.fgsea.draw(vp)
+            self.world.draw(vp)
         self.hud.draw()
 
     def get_handlers(self):

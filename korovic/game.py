@@ -1,4 +1,5 @@
 import pyglet
+from pyglet import gl
 from pyglet.window import key
 from pyglet.event import EVENT_HANDLED
 import pyglet.clock
@@ -18,6 +19,12 @@ class Game(object):
         self.game = self.scene = Scene(self)
         self.squid = self.game.world.squid
         self.editor = Editor(self.window, self.squid)
+        gl.glEnable(gl.GL_DEPTH_TEST)
+        gl.glDepthFunc(gl.GL_ALWAYS)
+        gl.glMatrixMode(gl.GL_MODELVIEW)
+        gl.glTranslatef(0, 0, -0.5)
+        gl.glEnable(gl.GL_ALPHA_TEST)
+        gl.glAlphaFunc(gl.GL_GREATER, 0)
 
         self.fps_display = pyglet.clock.ClockDisplay()
 

@@ -111,25 +111,12 @@ class HorizonPainter(object):
 
 
 class ForegroundSeaPainter(HorizonPainter):
-    def __init__(self, height, colour, x):
-        super(ForegroundSeaPainter, self).__init__(height, colour)
-        self.x = x
-
-    def draw(self, viewport):
-        alt = viewport.bl.y
-
-        if alt > self.height:
-            return
-        h = max(0, min(self.height - alt, viewport.height))
-        w = viewport.width
-        x = viewport.bl.x
-        startx = max(0, self.x - x)
-
-        o = v(startx, 0)
-        x = v(w, 0)
-        y = v(startx, h)
-
-        return self.draw_quad([o, x, x + y, y])
+    def draw_quad(self, vs):
+        """Draw a quad defined by vs"""
+        gl.glColor3f(*self.colour)
+        pyglet.graphics.draw(4, gl.GL_QUADS,
+            ('v3f', list(walk((v.x, v.y, 0.5) for v in vs))),
+        )
 
 
 class SpatialSparseHash(object):

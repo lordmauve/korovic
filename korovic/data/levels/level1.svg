@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   version="1.1"
+   width="15000"
+   height="600"
+   id="svg5292">
+  <title
+     id="title5497">Ok, ze city is that vey!</title>
+  <defs
+     id="defs5294" />
+  <metadata
+     id="metadata5297">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>Ok, ze city is that vey!</dc:title>
+        <dc:description />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <image
+     xlink:href="file:///home/mauve/dev/flying/korovic/data/sprites/island-lair.png"
+     x="0"
+     y="367"
+     width="676"
+     height="233"
+     id="image5378" />
+  <image
+     xlink:href="file:///home/mauve/dev/flying/korovic/data/sprites/city.png"
+     x="14438"
+     y="196"
+     width="792"
+     height="404"
+     id="image5475" />
+</svg>

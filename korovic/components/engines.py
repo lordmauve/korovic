@@ -223,9 +223,9 @@ class Propeller(OnAnimation, Engine):
 class PulseJet(Engine):
     MASS = 20
     slot_mask = Slot.TOP
-    FORCE = v(60000, 0)
+    FORCE = v(40000, 0)
     FUEL_CONSUMPTION = 1
-    OFFSET = v(0, 42)  # Offset of force from attachment point
+    OFFSET = v(0, 22)  # Offset of force from attachment point
 
     def editor(self):
         return AngleEditor(self, min_angle=-5, max_angle=30)
