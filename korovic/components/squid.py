@@ -102,7 +102,8 @@ class Susie(Component):
         img.anchor_x = w * 0.5
         cls.shadow_image = img
 
-    def __init__(self):
+    def __init__(self, world):
+        self.world = world
         self.sprite = pyglet.sprite.Sprite(self.image, 0, 0)
         self.shadow = pyglet.sprite.Sprite(self.shadow_image, 0, 0)
         

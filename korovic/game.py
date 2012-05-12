@@ -15,9 +15,8 @@ class Game(object):
     def start(self):
         w, h = SCREEN_SIZE
         self.window = pyglet.window.Window(width=w, height=h, caption=NAME)
-        self.world = World()
-        self.squid = self.world.squid
-        self.game = self.scene = Scene(self.world)
+        self.game = self.scene = Scene(self)
+        self.squid = self.game.world.squid
         self.editor = Editor(self.window, self.squid)
 
         self.fps_display = pyglet.clock.ClockDisplay()
@@ -37,19 +36,15 @@ class Game(object):
         self.window.pop_handlers()
         self.scene = scene
         self.window.push_handlers(**scene.get_handlers())
+        self.scene.start()
 
     def start_intro(self):
         self.start_scene(intro(self, self.editor))
 
     def start_editor(self):
-        self.squid.position = (285, 150)
-        self.squid.rotation = 0
-        self.squid.body.velocity = (0, 0)
         self.start_scene(self.editor)
 
     def start_game(self):
-        self.world.reset()
-        self.game.update_controllers()
         self.start_scene(self.game)
 
     def toggle_editor(self):

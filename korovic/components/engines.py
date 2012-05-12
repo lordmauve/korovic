@@ -5,8 +5,6 @@ from pyglet.sprite import Sprite
 
 from lepton import Particle, ParticleGroup
 from lepton.emitter import StaticEmitter
-from lepton import texturizer
-from lepton import renderer
 from lepton import controller
 from lepton import domain
 
@@ -119,12 +117,17 @@ class Rocket(Engine):
 
     def __init__(self, *args):
         super(Rocket, self).__init__(*args)
+        psystem = self.squid.world.particles
         self.particlegroup = ParticleGroup(
             renderer=self.particle_renderer,
-            controllers=self.particle_controllers
+            controllers=self.particle_controllers,
+            system=psystem
         )
 
         self.emitter = None
+
+    def __del__(self):
+        self.particlegroup.system.remove_group(self.particlegroup)
 
     def controller(self):
         return OneTimeController(self)
@@ -183,7 +186,6 @@ class Rocket(Engine):
             if self.time_left > 0:
                 self.update_emitter(dt)
                 super(Rocket, self).update(dt)
-        self.particlegroup.update(dt)
 
     def draw_particles(self):
         self.particlegroup.draw()

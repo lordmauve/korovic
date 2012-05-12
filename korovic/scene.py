@@ -1,3 +1,4 @@
+import pyglet.clock
 from pyglet.sprite import Sprite
 from pyglet.window import key
 from pyglet.event import EVENT_HANDLED
@@ -14,28 +15,33 @@ from .constants import SEA_LEVEL, HORIZON_LEVEL, SCREEN_SIZE
 
 from .editor_hud import EditorHud
 from .hud import GameHud
-
-from .components import Susie
+from .world import World
 from .controllers import NullController
 from .primitives import SpeechBubble
 
 
-
-
 class Scene(object):
-    def __init__(self, world):
+    def __init__(self, game):
+        self.game = game
         Clouds.load()
         Stars.load()
+        self.world = World()
         self.camera = Camera()
         self.background = GradientPainter(sky)
         self.clouds = Clouds()
         self.stars = Stars()
         self.horizon = HorizonPainter(HORIZON_LEVEL, (0.5, 0.8, 1))
         self.fgsea = ForegroundSeaPainter(SEA_LEVEL, (0.5, 0.8, 1), x=676)
-        self.world = world
         self.lair = Sprite(loader.image('data/sprites/island-lair.png')) 
-        self.hud = GameHud(world)
-        self.update_controllers()
+        self.hud = GameHud(self.world)
+
+        self.world.set_handler('on_crash', self.on_crash)
+
+    def on_crash(self, distance):
+        pyglet.clock.schedule_once(self.on_death, 3)
+
+    def on_death(self, dt):
+        self.game.start_editor()
 
     def update_controllers(self):
         cs = self.world.controllers()
@@ -94,8 +100,12 @@ class Scene(object):
             self.get_controller(controller).on_release()
             return EVENT_HANDLED
 
+    def start(self):
+        self.world.reset()
+        self.update_controllers()
+
     def stop(self):
-        pass
+        self.world.clear_particles()
 
 
 class Editor(object):
@@ -146,6 +156,11 @@ class Editor(object):
         if self.editor:
             self.window.pop_handlers()
             self.editor = None
+
+    def start(self):
+        self.squid.position = (285, 150)
+        self.squid.rotation = 0
+        self.squid.body.velocity = (0, 0)
 
     def stop(self):
         self.clear_editor()
