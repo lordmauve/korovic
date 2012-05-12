@@ -43,6 +43,7 @@ class SlotEditor(object):
         p = v(x, y)
         self.dragging = (p - self.component.position).length <= self.component.radius()
         if self.dragging:
+            self.start_pos = self.component.position
             return EVENT_HANDLED
 
     def on_mouse_release(self, x, y, button, modifiers):
@@ -65,7 +66,7 @@ class SlotEditor(object):
         dist = 6400
         slot = None
         slots = self.component.squid.slots
-        ap = self.component.position + self.display_offset
+        ap = self.start_pos + self.display_offset
         for i, pos in slots.slot_positions():
             can_attach = slots.can_attach(i, self.component)
             if not can_attach:
@@ -76,7 +77,8 @@ class SlotEditor(object):
             if d < dist:
                 slot = i
                 dist = d
-        if slot:
+
+        if slot is not None:
             self.proposed_slot = (slot, v(0, 0))
             self.component.slot = slots.slots[slot]
             self.component.attachment_point = slots.slots[slot].pos

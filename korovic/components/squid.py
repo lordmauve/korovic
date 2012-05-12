@@ -48,7 +48,7 @@ class Slots(object):
 
     def can_attach(self, id, component):
         s = self.slots[id]
-        if s.component:
+        if s.component and s.component is not component:
             return False
         return bool(s.flags & component.slot_mask)
 
