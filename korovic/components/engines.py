@@ -198,7 +198,7 @@ class Rocket(Engine):
 class Propeller(OnAnimation, Engine):
     MASS = 3
     slot_mask = Slot.TOP | Slot.BOTTOM | Slot.NOSE
-    FORCE = v(40000, 0)
+    FORCE = v(45000, 0)
     angles = {
         Slot.TOP: math.pi * 0.5,
         Slot.BOTTOM: math.pi * 1.5,

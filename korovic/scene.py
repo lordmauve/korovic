@@ -35,6 +35,10 @@ class Scene(object):
         self.hud = GameHud(self.world)
 
         self.world.set_handler('on_crash', self.on_crash)
+        self.world.set_handler('on_goal', self.on_goal)
+
+    def on_goal(self):
+        print "Success!"
 
     def on_crash(self, distance):
         pyglet.clock.schedule_once(self.on_death, 3)

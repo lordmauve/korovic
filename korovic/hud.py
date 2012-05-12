@@ -38,13 +38,18 @@ class GameHud(object):
 
     def draw(self):
         alt = (self.world.squid.position.y - SEA_LEVEL - 15) * 0.1
-        dist = (self.world.squid.position.x - 150) * 0.1
+        if self.world.goal:
+            dist = abs(self.world.goal.left - self.world.squid.position.x) * 0.1
+            self.distlabel.document.text = 'Target: %dm' % dist
+        else:
+            dist = (self.world.squid.position.x - 150) * 0.1
+            self.distlabel.document.text = 'Distance: %dm' % dist
 
         if alt < 0:
             self.altlabel.document.text = 'Depth: %dm' % (-alt)
         else:
             self.altlabel.document.text = 'Altitude: %dm' % alt
-        self.distlabel.document.text = 'Distance: %dm' % dist
+
         self.fuellabel.document.text = 'Fuel: %0.1fkg' % self.world.squid.fuel
         self.infobox.draw()
         self.altlabel.draw()

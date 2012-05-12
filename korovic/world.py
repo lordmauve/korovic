@@ -10,6 +10,8 @@ from pyglet.sprite import Sprite
 from lepton import ParticleSystem
 from lepton.emitter import StaticEmitter
 
+from .vector import v
+from .camera import Rect
 from . import components
 from . import loader
 from .constants import TARGET_FPS, SEA_LEVEL
@@ -30,11 +32,13 @@ class World(EventDispatcher):
         self.squid = components.Susie(self)
 
         self.width = None
+        self.goal = None
 
         self.load('level1')
         self.create_wall()
         self.particles = ParticleSystem()
         self.crashed = False
+        self.won = False
 
     def create_sprite(self, img, x, y):
         if img not in self.images:
@@ -44,18 +48,18 @@ class World(EventDispatcher):
         )
 
     def load(self, level):
+        self.goal = None
+        self.width = None
         self.batch = Batch()
         doc = parse(resource_stream(__name__, 'data/levels/%s.svg' % level))
 
-        self.width = int(doc.getroot().get('width'))
+        self.width = w = int(doc.getroot().get('width'))
         h = int(doc.getroot().get('height'))
         self.title = doc.find('.//{http://www.w3.org/2000/svg}title').text
         try:
             self.money = int(doc.find('.//{http://purl.org/dc/elements/1.1/}identifier').text)
         except AttributeError:
             self.money = 3000
-        else:
-            self.create_wall(self.width + 1000)
 
         self.squid.money = self.money
         for im in doc.findall('.//{http://www.w3.org/2000/svg}image'):
@@ -70,11 +74,21 @@ class World(EventDispatcher):
             iw = int(float(im.get('width')))
             y = h - int(float(im.get('y')) + ih)
 
-            print type, x, y
-           
             if type in ['island-lair', 'city']:
                 self.create_island(x, x + iw)
                 self.create_sprite(path, x, y)
+            if type == 'city':
+                self.create_goal(x, x + iw)
+                # Only if the city straddles the edge of the page
+                # Do we create a wall there
+                if w - x < iw:
+                    self.width = None
+
+        if self.goal:
+            if self.width:
+                self.create_wall(self.width + 500)
+        else:
+            self.width = None
 
     def clear_particles(self):
         for group in self.particles:
@@ -93,12 +107,15 @@ class World(EventDispatcher):
         self.remove_squid()
         self.squid.reset()
         self.crashed = False
+        self.won = False
         self.clear_particles()
         self.space.add(self.squid.body, *self.squid.shapes)
 
-    def create_wall(self, x=-1000, width=1000):
+    def create_wall(self, x=-500, width=500):
         body = pymunk.Body()
-        self.space.add_static(pymunk.Segment(body, (x, 0), (x, 100000), width))
+        seg = pymunk.Segment(body, (x, 0), (x, 100000), width)
+        seg.friction = 0
+        self.space.add_static(seg)
 
     def create_island(self, x1, x2, y=20):
         body = pymunk.Body()
@@ -111,15 +128,27 @@ class World(EventDispatcher):
         self.space.add_static(pymunk.Segment(body, p2, p3, SEA_LEVEL))
         self.space.add_static(pymunk.Segment(body, p3, p4, SEA_LEVEL))
 
+    def create_goal(self, x1, x2, y=20):
+        self.goal = Rect(v(x1, y), v(x2, y + 100))
+
     def create_floor(self):
         self.create_island(0, 676)
 
     def update(self, dt):
         self.particles.update(dt)
-        if not self.crashed:
+        if not self.crashed and not self.won:
             self.check_crash()
             self.squid.update(dt)
-        self.space.step(1.0 / TARGET_FPS)
+
+            g = self.goal
+            if g and self.squid.position in g:
+                self.won = True
+                self.dispatch_event('on_goal')
+
+        # We run the physics with very small time steps
+        # in order to give more sensitive collisions at speed
+        for i in xrange(5):
+            self.space.step(0.2 / TARGET_FPS)
 
     def check_crash(self):
         p = self.squid.position
@@ -145,3 +174,4 @@ class World(EventDispatcher):
 
 
 World.register_event_type('on_crash')
+World.register_event_type('on_goal')

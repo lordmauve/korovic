@@ -8,6 +8,7 @@ from . import loader
 
 PATH = 'data/'
 
+
 class Cutscene(object):
     def __init__(self, game, next):
         self.game = game
@@ -54,6 +55,17 @@ class Cutscene(object):
             s.z = z
             self.sprites[name] = s
 
+    def bubble(self, pos, text, duration=3.5, delay=False):
+        """Create a speech bubble above a sprite"""
+        @self.step
+        def _bubble():
+            p = v(pos)
+            b = SpeechBubble(p, text, tail=False)
+            b.expiry = self.t + duration
+            self.bubbles.append(b)
+            if delay:
+                self.delay += duration
+
     def say(self, name, text, duration=3.5, delay=True):
         """Create a speech bubble above a sprite"""
         @self.step
@@ -98,6 +110,25 @@ class Cutscene(object):
 
         @self.step
         def _move_sprite():
+            i = iter(interpolator())
+            i.next()
+            self.interpolators.append(i)
+
+    def zoom_sprite(self, name, scale, duration=1):
+        """Move name to pos"""
+        def interpolator():
+            s = self.sprites[name]
+            t = 0
+            start = s.scale
+            end = scale
+            while t < duration:
+                t += (yield)
+                frac = min(1.0, float(t) / duration)
+                s.scale = (1 - frac) * start + frac * end
+            s.scale = end
+
+        @self.step
+        def _zoom_sprite():
             i = iter(interpolator())
             i.next()
             self.interpolators.append(i)
@@ -185,7 +216,11 @@ class Cutscene(object):
 def intro(game, next):
     c = Cutscene(game, next)
     c.background('cutscene/aerial')
+    c.pause(1)
+    c.bubble((62, 471), 'On a remote island...', duration=8)
     c.pause(3)
+    c.bubble((420, 62), '...somewhere in the Pacific...', duration=5)
+    c.pause(5)
     c.background('cutscene/beach')
     c.sprite('korovic', (52, 35), 'cutscene/korovic-standing')
     c.sprite('susie', (55, 6), 'cutscene/susie-standing')
@@ -196,7 +231,7 @@ def intro(game, next):
     c.replace_sprite('korovic', 'cutscene/korovic-standing')
     c.say('korovic', 'I vill call you Susie.')
     c.pause(1.5)
-    c.say('korovic', 'Who ist a cute little atomic squid?')
+    c.say('korovic', 'Who\'s a cute little atomic squid?')
     c.sprite('susie-speak', (233, 95), 'cutscene/blup')
     c.pause(2)
     c.remove_sprite('susie-speak')
@@ -213,11 +248,11 @@ def intro(game, next):
     c.say('korovic', 'Now svim, my fantastisch cephalapod!', delay=False)
     c.pause(1)
     c.move_sprite('susie', (331, 6), duration=5)
-    c.pause(1)
+    c.pause(2.5)
     c.replace_sprite('korovic', 'cutscene/korovic-elated')
     c.say('korovic', 'Lay vaste to ze cities and level ze towns!')
     c.replace_sprite('korovic', 'cutscene/korovic-standing')
-    c.pause(3)
+    c.pause(1)
     c.replace_sprite('susie', 'cutscene/susie-dipping')
     c.pause(1)
     c.sprite('susie-speak', (515, 95), 'cutscene/exclamation')

@@ -163,16 +163,20 @@ class SpeechBubble(object):
     def load(cls):
         cls.tail = loader.image('data/cutscene/bubble-tail.png')
 
-    def __init__(self, pos, text, width=None):
-        if self.tail is None:
+    def __init__(self, pos, text, width=None, tail=True):
+        if self.tail is None and tail:
             self.load()
         self.pos = v(pos)
         self.text = text
         self.width = width
+        self.with_tail = tail
         self.build()
 
     def build(self):
-        off = v(-29, 73)
+        if self.with_tail:
+            off = v(-29, 73)
+        else:
+            off = v(0, 0)
         pad_x, pad_y = self.PADDING
         self.label = Label(
             pos=self.pos + off + v(self.PADDING),
@@ -196,7 +200,8 @@ class SpeechBubble(object):
         self.vertex_list = pyglet.graphics.vertex_list(5,
             ('v2f', self.vertices),
         )
-        self.tail = pyglet.sprite.Sprite(self.tail, x=self.pos.x, y=self.pos.y)
+        if self.with_tail:
+            self.tail = pyglet.sprite.Sprite(self.tail, x=self.pos.x, y=self.pos.y)
         
     def draw(self):
         self.rectangle.draw()
@@ -205,5 +210,6 @@ class SpeechBubble(object):
         self.vertex_list.draw(gl.GL_LINE_STRIP) 
         gl.glLineWidth(1)
         gl.glColor4f(1, 1, 1, 1)
-        self.tail.draw()
+        if self.with_tail:
+            self.tail.draw()
         self.label.draw()
