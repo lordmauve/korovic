@@ -45,7 +45,8 @@ class World(EventDispatcher):
         self.batch = Batch()
         doc = parse(resource_stream(__name__, 'data/levels/%s.svg' % level))
         self.title = doc.find('.//{http://www.w3.org/2000/svg}title').text
-        self.squid.money = int(doc.find('.//{http://purl.org/dc/elements/1.1/}identifier').text)
+        self.money = int(doc.find('.//{http://purl.org/dc/elements/1.1/}identifier').text)
+        self.squid.money = self.money
         w = int(doc.getroot().get('width'))
         h = int(doc.getroot().get('height'))
         self.create_wall(w + 1000)

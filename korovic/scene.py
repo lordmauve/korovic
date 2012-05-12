@@ -106,16 +106,17 @@ class Scene(object):
 
 
 class Editor(object):
-    def __init__(self, window, squid):
+    def __init__(self, window, world):
         self.window = window
-        self.squid = squid
-        self.slots = squid.slots
+        self.world = world
+        self.squid = world.squid
+        self.slots = self.squid.slots
         self.background = Sprite(loader.image('data/sprites/editor-bg.png'))
         #self.squid.attachments[0].selected = True
         self.editor = None
         self.scroll_state = 0
         self.bubble = None
-        self.hud = EditorHud(squid)
+        self.hud = EditorHud(self.squid, max_money=world.money)
     
     def update(self, dt):
         if self.editor:

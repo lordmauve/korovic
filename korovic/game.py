@@ -18,7 +18,7 @@ class Game(object):
         self.window = pyglet.window.Window(width=w, height=h, caption=NAME)
         self.game = self.scene = Scene(self)
         self.squid = self.game.world.squid
-        self.editor = Editor(self.window, self.squid)
+        self.editor = Editor(self.window, self.game.world)
         gl.glEnable(gl.GL_DEPTH_TEST)
         gl.glDepthFunc(gl.GL_ALWAYS)
         gl.glMatrixMode(gl.GL_MODELVIEW)

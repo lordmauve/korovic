@@ -10,14 +10,14 @@
    xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="3000"
+   width="15000"
    height="600"
    id="svg5292"
    version="1.1"
    inkscape:version="0.48.2 r9819"
    sodipodi:docname="level1.svg">
   <title
-     id="title5551">Take to ze skies!</title>
+     id="title5497">Ok, ze city is that vey!</title>
   <defs
      id="defs5294" />
   <sodipodi:namedview
@@ -27,9 +27,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.125"
-     inkscape:cx="2295.5499"
-     inkscape:cy="1916.7149"
+     inkscape:zoom="0.1767767"
+     inkscape:cx="2498.6144"
+     inkscape:cy="496.39322"
      inkscape:document-units="px"
      inkscape:current-layer="svg5292"
      showgrid="false"
@@ -46,7 +46,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title>Take to ze skies!</dc:title>
+        <dc:title>Ok, ze city is that vey!</dc:title>
         <dc:description />
         <cc:license
            rdf:resource="" />
@@ -56,7 +56,7 @@
             <dc:title></dc:title>
           </cc:Agent>
         </dc:rights>
-        <dc:identifier>300</dc:identifier>
+        <dc:identifier>500</dc:identifier>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -69,7 +69,7 @@
      width="676" />
   <image
      y="196"
-     x="2414"
+     x="14438"
      id="image5475"
      xlink:href="file:///home/mauve/dev/flying/korovic/data/sprites/city.png"
      height="404"

@@ -21,8 +21,8 @@ SHOP = [
     Item('Biplane', 150, components.BiplaneWing, 'Ah! Ze old days!'),
     Item('Aerolon', 150, components.Aerolon, 'Control and stability, Susie!'),
     Item('Propeller', 100, components.Propeller, 'Contact!'),
-    Item('Small Fuel Tank', 60, components.SmallFuelTank, 'A little fuel goes a long way!'),
-    Item('Large Fuel Tank', 100, components.LargeFuelTank, 'Is zis too much fuel for you?'),
+    Item('Small Fuel Tank', 40, components.SmallFuelTank, 'A little fuel goes a long way!'),
+    Item('Large Fuel Tank', 75, components.LargeFuelTank, 'Is zis too much fuel for you?'),
     Item('Pulsejet', 150, components.PulseJet, 'Vould you like to cruise like a V-1, Susie?'),
     Item('Rotor', 500, components.Rotor, 'You are Susie, not Huey, yes?'),
 ]
@@ -118,7 +118,7 @@ class EditorHud(object):
     def load(cls):
         pass
 
-    def __init__(self, squid):
+    def __init__(self, squid, max_money):
         self.squid = squid
         self.slots = squid.slots
 
@@ -129,7 +129,7 @@ class EditorHud(object):
         self.tile_size = v(340, 80)
         self.height = 0
         self.scroll = 0
-        self.build()
+        self.build(max_money)
 
     def money(self):
         return self.squid.money
@@ -146,9 +146,11 @@ class EditorHud(object):
         max_scroll = max(0, self.height - SCREEN_SIZE[1])
         self.scroll = max(0, min(self.scroll - dy, max_scroll))
 
-    def build(self):
+    def build(self, max_money):
         items = []
         for item in SHOP:
+            if item.price > max_money:
+                continue
             items.append(ListItem(self, item))
         self.items = items
         self.height = (self.tile_size.y + 10) * len(self.items) + 10
