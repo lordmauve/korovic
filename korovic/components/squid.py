@@ -147,7 +147,7 @@ class Susie(Component):
     def create_body(self):
         super(Susie, self).create_body()
         self.spikes = [ 
-            TentacleSpike(self, v(-90, 0)),
+#            TentacleSpike(self, v(-90, 0)),
         ]
 
     def reset(self):
@@ -177,7 +177,7 @@ class Susie(Component):
         trans = pos - self.body.position
         self.body.position = pos
         self.sprite.position = pos
-        self.spikes[0].position += trans
+#        self.spikes[0].position += trans
 
     def get_position(self):
         return self.body.position
@@ -260,6 +260,7 @@ class TentacleSpike(Component):
             a=self.body.position + v(3, 0),
             b=squid.position + attachment_point,
             c1=self.body,
+            c2=self.squid.body,
             segments=5
         )
             
@@ -269,8 +270,6 @@ class TentacleSpike(Component):
         if abs(speed) > 1:
             drag = vel.safe_scaled_to(1) * min(speed, 100) * -self.DRAG
             self.body.apply_force(drag)
-        self.tether.bodies[-1].position = self.squid.body.local_to_world(self.attachment_point)
-        self.tether.bodies[-1].velocity = self.squid.body.velocity
 
     def bodies_and_shapes(self):
         bs = [self.body] + self.shapes
@@ -309,13 +308,14 @@ class Tether(object):
         self.joints = []
         a = v(a)
         b = v(b)
+        segment_length = (b - a).length / segments
         for i in xrange(segments + 1):
             frac = float(i) / segments
             pos = frac * b + (1 - frac) * a
             body = self.create_node(pos)
             if self.bodies:
                 last = self.bodies[-1]
-                self.joints.append(pymunk.PinJoint(last, body))
+                self.joints.append(pymunk.SlideJoint(last, body, (0, 0), (0, 0), 0, segment_length))
             self.bodies.append(body)
         if c1:
             self.joints.append(
@@ -338,10 +338,18 @@ class Tether(object):
             pos = frac * b + (1 - frac) * a
             body.position = pos
             body.velocity = v(0, 0)
-        self.build_vertex_list()
+        self.set_vertex_list(a, b)
 
     def bodies_and_shapes(self):
         return self.bodies + self.shapes + self.joints
+
+    def set_vertex_list(self, a, b):
+        vs = []
+        for i, body in enumerate(self.bodies):
+            frac = float(i) / (len(self.bodies) - 1)
+            pos = frac * b + (1 - frac) * a
+            vs.extend(list(pos))
+        self.vertices.vertices = vs
 
     def build_vertex_list(self):
         vs = []
