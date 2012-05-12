@@ -29,6 +29,8 @@ class World(EventDispatcher):
         components.load_all()
         self.squid = components.Susie(self)
 
+        self.width = None
+
         self.load('level1')
         self.create_wall()
         self.particles = ParticleSystem()
@@ -44,12 +46,18 @@ class World(EventDispatcher):
     def load(self, level):
         self.batch = Batch()
         doc = parse(resource_stream(__name__, 'data/levels/%s.svg' % level))
-        self.title = doc.find('.//{http://www.w3.org/2000/svg}title').text
-        self.money = int(doc.find('.//{http://purl.org/dc/elements/1.1/}identifier').text)
-        self.squid.money = self.money
-        w = int(doc.getroot().get('width'))
+
+        self.width = int(doc.getroot().get('width'))
         h = int(doc.getroot().get('height'))
-        self.create_wall(w + 1000)
+        self.title = doc.find('.//{http://www.w3.org/2000/svg}title').text
+        try:
+            self.money = int(doc.find('.//{http://purl.org/dc/elements/1.1/}identifier').text)
+        except AttributeError:
+            self.money = 3000
+        else:
+            self.create_wall(self.width + 1000)
+
+        self.squid.money = self.money
         for im in doc.findall('.//{http://www.w3.org/2000/svg}image'):
             mo = re.search(r'(?P<path>\w+/(?P<type>[\w-]+))\.png$', im.get('{http://www.w3.org/1999/xlink}href'))
             if not mo:

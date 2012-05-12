@@ -82,14 +82,16 @@ class Camera(object):
         y = max(self.ss.y, y)
         self.pos = v(x, y)
 
-    def set_pos(self, pos):
+    def set_pos(self, pos, max_x=None):
         x, y = pos
         x = max(self.ss.x, x)
         y = max(self.ss.y, y)
+        if max_x:
+            x = min(max_x - self.ss.x, x)
         self.pos = v(x, y)
 
-    def track(self, actor):
-        self.set_pos(actor.body.position)
+    def track(self, actor, max_x=None):
+        self.set_pos(actor.body.position, max_x=None)
 
     def viewport(self):
         ss = v(*SCREEN_SIZE) * 0.5

@@ -60,7 +60,7 @@ class Scene(object):
         self.world.update(dt)
 
     def draw(self):
-        self.camera.track(self.world.squid)
+        self.camera.track(self.world.squid, max_x=self.world.width)
         vp = self.camera.viewport()
         self.background.draw(vp)
         self.horizon.draw(vp)
@@ -170,6 +170,11 @@ class Editor(object):
             self.scroll_start = v(x, y)
         else:
             self.scroll_state = 0
+            if not self.editor:
+                self.find_editor(x, y)
+                if self.editor:
+                    return self.editor.on_mouse_press(x, y, button, modifiers)
+                return EVENT_HANDLED
 
     def on_mouse_motion(self, x, y, dx, dy):
         mpos = v(x, y)
@@ -205,11 +210,16 @@ class Editor(object):
             return EVENT_HANDLED
         mpos = v(x, y)
 
-        for b in self.hud.buttons():
-            if mpos in b.rect:
-                b.callback()
-                return
-            
+        if not self.editor:
+            for b in self.hud.buttons():
+                if mpos in b.rect:
+                    b.callback()
+                    return
+        else:
+            self.find_editor(x, y)
+
+    def find_editor(self, x, y):
+        mpos = v(x, y)
         closest_dist = 1000
         closest = None
 
