@@ -38,6 +38,14 @@ class Slots(object):
         s.id = len(self.slots)
         self.slots.append(s)
 
+    def slot_position(self, id):
+        s = self.slots[id]
+        return self.squid.body.local_to_world(s.pos)
+
+    def slot_positions(self):
+        for i, s in enumerate(self.slots):
+            yield i, self.slot_position(i)
+
     def can_attach(self, id, component):
         s = self.slots[id]
         if s.component:
@@ -57,6 +65,7 @@ class Slots(object):
         self.components.append(component)
         self.components.sort(key=lambda c: bool(c.slot_mask & Slot.SIDE))
         component.slot = self.slots[id]
+        component.attachment_point = self.slots[id].pos
 
     def attach_new(self, id, component_class):
         """Attach a new instance of component_class at id"""

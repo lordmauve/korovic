@@ -10,7 +10,7 @@ from lepton import domain
 
 from ..constants import SEA_LEVEL
 from ..vector import v
-from ..editor import AngleEditor
+from ..editor import AngleEditor, SlotEditor
 from ..controllers import PressController, OneTimeController
 
 from .base import Component, ActivateableComponent
@@ -215,6 +215,9 @@ class Propeller(OnAnimation, Engine):
 
     def controller(self):
         return PressController(self)
+
+    def editor(self):
+        return SlotEditor(self)
 
 
 class PulseJet(Engine):
