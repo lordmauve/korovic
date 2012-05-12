@@ -23,6 +23,7 @@ class World(EventDispatcher):
         self.space = pymunk.Space()
         self.space.gravity = (0.0, -900.0)
         self.space.damping = 0.9
+        self.space.iterations = 20
 
         self.images = {}
         self.sprites = []
@@ -48,16 +49,16 @@ class World(EventDispatcher):
     def create_sprite(self, img, x, y):
         s = self.load_sprite(img)
         self.sprites.append(
-            Sprite(s, x=x, y=y, batch=self.batch)
+            Sprite(s, x=x, y=y)
         )
 
     def load(self, level):
         self.space.remove_static(*self.space.static_shapes)
         self.squid.slots.detach_all()
         self.create_wall()
+        self.sprites = []
         self.goal = None
         self.width = None
-        self.batch = Batch()
         doc = parse(resource_stream(__name__, 'data/levels/%s.svg' % level))
 
         self.width = w = int(doc.getroot().get('width'))
@@ -106,7 +107,7 @@ class World(EventDispatcher):
 
     def remove_squid(self):
         try:
-            self.space.remove(self.squid.body, *self.squid.shapes)
+            self.space.remove(*self.squid.bodies_and_shapes())
         except KeyError:
             pass
 
@@ -116,7 +117,7 @@ class World(EventDispatcher):
         self.crashed = False
         self.won = False
         self.clear_particles()
-        self.space.add(self.squid.body, *self.squid.shapes)
+        self.space.add(self.squid.bodies_and_shapes())
 
     def create_wall(self, x=-500, width=500):
         body = self.space.static_body
@@ -167,7 +168,8 @@ class World(EventDispatcher):
             self.dispatch_event('on_crash', self.distance)
 
     def draw(self, viewport):
-        self.batch.draw()
+        for s in self.sprites:
+            s.draw()
         # Draw with depth testing
         gl.glDepthFunc(gl.GL_LEQUAL)
         if self.crashed:

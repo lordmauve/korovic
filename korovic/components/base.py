@@ -14,6 +14,7 @@ class Component(object):
     MASS = 50.0
     CAPACITY = 0
     slot_mask = 1
+    collision_group = 1
 
     selected = False
     angle = 0
@@ -98,6 +99,7 @@ class Component(object):
             c = pymunk.Circle(self.body, radius, centre)
             c.friction = 50000.0
             c.elasticity = 0.01
+            c.group = self.collision_group
             self.shapes.append(c)
 
     def draw_component(self):

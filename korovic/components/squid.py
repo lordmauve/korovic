@@ -1,8 +1,11 @@
 import math
+import pymunk
 import pyglet.sprite
+import pyglet.graphics
+from pyglet import gl
 from .base import Component
 
-from ..constants import SEA_LEVEL
+from ..constants import SEA_LEVEL, TARGET_FPS
 
 from .. import loader
 from ..vector import v
@@ -132,14 +135,27 @@ class Susie(Component):
         self.slots.add_slot(self.circles[3][0] - v(0, 15), Slot.BOTTOM)
         self.slots.add_slot(self.circles[3][0] - v(38, 4), Slot.NOSE)
 
+        self.spikes = []
         self.reset()
+
+    def bodies_and_shapes(self):
+        bs = [self.body] + self.shapes
+        for s in self.spikes:
+            bs.extend(s.bodies_and_shapes())
+        return bs
+    
+    def create_body(self):
+        super(Susie, self).create_body()
+        self.spikes = [ 
+            TentacleSpike(self, v(-90, 0)),
+        ]
 
     def reset(self):
         self.create_body()
         self.body.angular_velocity_limit = 1.5  # Ensure Susie can't spin too fast
         self.body.mass = self.total_weight()
         self.fuel = self.fuel_capacity()
-        self.body.position = (250, 80)
+        self.position = (250, 80)
         for a in self.slots.components:
             a.reset()
 
@@ -158,8 +174,10 @@ class Susie(Component):
         return self.fuel > 0
 
     def set_position(self, pos):
+        trans = pos - self.body.position
         self.body.position = pos
         self.sprite.position = pos
+        self.spikes[0].position += trans
 
     def get_position(self):
         return self.body.position
@@ -193,11 +211,15 @@ class Susie(Component):
 
     def update(self, dt):
         self.body.reset_forces()
+        for s in self.spikes:
+            s.update(dt)
         for a in self.slots.components:
             a.update(dt)
         self.body.angular_velocity *= self.ANGULAR_VELOCITY_DAMPING
 
     def draw_component(self, selected=None):
+        for s in self.spikes:
+            s.draw()
         self.sprite.set_position(*self.body.position)
         self.sprite.rotation = -180 / math.pi * self.body.angle
         self.sprite.draw()
@@ -224,3 +246,120 @@ class Susie(Component):
         else:
             for a in self.slots.components:
                 a.draw()
+
+
+class TentacleSpike(Component):
+    """For decoration only!"""
+    MASS = 0.1
+    DRAG = 0.02
+    def __init__(self, squid, attachment_point):
+        super(TentacleSpike, self).__init__(squid, attachment_point)
+        self.create_body()
+        self.body.position = squid.position + attachment_point - v(50, 0)
+        self.tether = Tether(
+            a=self.body.position + v(3, 0),
+            b=squid.position + attachment_point,
+            c1=self.body,
+            segments=5
+        )
+            
+    def update(self, dt):
+        vel = v(self.body.velocity)
+        speed = vel.length
+        if abs(speed) > 1:
+            drag = vel.safe_scaled_to(1) * min(speed, 100) * -self.DRAG
+            self.body.apply_force(drag)
+        self.tether.bodies[-1].position = self.squid.body.local_to_world(self.attachment_point)
+        self.tether.bodies[-1].velocity = self.squid.body.velocity
+
+    def bodies_and_shapes(self):
+        bs = [self.body] + self.shapes
+        return bs + self.tether.bodies_and_shapes()
+
+    def position(self):
+        return self.body.position
+
+    def set_position(self, pos):
+        self.body.position = pos
+        self.tether.reorient(pos, self.squid.position + self.attachment_point - v(50, 0))
+        self.body.angle = 0
+
+    position = property(position, set_position)
+    
+    @property
+    def rotation(self):
+        return self.body.angle
+
+    def draw(self):
+        self.tether.draw()
+        super(TentacleSpike, self).draw()
+
+
+class Tether(object):
+    def __init__(self, a, b, c1=None, c2=None, segments=10, density=0.01, colour=(0, 0, 0, 1), thickness=4):
+        """Tether between points a and b.
+
+        if c1 and c2 are given, these are bodies that will be jointed to each end of the tether.
+        """
+        self.density = density
+        self.colour = colour
+        self.thickness = thickness
+        self.shapes = []
+        self.bodies = []
+        self.joints = []
+        a = v(a)
+        b = v(b)
+        for i in xrange(segments + 1):
+            frac = float(i) / segments
+            pos = frac * b + (1 - frac) * a
+            body = self.create_node(pos)
+            if self.bodies:
+                last = self.bodies[-1]
+                self.joints.append(pymunk.PinJoint(last, body))
+            self.bodies.append(body)
+        if c1:
+            self.joints.append(
+                pymunk.PivotJoint(c1, self.bodies[0], self.bodies[0].position),
+            )
+        if c2:
+            self.joints.append(
+                pymunk.PivotJoint(c2, self.bodies[-1], self.bodies[-1].position),
+            )
+
+        for j in self.joints:
+            j.error_bias = 0.9 ** 30.0
+
+        self.vertices = pyglet.graphics.vertex_list(len(self.bodies), 'v2f')
+
+    def reorient(self, a, b):
+        """Move bodies into a line between a and b"""
+        for i, body in enumerate(self.bodies):
+            frac = float(i) / (len(self.bodies) - 1)
+            pos = frac * b + (1 - frac) * a
+            body.position = pos
+            body.velocity = v(0, 0)
+        self.build_vertex_list()
+
+    def bodies_and_shapes(self):
+        return self.bodies + self.shapes + self.joints
+
+    def build_vertex_list(self):
+        vs = []
+        for b in self.bodies:
+            vs.extend(list(b.position))
+        self.vertices.vertices = vs
+
+    def draw(self):
+        self.build_vertex_list()
+        gl.glColor4f(*self.colour)
+        gl.glLineWidth(self.thickness)
+        self.vertices.draw(gl.GL_LINE_STRIP) 
+        gl.glLineWidth(1)
+
+    def create_node(self, pos):
+        body = pymunk.Body(self.density, self.density)
+        s = pymunk.Circle(body, self.thickness * 0.5)
+        s.group = 1
+        self.shapes.append(s)
+        body.position = pos
+        return body
