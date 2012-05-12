@@ -16,7 +16,26 @@ from ..controllers import PressController, OneTimeController
 from .base import Component, ActivateableComponent
 from .squid import Slot
 
+from ..sound import load_sound
 from .. import loader
+
+
+class ActiveSound(object):
+    sound_channel = None
+    sound = None
+
+    def reset(self):
+        super(ActiveSound, self).reset()
+        self.on_stop()
+
+    def on_start(self):
+        if self.sound_channel is None:
+            self.sound_channel = self.sound.play(loops=-1, fade_ms=50)
+
+    def on_stop(self):
+        if self.sound_channel is not None:
+            self.sound_channel.fadeout(50)
+            self.sound_channel = None
 
 
 class OnAnimation(Component):
@@ -42,11 +61,26 @@ class Engine(ActivateableComponent):
     FORCE = v(100000, 0)
     FUEL_CONSUMPTION = 6
     OFFSET = v(0, 0)
+    started = False
+
+    def on_start(self):
+        pass
+
+    def on_stop(self):
+        pass
 
     def update(self, dt):
+        ran = False
         if self.active:
             if self.squid.draw_fuel(self.FUEL_CONSUMPTION * dt):
+                if not self.started:
+                    self.on_start()
+                    self.started = True
+                ran = True
                 self.apply_force_relative(self.FORCE, self.OFFSET)
+        if not ran and self.started:
+            self.on_stop()
+            self.started = False
 
     def is_enabled(self):
         return self.squid.has_fuel()
@@ -58,8 +92,9 @@ class Engine(ActivateableComponent):
         return AngleEditor(self)
 
 
-class JetEngine(OnAnimation, Engine):
+class JetEngine(ActiveSound, OnAnimation, Engine):
     """A jet engine."""
+    sound = load_sound('data/sounds/jet.wav')
 
 
 class Renderer(object):
@@ -81,7 +116,8 @@ class Renderer(object):
         batch.draw()
             
 
-class Rocket(Engine):
+class Rocket(ActiveSound, Engine):
+    sound = load_sound('data/sounds/rocket.wav')
     @classmethod
     def load(cls):
         super(Rocket, cls).load()
@@ -139,6 +175,7 @@ class Rocket(Engine):
         if not self.active:
             self.time_left = self.BURN_TIME
             self.active = True
+            self.on_start()
             
             # Stuff in any numbers for now, update later
             self.vel_domain = domain.Disc(
@@ -186,6 +223,8 @@ class Rocket(Engine):
             if self.time_left > 0:
                 self.update_emitter(dt)
                 super(Rocket, self).update(dt)
+            else:
+                self.on_stop()
 
     def draw_particles(self):
         self.particlegroup.draw()
@@ -195,7 +234,12 @@ class Rocket(Engine):
         super(Rocket, self).draw()
 
 
-class Propeller(OnAnimation, Engine):
+
+
+
+prop_sound = load_sound('data/sounds/prop.wav')
+
+class Propeller(ActiveSound, OnAnimation, Engine):
     MASS = 3
     slot_mask = Slot.TOP | Slot.BOTTOM | Slot.NOSE
     FORCE = v(45000, 0)
@@ -205,10 +249,11 @@ class Propeller(OnAnimation, Engine):
         Slot.NOSE: 0
     }
     FUEL_CONSUMPTION = 3
+    sound = prop_sound
 
     def set_angle(self):
         """Angle is not user modifiable"""
-
+    
     @property
     def angle(self):
         return self.angles[self.slot.flags]
@@ -220,22 +265,24 @@ class Propeller(OnAnimation, Engine):
         return SlotEditor(self)
 
 
-class PulseJet(Engine):
+class PulseJet(ActiveSound, Engine):
     MASS = 20
     slot_mask = Slot.TOP
     FORCE = v(40000, 0)
     FUEL_CONSUMPTION = 1
     OFFSET = v(0, 22)  # Offset of force from attachment point
+    sound = load_sound('data/sounds/pulsejet.wav')
 
     def editor(self):
         return AngleEditor(self, min_angle=-5, max_angle=30)
 
 
-class Rotor(OnAnimation, Engine):
+class Rotor(ActiveSound, OnAnimation, Engine):
     MASS = 30
     FORCE = v(0, 140000)
     OFFSET = v(0, 100)
     slot_mask = Slot.TOP
+    sound = load_sound('data/sounds/heli.wav')
 
     FUEL_CONSUMPTION = 5
 
