@@ -66,6 +66,11 @@ class Component(object):
 
     def bodies_and_shapes(self):
         bs = [self.body] + self.shapes
+        for c in self.components:
+            try:
+                bs.extend(c.bodies_and_shapes())
+            except Exception:
+                pass
         return bs
 
     def is_enabled(self):

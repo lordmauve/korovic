@@ -4,6 +4,7 @@ from .engines import *
 from .wings import *
 from .fuel import *
 from .obstacles import *
+from .balloons import *
 
 
 def load_all():
