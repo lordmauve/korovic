@@ -148,6 +148,9 @@ class Label(pyglet.text.Label):
 
 class SpeechBubble(object):
     tail = None
+
+    PADDING = 40, 20
+
     @classmethod
     def load(cls):
         cls.tail = loader.image('data/cutscene/bubble-tail.png')
@@ -157,16 +160,27 @@ class SpeechBubble(object):
             self.load()
         self.pos = pos
         self.text = text
+        self.build()
 
     def build(self):
-        self.label = Label(self.pos + v(-10, 84), self.text, font="Comic Sans MS")
-        w = self.label.width + 20
-        bl = self.pos + v(-29, 74)
-        tr = bl + v(w + 20, 40)
+        off = v(-29, 73)
+        pad_x, pad_y = self.PADDING
+        self.label = Label(
+            pos=self.pos + off + v(self.PADDING),
+            color=(0, 0, 0, 255),
+            text=self.text,
+            font_name="Comic Sans MS"
+        )
+        w = self.label.content_width
+        h = self.label.content_height * 0.6
+        bl = self.pos + off 
+        tr = bl + v(w + pad_x * 2, h + pad_y * 2)
         self.rect = Rect(bl, tr)
 
+        self.rectangle = Rectangle(self.rect, [(1.0, 1.0, 1.0, 1.0)])
+
         self.vertices = list(walk([self.rect.bl, self.rect.br, self.rect.tr, self.rect.tl, self.rect.bl]))
-        self.vertex_list = pyglet.graphics.vertex_list(4,
+        self.vertex_list = pyglet.graphics.vertex_list(5,
             ('v2f', self.vertices),
         )
         self.tail = pyglet.sprite.Sprite(self.tail, x=self.pos.x, y=self.pos.y)
@@ -174,7 +188,9 @@ class SpeechBubble(object):
     def draw(self):
         self.rectangle.draw()
         gl.glColor4f(0.5, 0.5, 0.5, 1)
-        self.vertext_list.draw(gl.GL_LINE_STRIP) 
+        gl.glLineWidth(2)
+        self.vertex_list.draw(gl.GL_LINE_STRIP) 
+        gl.glLineWidth(1)
         gl.glColor4f(1, 1, 1, 1)
         self.tail.draw()
         self.label.draw()

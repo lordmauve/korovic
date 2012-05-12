@@ -1,10 +1,12 @@
 import pyglet
+from pyglet import gl
 from pyglet.window import key
 from pyglet.event import EVENT_HANDLED
 import pyglet.clock
 
 from .world import World
 from .scene import Scene, Editor
+from .cutscene import intro
 
 
 from .constants import SCREEN_SIZE, TARGET_FPS, NAME
@@ -14,6 +16,7 @@ class Game(object):
     def start(self):
         w, h = SCREEN_SIZE
         self.window = pyglet.window.Window(width=w, height=h, caption=NAME)
+        gl.glEnable(gl.GL_LINE_SMOOTH)
         self.world = World()
         self.squid = self.world.squid
         self.game = self.scene = Scene(self.world)
@@ -27,7 +30,7 @@ class Game(object):
             on_key_press=self.on_key_press
         )
         self.window.push_handlers()
-        self.start_game()
+        self.start_intro()
 
         pyglet.app.run()
 
@@ -36,6 +39,9 @@ class Game(object):
         self.window.pop_handlers()
         self.scene = scene
         self.window.push_handlers(**scene.get_handlers())
+
+    def start_intro(self):
+        self.start_scene(intro(self, self.editor))
 
     def start_editor(self):
         self.squid.position = (285, 150)

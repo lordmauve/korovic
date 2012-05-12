@@ -4,12 +4,14 @@ from .primitives import SpeechBubble
 from .vector import v
 from . import loader
 
+PATH = 'data/'
 
 class Cutscene(object):
-    def __init__(self, path):
+    def __init__(self, game, next):
+        self.game = game
+        self.next = next
         self.t = 0
         self.steps = []
-        self.path = path
         self.images = {}
         self.sprites = {}
         self.bubbles = []
@@ -21,7 +23,7 @@ class Cutscene(object):
         try:
             return self.images[img]
         except KeyError:
-            i = loader.image(self.path + img + '.png')
+            i = loader.image(PATH + img + '.png')
             self.images[img] = i
             return i
 
@@ -44,36 +46,36 @@ class Cutscene(object):
         x, y = pos
         @self.step
         def _sprite():
+            if name in self.sprites:
+                self.sprites[name].delete()
             s = pyglet.sprite.Sprite(i, x=x, y=y)
             s.z = z
-            self.sprites['name'] = s
+            self.sprites[name] = s
 
-    def say(self, name, text, duration=5, delay=True):
+    def say(self, name, text, duration=3.5, delay=True):
         """Create a speech bubble above a sprite"""
         @self.step
         def _say():
             s = self.sprites[name]
-            x = s.pos + s.width * 0.5
-            y = s.pos + s.height + 25
-            b = SpeechBubble(v(x, y), text)
-            b.expire = self.t + duration
+            pos = v(s.position) + v(int(s.width * 0.5), int(s.height + 25))
+            b = SpeechBubble(pos, text)
+            b.expiry = self.t + duration
             self.bubbles.append(b)
             if delay:
                 self.delay += duration
-
 
     def remove_sprite(self, name):
         """Hide the sprite `name`"""
         @self.step
         def _remove_sprite():
-            self.sprites.pop(name.delete())
+            self.sprites.pop(name).delete()
 
     def replace_sprite(self, name, img):
         """Replace the image of sprite name"""
         i = self.load_image(img)
         @self.step
         def _replace_sprite():
-            self.sprites[name].img = i
+            self.sprites[name].image = i
 
     def animate_sprite(self, name, imgs, framerate=2):
         """Replace a sprite with animated frames."""
@@ -87,7 +89,7 @@ class Cutscene(object):
             start = v(s.position)
             end = v(pos)
             while t < duration:
-                t += yield
+                t += (yield)
                 frac = min(1.0, float(t) / duration)
                 s.position = (1 - frac) * start + frac * end
             s.position = pos
@@ -116,12 +118,13 @@ class Cutscene(object):
                 interpolators.append(s)
         self.interpolators = []
 
-    def do_bubbles(self):
-        self.bubbles = [b for b in self.bubbles if b.expiry < self.t]
+    def expire_bubbles(self):
+        self.bubbles = [b for b in self.bubbles if b.expiry > self.t]
 
     def update(self, dt):
         self.t += dt
         self.do_interpolators(dt)
+        self.expire_bubbles()
         if self.do_delay(dt):
             return
         self.run_steps()
@@ -131,6 +134,8 @@ class Cutscene(object):
             step = self.steps[self.current]
             self.current += 1
             step()
+        if self.is_finished():
+            self.game.set_scene(self.next)
 
     def draw(self):
         sprites = self.sprites.values()
@@ -141,7 +146,7 @@ class Cutscene(object):
             s.draw()
 
     def is_finished(self):
-        return self.current < len(self.steps)
+        return self.current >= len(self.steps) and self.delay == 0
 
     def rewind(self):
         self.current = 0
@@ -151,14 +156,46 @@ class Cutscene(object):
             s.delete()
         del(self.sprites)
 
+    def get_handlers(self):
+        return {
+            'on_draw': self.draw
+        }
 
-def intro():
-    c = Cutscene('data/')
-    c.set_background('cutscene/aerial')
+
+def intro(game, next):
+    c = Cutscene(game, next)
+    c.background('cutscene/aerial')
     c.pause(3)
-    c.set_background('cutscene/beach')
-    c.sprite('korovic', (52, 35), 'cutscene/korovic-elated')
-    c.sprite('susie', (55, 10), 'cutscene/susie-standing')
+    c.background('cutscene/beach')
+    c.sprite('korovic', (52, 35), 'cutscene/korovic-standing')
+    c.sprite('susie', (55, 6), 'cutscene/susie-standing')
     c.pause(2)
-    c.say('korovic', 'At last!', duration=2)
-    c.say('korovic', 'My atomic super squid is complete!', duration=2)
+    c.replace_sprite('korovic', 'cutscene/korovic-elated')
+    c.say('korovic', 'At last!')
+    c.say('korovic', 'You are komplete, mein atomic super squid!')
+    c.replace_sprite('korovic', 'cutscene/korovic-standing')
+    c.say('korovic', 'I vill call you Susie.')
+    c.pause(1.5)
+    c.say('korovic', 'Who ist a cute little atomic squid?')
+    c.sprite('susie-speak', (233, 95), 'cutscene/blup')
+    c.pause(2)
+    c.remove_sprite('susie-speak')
+    c.replace_sprite('korovic', 'cutscene/korovic-elated')
+    c.say('korovic', 'Yes, you are!')
+    c.say('korovic', 'You are my greatest achievement.')
+    c.say('korovic', 'Now we vill be able to take over ze world!', delay=False)
+    c.pause(0.5)
+    c.sprite('susie-speak', (233, 95), 'cutscene/squee')
+    c.pause(2)
+    c.remove_sprite('susie-speak')
+    c.pause(2)
+    c.replace_sprite('korovic', 'cutscene/korovic-pointing')
+    c.say('korovic', 'Now svim, my fantastisch cephalapod!', delay=False)
+    c.pause(1)
+    c.move_sprite('susie', (118, 6), duration=5)
+    c.pause(1)
+    c.replace_sprite('korovic', 'cutscene/korovic-elated')
+    c.say('korovic', 'Lay vaste to ze cities and level ze towns!')
+    c.replace_sprite('korovic', 'cutscene/korovic-standing')
+    c.pause(2)
+    return c
