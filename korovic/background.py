@@ -68,7 +68,7 @@ class GradientPainter(object):
         h = viewport.height 
         w = viewport.width
         c1 = self.gradient.colour(alt)
-        c2 = self.gradient.colour(alt + h)
+        c2 = self.gradient.colour(alt + 10000)
 
         o = v(0, 0)
         x = v(w, 0)

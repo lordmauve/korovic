@@ -16,7 +16,7 @@ Button = namedtuple('Button', 'rect callback tooltip')
 
 SHOP = [
     Item('Jet Engine', 750, components.JetEngine, 'Lots of thrust, but heavy!'),
-    Item('Rocket', 350, components.Rocket, 'Vhen rockets are up, who cares vhere zey come down!'),
+    Item('Rocket', 350, components.Rocket, 'Once rockets are up, who cares vhere zey come down?'),
     Item('Wing', 200, components.Wing, 'An aerofoil gives lift as it moves through ze air!'),
     Item('Biplane', 150, components.BiplaneWing, 'Ah! Ze old days!'),
     Item('Aerolon', 150, components.Aerolon, 'Control and stability, Susie!'),
