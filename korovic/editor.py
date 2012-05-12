@@ -41,7 +41,7 @@ class SlotEditor(object):
 
     def on_mouse_press(self, x, y, button, modifiers):
         p = v(x, y)
-        self.dragging = (p - self.component.position).length <= self.component.radius()
+        self.dragging = (p - self.component.position).length <= 70
         if self.dragging:
             self.start_pos = self.component.position
             return EVENT_HANDLED

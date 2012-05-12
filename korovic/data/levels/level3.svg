@@ -10,14 +10,14 @@
    xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="3000"
+   width="25000"
    height="600"
    id="svg5292"
    version="1.1"
    inkscape:version="0.48.2 r9819"
-   sodipodi:docname="freeflight.svg">
+   sodipodi:docname="level3.svg">
   <title
-     id="title9467">How far can you fly?</title>
+     id="title9516">You must now findink the city, ja?</title>
   <defs
      id="defs5294" />
   <sodipodi:namedview
@@ -27,16 +27,16 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.125"
-     inkscape:cx="2295.5499"
-     inkscape:cy="1916.7149"
+     inkscape:zoom="0.044194174"
+     inkscape:cx="12760.627"
+     inkscape:cy="4618.7654"
      inkscape:document-units="px"
      inkscape:current-layer="svg5292"
      showgrid="false"
-     inkscape:window-width="1680"
-     inkscape:window-height="1022"
-     inkscape:window-x="1280"
-     inkscape:window-y="0"
+     inkscape:window-width="1280"
+     inkscape:window-height="746"
+     inkscape:window-x="0"
+     inkscape:window-y="536"
      inkscape:window-maximized="1" />
   <metadata
      id="metadata5297">
@@ -46,17 +46,17 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title>How far can you fly?</dc:title>
+        <dc:title>You must now findink the city, ja?</dc:title>
         <dc:description />
         <cc:license
            rdf:resource="" />
-        <dc:date></dc:date>
+        <dc:date />
         <dc:rights>
           <cc:Agent>
-            <dc:title></dc:title>
+            <dc:title />
           </cc:Agent>
         </dc:rights>
-        <dc:identifier>3000</dc:identifier>
+        <dc:identifier>800</dc:identifier>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -67,4 +67,11 @@
      xlink:href="file:///home/mauve/dev/flying/korovic/data/sprites/island-lair.png"
      height="233"
      width="676" />
+  <image
+     y="196"
+     x="22855.398"
+     id="image5475"
+     xlink:href="file:///home/mauve/dev/flying/korovic/data/sprites/city.png"
+     height="404"
+     width="792" />
 </svg>

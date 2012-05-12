@@ -13,10 +13,10 @@ from .constants import SCREEN_SIZE, TARGET_FPS, NAME
 
 
 class Game(object):
-    def start(self):
+    def start(self, level=1):
         w, h = SCREEN_SIZE
         self.window = pyglet.window.Window(width=w, height=h, caption=NAME)
-        self.game = self.scene = Scene(self)
+        self.game = self.scene = Scene(self, level=level)
         self.squid = self.game.world.squid
         self.editor = Editor(self.window, self.game.world)
         gl.glEnable(gl.GL_DEPTH_TEST)
@@ -34,8 +34,10 @@ class Game(object):
             on_key_press=self.on_key_press
         )
         self.window.push_handlers()
-        self.start_intro()
-#        self.next_level()
+        if level == 1:
+            self.start_intro()
+        else:
+            self.next_level()
 
         pyglet.app.run()
 

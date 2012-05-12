@@ -10,14 +10,14 @@
    xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="3000"
+   width="30000"
    height="600"
    id="svg5292"
    version="1.1"
    inkscape:version="0.48.2 r9819"
-   sodipodi:docname="freeflight.svg">
+   sodipodi:docname="level4.svg">
   <title
-     id="title9467">How far can you fly?</title>
+     id="title9465">Zey have upgraded their defenses!</title>
   <defs
      id="defs5294" />
   <sodipodi:namedview
@@ -27,9 +27,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.125"
-     inkscape:cx="2295.5499"
-     inkscape:cy="1916.7149"
+     inkscape:zoom="0.5"
+     inkscape:cx="1578.8835"
+     inkscape:cy="81.389384"
      inkscape:document-units="px"
      inkscape:current-layer="svg5292"
      showgrid="false"
@@ -46,17 +46,17 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title>How far can you fly?</dc:title>
+        <dc:title>Zey have upgraded their defenses!</dc:title>
         <dc:description />
         <cc:license
            rdf:resource="" />
-        <dc:date></dc:date>
+        <dc:date />
         <dc:rights>
           <cc:Agent>
-            <dc:title></dc:title>
+            <dc:title />
           </cc:Agent>
         </dc:rights>
-        <dc:identifier>3000</dc:identifier>
+        <dc:identifier>1500</dc:identifier>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -67,4 +67,32 @@
      xlink:href="file:///home/mauve/dev/flying/korovic/data/sprites/island-lair.png"
      height="233"
      width="676" />
+  <image
+     y="196"
+     x="28919.547"
+     id="image5475"
+     xlink:href="file:///home/mauve/dev/flying/korovic/data/sprites/city.png"
+     height="404"
+     width="792" />
+  <image
+     y="-20.048798"
+     x="28298.926"
+     id="image9441"
+     xlink:href="file:///home/mauve/dev/flying/korovic/data/sprites/barrageballoon.png"
+     height="288"
+     width="313" />
+  <image
+     width="313"
+     height="288"
+     xlink:href="file:///home/mauve/dev/flying/korovic/data/sprites/barrageballoon.png"
+     id="image9444"
+     x="28733.926"
+     y="-326.0488" />
+  <image
+     y="158.63751"
+     x="653.34186"
+     id="image9441-0"
+     xlink:href="file:///home/mauve/dev/flying/korovic/data/sprites/barrageballoon.png"
+     height="288"
+     width="313" />
 </svg>

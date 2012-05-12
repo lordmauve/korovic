@@ -21,11 +21,11 @@ from .primitives import SpeechBubble
 
 
 class Scene(object):
-    def __init__(self, game):
+    def __init__(self, game, level=1):
         self.game = game
         Clouds.load()
         Stars.load()
-        self.level = 1
+        self.level = level
         self.world = World('level%d' % self.level)
         self.camera = Camera()
         self.background = GradientPainter(sky)

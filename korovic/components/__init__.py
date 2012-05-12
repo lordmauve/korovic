@@ -3,6 +3,7 @@ from .squid import *
 from .engines import *
 from .wings import *
 from .fuel import *
+from .obstacles import *
 
 
 def load_all():

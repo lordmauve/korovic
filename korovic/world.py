@@ -27,6 +27,7 @@ class World(EventDispatcher):
 
         self.images = {}
         self.sprites = []
+        self.actors = []
         self.batch = Batch()
 
         self.load_sprite('sprites/susie-destroy')
@@ -52,6 +53,11 @@ class World(EventDispatcher):
             Sprite(s, x=x, y=y)
         )
 
+    def destroy_actors(self):
+        for a in self.actors:
+            self.space.remove(*a.bodies_and_shapes())
+        self.actors = []
+    
     def load(self, level):
         self.space.remove_static(*self.space.static_shapes)
         self.squid.slots.detach_all()
@@ -82,15 +88,26 @@ class World(EventDispatcher):
             iw = int(float(im.get('width')))
             y = h - int(float(im.get('y')) + ih)
 
-            if type in ['island-lair', 'city']:
+            if type == 'island-lair':
                 self.create_island(x, x + iw)
                 self.create_sprite(path, x, y)
-            if type == 'city':
+            elif type == 'city':
+                self.create_island(x, x + iw)
+                self.create_sprite(path, x, y)
                 self.create_goal(x, x + iw)
                 # Only if the city straddles the edge of the page
                 # Do we create a wall there
                 if x + iw < w:
                     self.width = None
+            elif type == 'barrageballoon':
+                balloon = components.BarrageBalloon()
+                self.actors.append(balloon)
+                b = pymunk.Body()
+                b.position = v(x, 0)
+                balloon.tether_to(b, y)
+                self.space.add(*balloon.bodies_and_shapes())
+            else:
+                print "Unknown object", path
 
         if self.goal:
             if self.width:
@@ -144,6 +161,8 @@ class World(EventDispatcher):
 
     def update(self, dt):
         self.particles.update(dt)
+        for a in self.actors:
+            a.update(dt)
         if not self.crashed and not self.won:
             self.check_crash()
             self.squid.update(dt)
@@ -170,6 +189,8 @@ class World(EventDispatcher):
     def draw(self, viewport):
         for s in self.sprites:
             s.draw()
+        for a in self.actors:
+            a.draw()
         # Draw with depth testing
         gl.glDepthFunc(gl.GL_LEQUAL)
         if self.crashed:

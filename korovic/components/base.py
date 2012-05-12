@@ -20,6 +20,9 @@ class Component(object):
     angle = 0
     abstract = True
 
+    yfix = 1    # This is a bodge to fix insertion points
+                # Haven't figured out the cause of the bug, just the solution :-/
+
     @classmethod
     def load(cls):
         cls.data = json.load(loader.file('data/components/%s.json' % cls.__name__.lower()))
@@ -47,11 +50,12 @@ class Component(object):
             cog += c * (area / total_area) 
             moi += pymunk.moment_for_circle(density * area, 0, r, c - cog)
 
+        cls.cog = cog
         offset -= cog
         cls.circles = [(c - cog, r) for c, r in circles]
 
         cls.image.anchor_x = -int(offset.x + 0.5)
-        cls.image.anchor_y = int(cls.image.height + offset.y + 0.5)
+        cls.image.anchor_y = cls.yfix * int(cls.image.height + offset.y + 0.5)
         cls.insertion_point = -cog
         cls.moi = moi  # moment of inertia
 
@@ -59,6 +63,10 @@ class Component(object):
         self.squid = squid
         self.attachment_point = attachment_point
         self.sprite = pyglet.sprite.Sprite(self.image, 0, 0)
+
+    def bodies_and_shapes(self):
+        bs = [self.body] + self.shapes
+        return bs
 
     def is_enabled(self):
         return True
