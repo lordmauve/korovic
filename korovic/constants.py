@@ -1,4 +1,4 @@
-NAME = 'Doctor Korovic and The Squid'
+NAME = "Doctor Korovic's Flying Atomic Squid"
 SCREEN_SIZE = 800, 600
 TARGET_FPS = 30.0
 
