@@ -55,12 +55,12 @@ class Cutscene(object):
             s.z = z
             self.sprites[name] = s
 
-    def bubble(self, pos, text, duration=3.5, delay=False):
+    def bubble(self, pos, text, duration=3.5, delay=False, align='left'):
         """Create a speech bubble above a sprite"""
         @self.step
         def _bubble():
             p = v(pos)
-            b = SpeechBubble(p, text, tail=False)
+            b = SpeechBubble(p, text, tail=False, align=align)
             b.expiry = self.t + duration
             self.bubbles.append(b)
             if delay:
@@ -184,7 +184,8 @@ class Cutscene(object):
         return (
             self.current >= len(self.steps) and
             self.delay == 0 and
-            not self.interpolators
+            not self.interpolators and
+            not self.bubbles
         )
 
     def start(self):
@@ -267,4 +268,13 @@ def intro(game, next):
     c.say('korovic', 'You may vell be allergic to SALT WATER.')
     c.pause(2)
     c.say('korovic', 'No matter. Ve vill find another vay!')
+    return c
+
+
+def level_start(number, title, game, next):
+    c = Cutscene(game, next)
+    c.background('cutscene/aerial')
+    c.bubble((400, 471), 'Level %d' % number, duration=5, align='center')
+    c.bubble((400, 62), '"%s"' % title, duration=5, align='center')
+    c.pause(5)
     return c

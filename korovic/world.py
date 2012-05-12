@@ -18,7 +18,7 @@ from .constants import TARGET_FPS, SEA_LEVEL
 
 
 class World(EventDispatcher):
-    def __init__(self):
+    def __init__(self, initial_level):
         super(World, self).__init__()
         self.space = pymunk.Space()
         self.space.gravity = (0.0, -900.0)
@@ -34,7 +34,7 @@ class World(EventDispatcher):
         self.width = None
         self.goal = None
 
-        self.load('level1')
+        self.load(initial_level)
         self.create_wall()
         self.particles = ParticleSystem()
         self.crashed = False

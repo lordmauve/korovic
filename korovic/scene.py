@@ -25,7 +25,8 @@ class Scene(object):
         self.game = game
         Clouds.load()
         Stars.load()
-        self.world = World()
+        self.level = 1
+        self.world = World('level%d' % self.level)
         self.camera = Camera()
         self.background = GradientPainter(sky)
         self.clouds = Clouds()

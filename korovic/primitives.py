@@ -163,13 +163,14 @@ class SpeechBubble(object):
     def load(cls):
         cls.tail = loader.image('data/cutscene/bubble-tail.png')
 
-    def __init__(self, pos, text, width=None, tail=True):
+    def __init__(self, pos, text, width=None, tail=True, align='left'):
         if self.tail is None and tail:
             self.load()
         self.pos = v(pos)
         self.text = text
         self.width = width
         self.with_tail = tail
+        self.align = align
         self.build()
 
     def build(self):
@@ -193,6 +194,15 @@ class SpeechBubble(object):
         bl = self.pos + off 
         tr = bl + v(w + pad_x * 2, h + pad_y * 2)
         self.rect = Rect(bl, tr)
+
+        if self.align == 'center':
+            self.label.x -= int(w * 0.5 + pad_x)
+            t = int(self.rect.width * 0.5)
+            self.rect = self.rect.translate(v(-t, 0))
+        elif self.align == 'right':
+            self.label.x -= int(w + 2 * pad_x)
+            t = self.rect.width
+            self.rect = self.rect.translate(v(-t, 0))
 
         self.rectangle = Rectangle(self.rect, [(1.0, 1.0, 1.0, 1.0)])
 

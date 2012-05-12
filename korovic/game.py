@@ -6,7 +6,7 @@ import pyglet.clock
 
 from .world import World
 from .scene import Scene, Editor
-from .cutscene import intro
+from .cutscene import intro, level_start
 
 
 from .constants import SCREEN_SIZE, TARGET_FPS, NAME
@@ -35,6 +35,7 @@ class Game(object):
         )
         self.window.push_handlers()
         self.start_intro()
+#        self.next_level()
 
         pyglet.app.run()
 
@@ -45,8 +46,14 @@ class Game(object):
         self.window.push_handlers(**scene.get_handlers())
         self.scene.start()
 
+    def next_level(self):
+        start = level_start(self.game.level, self.game.world.title, self, self.editor)
+        self.start_scene(start)
+
     def start_intro(self):
-        self.start_scene(intro(self, self.editor))
+        start = level_start(self.game.level, self.game.world.title, self, self.editor)
+        introduction = intro(self, start)
+        self.start_scene(introduction)
 
     def start_editor(self):
         self.start_scene(self.editor)
