@@ -69,17 +69,19 @@ class World(EventDispatcher):
             template=Particle(
                 color=(1.0, 1.0, 1.0, 1.0),
             ),
+            rate=100,
+            time_to_live=0.3
         )
         self.splash_group = ParticleGroup(
             controllers=[
                 controller.Movement(),
                 controller.Gravity((0, -900, 0)),
-                controller.Lifetime(max_age=2)
+                controller.Lifetime(max_age=2),
+                e
             ],
             renderer=Renderer(img),
             system=self.particles
         )
-        e.emit(30, self.splash_group)
 
     def load_sprite(self, img):
         if img not in self.images:
@@ -220,11 +222,13 @@ class World(EventDispatcher):
     def check_crash(self):
         p = self.squid.position
         if p.y < 0:
+            if self.crashed:
+                return
             self.distance = p.x * 0.1
             self.crashed = True
             self.remove_squid()
             self.splash.play()
-            vx, vy = self.squid.body.velocity * 0.5
+            vx, vy = self.squid.body.velocity * 0.7
             vy = max(20, vy * -1)
             self.particle_splash(p, v(vx, vy))
             self.dispatch_event('on_crash', self.distance)
