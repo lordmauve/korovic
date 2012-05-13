@@ -8,3 +8,49 @@ Alas, Susie, the squid, is allergic to sea water.
 
 Doctor Korovic has conceived a most fiendish plan - Susie must take to the
 skies!
+
+Running
+-------
+
+To run the game, run ``run_game.py``, or if you have installed it (see below),
+then just run ``korovic``.
+
+You can start the game at any level by using the ``--level`` switch, eg. ::
+
+    $ korovic --level 2
+
+Installing
+----------
+
+Doctor Korovic's Flying Atomic Squid is packaged with distribute. It can be
+installed with setup.py::
+
+    $ python setup.py install
+
+Or from PyPI:
+
+    $ pip install korovic
+
+Both of these approaches work with virtualenvs, and will install all the
+dependencies.
+
+Editing
+-------
+
+In the editor, click and drag on the menu to scroll it.
+
+You can also click on many components to adjust their angles, and drag them
+between slots. Most components are limited in the slots they can be put into.
+
+When you are ready to fly, click "Fly".
+
+Controls
+--------
+
+Control is on the number keys. Icons in the bottom right will display the key
+for each component you have attached to Susie.
+
+To return to the editor, press Escape.
+
+To skip through a cutscene, press space. To skip a cutscene completely, press
+Escape.
