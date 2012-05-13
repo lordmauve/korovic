@@ -211,6 +211,7 @@ class World(EventDispatcher):
             g = self.goal
             if g and self.squid.position in g:
                 self.won = True
+                self.squid.stop_all()
                 self.create_sprite('sprites/susie-destroy', g.left + 200, g.bottom + 22)
                 self.dispatch_event('on_goal')
 
