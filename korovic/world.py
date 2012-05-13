@@ -178,13 +178,13 @@ class World(EventDispatcher):
         self.space.add(self.squid.bodies_and_shapes())
 
     def create_wall(self, x=-500, width=500):
-        body = self.space.static_body
+        body = pymunk.Body()
         seg = pymunk.Segment(body, (x, 0), (x, 100000), width)
         seg.friction = 0
         self.space.add_static(seg)
 
     def create_island(self, x1, x2, y=20):
-        body = self.space.static_body
+        body = pymunk.Body()
         margin = 50  #  A little leeway to stop susie clipping badly into the sea
         p1 = (x1 - 200 - margin, y - 100)
         p2 = (x1 - margin, y)
@@ -227,6 +227,7 @@ class World(EventDispatcher):
             self.distance = p.x * 0.1
             self.crashed = True
             self.remove_squid()
+            self.squid.stop_all()
             self.splash.play()
             vx, vy = self.squid.body.velocity * 0.7
             vy = max(20, vy * -1)

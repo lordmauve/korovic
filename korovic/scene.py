@@ -113,6 +113,7 @@ class Scene(object):
 
     def start(self):
         self.world.reset()
+        self.world.squid.stop_all()
         self.update_controllers()
 
     def stop(self):

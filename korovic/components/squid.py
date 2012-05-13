@@ -170,6 +170,13 @@ class Susie(Component):
         else:
             return False
 
+    def stop_all(self):
+        for c in self.slots.components:
+            try:
+                c.on_stop()
+            except AttributeError:
+                pass
+
     def has_fuel(self):
         return self.fuel > 0
 

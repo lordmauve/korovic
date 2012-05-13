@@ -22,8 +22,11 @@ You can start the game at any level by using the ``--level`` switch, eg. ::
 Installing
 ----------
 
-Doctor Korovic's Flying Atomic Squid is packaged with distribute. It can be
-installed with setup.py::
+Doctor Korovic's Flying Atomic Squid is packaged with distribute. You will need
+either distribute or setuptools to be able to install this (distribute is
+preferred).
+
+It can be installed with setup.py::
 
     $ python setup.py install
 
@@ -31,8 +34,22 @@ Or from PyPI:
 
     $ pip install korovic
 
-Both of these approaches work with virtualenvs, and will install all the
-dependencies.
+Both of these approaches work with virtualenvs, and will install dependencies.
+Note that this depends on the dependencies being available to pip/easy_install.
+In particular pygame seems not to be currently pip installable on Linux as it
+selects a Mac build by default. The other packages are automatically
+installable.
+
+Dependencies needed
+-------------------
+
+If you choose not to use pip, you will need to install the following
+dependencies:
+
+* pyglet>=1.1.4
+* pymunk==2.1.0
+* pygame>=1.9.1release
+* lepton==1.0b2
 
 Editing
 -------
