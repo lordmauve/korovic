@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='korovic',
-    version='1.0.1',
+    version='1.0.2',
     packages=find_packages(),
     description="Dr. Korovic's Flying Atomic Squid",
     long_description=open('README').read(),
