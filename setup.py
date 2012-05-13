@@ -13,7 +13,8 @@ setup(
         'pyglet>=1.1.4',
         'pymunk==2.1.0',
         'pygame>=1.9.1release',
-        'lepton==1.0b2'
+        'lepton==1.0b2',
+        'distribute>=0.6'
     ],
     package_data={
         'korovic': ['data/*/*'],
@@ -21,6 +22,9 @@ setup(
     entry_points={
         'console_scripts': [
             'korovic = korovic.__main__:main',
-            ]   
-        }
-    )
+        ]   
+    },
+    dependency_links=[
+        'http://pygame.org/ftp/'
+    ]
+)

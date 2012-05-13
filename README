@@ -50,6 +50,7 @@ dependencies:
 * pymunk==2.1.0
 * pygame>=1.9.1release
 * lepton==1.0b2
+* setuptools or distribute (for pkg_resources)
 
 Editing
 -------
