@@ -16,7 +16,7 @@ setup(
         'lepton==1.0b2'
     ],
     package_data={
-        'gamename': ['data/*'],
+        'korovic': ['data/*/*'],
     },
     entry_points={
         'console_scripts': [
