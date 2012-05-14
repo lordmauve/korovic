@@ -143,7 +143,7 @@ class World(EventDispatcher):
             elif type == 'barrageballoon':
                 balloon = components.BarrageBalloon()
                 self.actors.append(balloon)
-                b = pymunk.Body()
+                b = pymunk.Body(pymunk.inf, pymunk.inf)
                 b.position = v(x, 0)
                 balloon.tether_to(b, y)
                 self.space.add(*balloon.bodies_and_shapes())
@@ -178,13 +178,13 @@ class World(EventDispatcher):
         self.space.add(self.squid.bodies_and_shapes())
 
     def create_wall(self, x=-500, width=500):
-        body = pymunk.Body()
+        body = pymunk.Body(pymunk.inf, pymunk.inf)
         seg = pymunk.Segment(body, (x, 0), (x, 100000), width)
         seg.friction = 0
         self.space.add_static(seg)
 
     def create_island(self, x1, x2, y=20):
-        body = pymunk.Body()
+        body = pymunk.Body(pymunk.inf, pymunk.inf)
         margin = 50  #  A little leeway to stop susie clipping badly into the sea
         p1 = (x1 - 200 - margin, y - 100)
         p2 = (x1 - margin, y)
