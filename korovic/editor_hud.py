@@ -189,12 +189,12 @@ class EditorHud(object):
             self.fuellabel.document.text = 'Fuel Capacity: -'
         tr = v(SCREEN_SIZE)
         pos = tr - self.tile_size - v(10, 10)
-        gl.glPushMatrix(gl.GL_MODELVIEW)
+        gl.glPushMatrix()
         gl.glTranslatef(pos.x, pos.y + self.scroll, 0)
         for item in self.items:
             item.draw()
             gl.glTranslatef(0, -self.tile_size.y - 10, 0)
-        gl.glPopMatrix(gl.GL_MODELVIEW)
+        gl.glPopMatrix()
         self.moneylabel.draw()
         self.weightlabel.draw()
         self.fuellabel.draw()

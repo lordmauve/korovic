@@ -99,11 +99,11 @@ class Camera(object):
 
     @contextmanager
     def modelview(self):
-        gl.glPushMatrix(gl.GL_MODELVIEW)
+        gl.glPushMatrix()
         try:
             gl.glMatrixMode(gl.GL_MODELVIEW)
             x, y = self.pos - self.ss
             gl.glTranslatef(-x, -y, 0)
             yield
         finally:
-            gl.glPopMatrix(gl.GL_MODELVIEW)
+            gl.glPopMatrix()

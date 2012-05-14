@@ -57,9 +57,9 @@ class GameHud(object):
         self.fuellabel.draw()
 
         if self.controllers:
-            gl.glPushMatrix(gl.GL_MODELVIEW)
+            gl.glPushMatrix()
             gl.glTranslatef(SCREEN_SIZE[0] - 74, 10, 0)
             for controller in reversed(self.controllers):
                 controller.draw()
                 gl.glTranslatef(-74, 0, 0)
-            gl.glPopMatrix(gl.GL_MODELVIEW)
+            gl.glPopMatrix()

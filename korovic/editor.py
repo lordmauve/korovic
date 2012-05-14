@@ -23,12 +23,12 @@ class SlotEditor(object):
             opacity = 127 if not self.proposed_slot else 255
             position = self.display_offset if not self.proposed_slot else self.proposed_slot[1]
             sopacity = self.component.sprite.opacity
-            gl.glPushMatrix(gl.GL_MODELVIEW)
+            gl.glPushMatrix()
             gl.glTranslatef(position.x, position.y, 0)
             self.component.sprite.opacity = opacity
             self.component.draw()
             self.component.sprite.opacity = sopacity
-            gl.glPopMatrix(gl.GL_MODELVIEW)
+            gl.glPopMatrix()
         else:
             self.component.draw()
         self.component.sprite.color = WHITE
