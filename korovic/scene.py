@@ -175,6 +175,7 @@ class Editor(object):
         self.squid.position = (255, 150)
         self.squid.rotation = 0
         self.squid.body.velocity = (0, 0)
+        self.hud = EditorHud(self.squid, max_money=self.world.money)
 
     def stop(self):
         self.clear_editor()
