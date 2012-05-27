@@ -128,12 +128,12 @@ class Susie(Component):
         self.slots = Slots(self)
         self.slots.add_slot(self.circles[2][0], Slot.SIDE)
         self.slots.add_slot(self.circles[3][0], Slot.SIDE)
-        self.slots.add_slot(self.circles[2][0] + v(0, 20), Slot.TOP)
+        self.slots.add_slot(self.circles[2][0] + v(0, 22), Slot.TOP)
         self.slots.add_slot(self.circles[2][0] - v(0, 20), Slot.BOTTOM)
-        self.slots.add_slot(self.circles[2][0] + v(85, 0), Slot.NOSE)
+        self.slots.add_slot(self.circles[2][0] + v(82, 3), Slot.NOSE)
         self.slots.add_slot(self.circles[3][0] + v(0, 15), Slot.TOP)
-        self.slots.add_slot(self.circles[3][0] - v(0, 15), Slot.BOTTOM)
-        self.slots.add_slot(self.circles[3][0] - v(38, 4), Slot.NOSE)
+        self.slots.add_slot(self.circles[3][0] - v(0, 16), Slot.BOTTOM)
+        self.slots.add_slot(self.circles[3][0] - v(34, 1), Slot.TAIL)
 
         self.spikes = []
         self.reset()
@@ -204,6 +204,9 @@ class Susie(Component):
 
     def fuel_capacity(self):
         return sum([c.CAPACITY for c in self.slots.components], self.CAPACITY)
+
+    def need_fuel(self):
+        return any([getattr(c, 'FUEL_CONSUMPTION', 0) for c in self.slots.components])
 
     def attach(self, component_class, pos=None):
         if pos is None:

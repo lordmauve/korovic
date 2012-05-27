@@ -51,6 +51,13 @@ class GameHud(object):
             self.altlabel.document.text = 'Altitude: %dm' % alt
 
         self.fuellabel.document.text = 'Fuel: %0.1fkg' % self.world.squid.fuel
+        if self.world.squid.fuel:
+            self.fuellabel.color = (255, 255, 255, 255)
+        else:
+            if self.world.squid.need_fuel():
+                self.fuellabel.color = (255, 0, 0, 255)
+            else:
+                self.fuellabel.document.text = 'Fuel: N/A'
         self.infobox.draw()
         self.altlabel.draw()
         self.distlabel.draw()

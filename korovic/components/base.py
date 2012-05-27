@@ -28,13 +28,18 @@ class Component(object):
         cls.data = json.load(loader.file('data/components/%s.json' % cls.__name__.lower()))
         cls.image = loader.image('data/' + cls.data['name'])
         ax, ay = cls.data['offset']
+
         # FIXME: this loading is really cludgey
         offset = v(ax, ay)
+
+        # Compute circles relative to top left (y-down)
         circles = []
-        circles.append((v(0, 0), cls.data['radius']))
+        circles.append((-offset, cls.data['radius']))
         for point in cls.data.get('points', []):
-            centre = v(point['offset']) + offset
-            circles.append((v(centre.x, -centre.y), point['radius']))
+            centre = v(point['offset'])
+            circles.append((v(centre.x, centre.y), point['radius']))
+
+        # Compute centre of gravity relative to top left (y-down)
         total_area = 0
         cs2 = []
         for c, r in circles:
@@ -45,19 +50,29 @@ class Component(object):
         density = cls.MASS / total_area
 
         cog = v(0, 0)
-        moi = 0
         for c, r, area in cs2:
             cog += c * (area / total_area) 
+
+        # Compute moment of inertia
+        moi = 0
+        for c, r, area in cs2:
             moi += pymunk.moment_for_circle(density * area, 0, r, c - cog)
-
-        cls.cog = cog
-        offset -= cog
-        cls.circles = [(c - cog, r) for c, r in circles]
-
-        cls.image.anchor_x = -int(offset.x + 0.5)
-        cls.image.anchor_y = cls.yfix * int(cls.image.height + offset.y + 0.5)
-        cls.insertion_point = -cog
         cls.moi = moi  # moment of inertia
+
+        # Now make all shapes relative to new COG (y up)
+        cls.circles = []
+        for c, r in circles:
+            c -= cog
+            pos = v(c.x, -c.y)
+            cls.circles.append((pos, r))
+
+        # And make anchor point the COG
+        cls.image.anchor_x = int(cog.x + 0.5)
+        cls.image.anchor_y = int(cls.image.height - cog.y + 0.5)
+
+        # And make insertion point the offset of the COG (y up)
+        ins = cog + offset
+        cls.insertion_point = v(ins.x, -ins.y)
 
     def __init__(self, squid, attachment_point):
         self.squid = squid
@@ -178,6 +193,11 @@ class Component(object):
         self.squid.body.apply_force(f=f, r=pos)
 
     apply_force = apply_force_relative
+
+    def apply_torque(self, t):
+        """Apply torque t
+        """
+        self.squid.body.torque += t 
 
     def reset(self):
         """Reset the state of the component."""

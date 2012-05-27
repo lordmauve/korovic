@@ -69,6 +69,9 @@ class Engine(ActivateableComponent):
     def on_stop(self):
         pass
 
+    def force_angle(self):
+        return self.angle
+
     def update(self, dt):
         ran = False
         if self.active:
@@ -77,7 +80,8 @@ class Engine(ActivateableComponent):
                     self.on_start()
                     self.started = True
                 ran = True
-                self.apply_force_relative(self.FORCE, self.OFFSET)
+                thrust = self.FORCE.rotated(math.degrees(self.squid.body.angle + self.force_angle()))
+                self.apply_force_absolute(thrust, self.OFFSET)
         if not ran and self.started:
             self.on_stop()
             self.started = False
@@ -241,18 +245,28 @@ prop_sound = load_sound('data/sounds/prop.wav')
 
 class Propeller(ActiveSound, OnAnimation, Engine):
     MASS = 3
-    slot_mask = Slot.TOP | Slot.BOTTOM | Slot.NOSE
+    slot_mask = Slot.TOP | Slot.BOTTOM | Slot.NOSE | Slot.TAIL
     FORCE = v(45000, 0)
     angles = {
         Slot.TOP: math.pi * 0.5,
         Slot.BOTTOM: math.pi * 1.5,
-        Slot.NOSE: 0
+        Slot.NOSE: 0,
+        Slot.TAIL: math.pi
+    }
+    force_angles = {
+        Slot.TOP: math.pi * 0.5,
+        Slot.BOTTOM: math.pi * 0.5,
+        Slot.NOSE: 0,
+        Slot.TAIL: 0
     }
     FUEL_CONSUMPTION = 3
     sound = prop_sound
 
     def set_angle(self):
         """Angle is not user modifiable"""
+
+    def force_angle(self):
+        return self.force_angles[self.slot.flags]
     
     @property
     def angle(self):

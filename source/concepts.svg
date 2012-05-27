@@ -304,14 +304,14 @@
   </defs>
   <sodipodi:namedview
      id="base"
-     pagecolor="#ffffff"
+     pagecolor="#000000"
      bordercolor="#666666"
      borderopacity="1.0"
-     inkscape:pageopacity="0.0"
+     inkscape:pageopacity="0"
      inkscape:pageshadow="2"
      inkscape:zoom="1"
-     inkscape:cx="628.61702"
-     inkscape:cy="654.1413"
+     inkscape:cx="1109.5683"
+     inkscape:cy="544.49935"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -1040,7 +1040,7 @@
     <g
        transform="matrix(2.1124152,0,0,2.1124152,-120.26025,-413.06815)"
        id="g4468"
-       inkscape:export-filename="/home/mauve/dev/flying/data/sprites/wing.png"
+       inkscape:export-filename="/home/mauve/dev/flying/korovic/data/sprites/wing.png"
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90">
       <g
@@ -1849,7 +1849,10 @@
     </g>
     <g
        id="g4885"
-       transform="matrix(1,0,-0.72301953,0.88851639,312.34911,66.331187)">
+       transform="matrix(1,0,-0.72301953,0.88851639,312.34911,66.331187)"
+       inkscape:export-filename="/home/mauve/dev/flying/korovic/data/sprites/ekranoplan.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90">
       <g
          id="g4859"
          transform="matrix(-2.1124152,0,0,2.1124152,640.31843,-825.06815)">
@@ -2491,6 +2494,39 @@
          sodipodi:ry="4.2426405"
          d="m 330.92596,42.613697 c 0,2.343146 -1.8995,4.242641 -4.24264,4.242641 -2.34315,0 -4.24264,-1.899495 -4.24264,-4.242641 0,-2.343146 1.89949,-4.24264 4.24264,-4.24264 2.34314,0 4.24264,1.899494 4.24264,4.24264 z"
          transform="matrix(1.1666667,0,0,1.1666667,-55.154329,-7.8093899)" />
+    </g>
+    <g
+       id="g4144"
+       transform="translate(223,-3)"
+       inkscape:export-filename="/home/mauve/dev/flying/korovic/data/sprites/hangglider.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90">
+      <g
+         transform="translate(2,-5)"
+         id="g4136">
+        <path
+           sodipodi:nodetypes="csccc"
+           inkscape:connector-curvature="0"
+           id="path3366"
+           d="m 414.34061,120.34211 c 48.2849,-1.46086 36.56486,3.20997 40.18373,0.48267 9.74562,-7.34462 -76.39624,-25.39017 -76.39624,-25.39017 l 12.12119,23.38304 z"
+           style="color:#000000;fill:#168a45;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+        <path
+           style="color:#000000;fill:#00d455;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+           d="m 410,121.31091 c 46.97076,-1.04847 45.37496,2.43063 44.99347,-0.55072 -0.90328,-7.05917 -103.61198,-17.32558 -103.61198,-17.32558 l 33.15583,16.78218 z"
+           id="path3364"
+           inkscape:connector-curvature="0"
+           sodipodi:nodetypes="csccc" />
+      </g>
+      <path
+         inkscape:connector-curvature="0"
+         id="path4140"
+         d="m 390.5,110.86218 27,26.5 38,-19"
+         style="color:#000000;fill:none;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4.00099993;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+      <path
+         inkscape:connector-curvature="0"
+         id="path4142"
+         d="m 418,137.36218 -4,-21"
+         style="color:#000000;fill:none;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4.00099993;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
     </g>
   </g>
 </svg>

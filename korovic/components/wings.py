@@ -3,6 +3,7 @@ import math
 from ..vector import v
 from ..editor import AngleEditor
 from ..controllers import PressController
+from ..constants import SEA_LEVEL
 
 from .base import Component, ActivateableComponent
 from .squid import Slot
@@ -49,6 +50,15 @@ class BiplaneWing(Wing):
     DRAG = 0.2
 
 
+class HangGlider(Wing):
+    MASS = 4
+    MAX_LIFT = 60000
+    slot_mask = Slot.TOP
+
+    LIFT_RATE = 7
+    DRAG = 0.3
+
+
 class Aerolon(Wing, ActivateableComponent):
     MASS = 2
     LIFT_RATE = 1
@@ -67,3 +77,29 @@ class Aerolon(Wing, ActivateableComponent):
 
     def controller(self):
         return PressController(self)
+
+
+class Ekranoplan(Component):
+    MASS = 15
+    MAX_LIFT = 200000
+    LIFT_RATE = 7
+    DRAG = 0.1
+    TORQUE_SCALE = 8
+
+    slot_mask = Slot.BOTTOM
+
+    def update(self, dt):
+        # Drag
+        self.apply_force_absolute(self.absolute_wind() * -self.DRAG)
+
+        # Lift
+        wind = self.relative_wind()
+        aoa = -(-wind).angle
+        if wind.length2 > 1 and -45 < aoa < 45:
+            coeff = self.LIFT_RATE * math.sin(2 * math.radians(aoa + 5))
+            lift = v(0, max(-self.MAX_LIFT, min(self.MAX_LIFT, coeff * wind.length2)))
+            alt = self.position.y - SEA_LEVEL
+            scale = max(0, 1 - (alt / 100.0) ** 2)
+            if alt > 0:
+                self.apply_force(lift * scale)
+                self.apply_torque(-self.rotation * scale * self.TORQUE_SCALE)

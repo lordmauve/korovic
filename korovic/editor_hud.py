@@ -28,6 +28,8 @@ SHOP = [
 #    Item('Balloon', 10, components.Balloon, 'Ninety-nine Luftballoons...'),
     Item('Pulsejet', 150, components.PulseJet, 'Vould you like to cruise like a V-1, Susie?'),
     Item('Rotor', 500, components.Rotor, 'You are Susie, not Huey, yes?'),
+    Item('Hang Glider', 100, components.HangGlider, 'And it vill keep ze sun off you!'),
+    Item('Ekranoplan', 400, components.Ekranoplan, 'I stole zese from ze Russians.'),
 ]
 
 GREY = (90, 90, 90, 255)
@@ -161,6 +163,7 @@ class EditorHud(object):
             if item.price > max_money:
                 continue
             items.append(ListItem(self, item))
+        items.sort(key=lambda x: x.item.price)
         self.items = items
         self.height = (self.tile_size.y + 10) * len(self.items) + 10
 
