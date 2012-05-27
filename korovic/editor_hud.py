@@ -25,11 +25,12 @@ SHOP = [
     Item('Propeller', 100, components.Propeller, 'Contact!'),
     Item('Small Fuel Tank', 40, components.SmallFuelTank, 'A little fuel goes a long way!'),
     Item('Large Fuel Tank', 75, components.LargeFuelTank, 'Is zis too much fuel for you?'),
-    Item('Balloon', 10, components.Balloon, 'Ninety-nine Luftballoons...'),
+    Item('Balloon', 35, components.Balloon, 'Ninety-nine Luftballoons...'),
     Item('Pulsejet', 150, components.PulseJet, 'Vould you like to cruise like a V-1, Susie?'),
     Item('Rotor', 500, components.Rotor, 'You are Susie, not Huey, yes?'),
     Item('Hang Glider', 100, components.HangGlider, 'And it vill keep ze sun off you!'),
     Item('Ekranoplan', 400, components.Ekranoplan, 'I stole zese from ze Russians.'),
+    Item('Hot Air Balloon', 275, components.HotAirBalloon, 'Up, up and avay!'),
 ]
 
 GREY = (90, 90, 90, 255)

@@ -60,14 +60,14 @@
   </defs>
   <sodipodi:namedview
      id="base"
-     pagecolor="#ffffff"
+     pagecolor="#000000"
      bordercolor="#666666"
      borderopacity="1.0"
-     inkscape:pageopacity="0.0"
+     inkscape:pageopacity="0"
      inkscape:pageshadow="2"
      inkscape:zoom="1"
-     inkscape:cx="335.75379"
-     inkscape:cy="365.1151"
+     inkscape:cx="217.75379"
+     inkscape:cy="285.1151"
      inkscape:current-layer="layer1"
      inkscape:document-units="px"
      showgrid="false"

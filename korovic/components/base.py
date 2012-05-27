@@ -226,6 +226,12 @@ class ActivateableComponent(Component):
     def is_active(self):
         return self.active
 
+    def on_start(self):
+        pass
+
+    def on_stop(self):
+        pass
+
     def reset(self):
         """Reset the state of the component."""
         self.active = self.initial

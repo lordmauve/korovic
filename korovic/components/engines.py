@@ -63,12 +63,6 @@ class Engine(ActivateableComponent):
     OFFSET = v(0, 0)
     started = False
 
-    def on_start(self):
-        pass
-
-    def on_stop(self):
-        pass
-
     def force_angle(self):
         return self.angle
 

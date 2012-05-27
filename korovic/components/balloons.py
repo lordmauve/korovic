@@ -1,10 +1,13 @@
 import math
 import pyglet.sprite
 
-from .base import Component
+from .base import Component, ActivateableComponent
+from .engines import OnAnimation, ActiveSound
 from .squid import Tether, Slot
 
+from ..controllers import PressController
 from ..vector import v
+from ..sound import load_sound
 
 
 class Balloon(Component):
@@ -21,6 +24,7 @@ class Balloon(Component):
         self.tether = None
         self.create_body()
         self.tether_to(self.squid.body) 
+        super(Balloon, self).reset()
 
     def bodies_and_shapes(self):
         bs = super(Balloon, self).bodies_and_shapes()
@@ -76,3 +80,44 @@ class Balloon(Component):
         if self.tether:
             self.tether.draw()
         super(Balloon, self).draw_component()
+
+
+class HotAirBalloon(ActiveSound, Balloon, OnAnimation, ActivateableComponent):
+    slot_mask = Slot.TOP
+    FUEL_CONSUMPTION = 0.1
+    MASS = 7
+    
+    temp = 0
+    MIN_LIFT = v(0, 10000)
+    MAX_LIFT = v(0, 80000)
+    started = False
+
+    sound = load_sound('data/sounds/hotairballoon.wav')
+
+    def update(self, dt):
+        ran = False
+        if self.active:
+            if self.squid.draw_fuel(self.FUEL_CONSUMPTION * dt):
+                if not self.started:
+                    self.on_start()
+                    self.started = True
+                ran = True
+                self.temp = min(1, self.temp + dt * 0.05)
+        else:
+            self.temp = self.temp * 0.9 ** dt 
+        if not ran and self.started:
+            self.on_stop()
+            self.started = False
+
+        # Not actually apply the lift
+        self.LIFT = (
+            self.temp * self.MAX_LIFT +
+            (1 - self.temp) * self.MIN_LIFT
+        )
+        super(HotAirBalloon, self).update(dt)
+
+    def is_enabled(self):
+        return self.squid.has_fuel()
+
+    def controller(self):
+        return PressController(self)
