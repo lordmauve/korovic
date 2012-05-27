@@ -142,6 +142,8 @@ class Susie(Component):
         bs = [self.body] + self.shapes
         for s in self.spikes:
             bs.extend(s.bodies_and_shapes())
+        for c in self.slots.components:
+            bs.extend(c.bodies_and_shapes())
         return bs
     
     def create_body(self):
@@ -150,12 +152,12 @@ class Susie(Component):
 #            TentacleSpike(self, v(-90, 0)),
         ]
 
-    def reset(self):
+    def reset(self, position=(250, 80)):
         self.create_body()
         self.body.angular_velocity_limit = 1.5  # Ensure Susie can't spin too fast
         self.body.mass = self.total_weight()
         self.fuel = self.fuel_capacity()
-        self.position = (250, 80)
+        self.position = position
         for a in self.slots.components:
             a.reset()
 
@@ -181,9 +183,14 @@ class Susie(Component):
         return self.fuel > 0
 
     def set_position(self, pos):
-        trans = pos - self.body.position
         self.body.position = pos
         self.sprite.position = pos
+        for c in self.slots.components:
+            try:
+                c.position = Component.get_position(c)
+            except AttributeError:
+                # position isn't settable, probably because it's derived
+                pass
 #        self.spikes[0].position += trans
 
     def get_position(self):

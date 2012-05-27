@@ -78,8 +78,11 @@ class Component(object):
         self.squid = squid
         self.attachment_point = attachment_point
         self.sprite = pyglet.sprite.Sprite(self.image, 0, 0)
+        self.body = None
 
     def bodies_and_shapes(self):
+        if self.body is None:
+            return []
         bs = [self.body] + self.shapes
         try:
             for c in self.components:
@@ -109,11 +112,13 @@ class Component(object):
             icon.scale = float(size) / s
         return icon
 
-    @property
-    def position(self):
+    def get_position(self):
         """World position of the component."""
         p = self.attachment_point + self.insertion_point.rotated(math.degrees(self.angle))  # position of the insertion point in body space
         return v(self.squid.body.local_to_world(p))
+    position = property(get_position)
+
+    home_position = get_position
     
     @property
     def rotation(self):

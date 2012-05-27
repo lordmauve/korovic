@@ -25,7 +25,7 @@ SHOP = [
     Item('Propeller', 100, components.Propeller, 'Contact!'),
     Item('Small Fuel Tank', 40, components.SmallFuelTank, 'A little fuel goes a long way!'),
     Item('Large Fuel Tank', 75, components.LargeFuelTank, 'Is zis too much fuel for you?'),
-#    Item('Balloon', 10, components.Balloon, 'Ninety-nine Luftballoons...'),
+    Item('Balloon', 10, components.Balloon, 'Ninety-nine Luftballoons...'),
     Item('Pulsejet', 150, components.PulseJet, 'Vould you like to cruise like a V-1, Susie?'),
     Item('Rotor', 500, components.Rotor, 'You are Susie, not Huey, yes?'),
     Item('Hang Glider', 100, components.HangGlider, 'And it vill keep ze sun off you!'),
