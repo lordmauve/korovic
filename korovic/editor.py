@@ -44,7 +44,7 @@ class SlotEditor(object):
         p = v(x, y)
         self.dragging = (p - self.component.position).length <= 70
         if self.dragging:
-            self.start_pos = self.component.position
+            self.start_pos = self.component.attachment_position()
             return EVENT_HANDLED
 
     def on_mouse_release(self, x, y, button, modifiers):
@@ -55,8 +55,7 @@ class SlotEditor(object):
                 slots.attach(self.proposed_slot[0], self.component)
                 self.real_slot = self.component.slot
             else:
-                self.component.slot = self.real_slot
-                self.component.attachment_point = self.real_slot.pos
+                self.component.attach_at_slot(self.real_slot)
             self.proposed_slot = None
             self.display_offset = v(0, 0)
             self.dragging = False
@@ -81,8 +80,7 @@ class SlotEditor(object):
 
         if slot is not None:
             self.proposed_slot = (slot, v(0, 0))
-            self.component.slot = slots.slots[slot]
-            self.component.attachment_point = slots.slots[slot].pos
+            self.component.attach_at_slot(slots.slots[slot])
         else:
             self.proposed_slot = None
 

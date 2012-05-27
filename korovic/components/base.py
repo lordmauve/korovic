@@ -80,6 +80,10 @@ class Component(object):
         self.sprite = pyglet.sprite.Sprite(self.image, 0, 0)
         self.body = None
 
+    def attach_at_slot(self, slot):
+        self.slot = slot
+        self.attachment_point = slot.pos
+
     def bodies_and_shapes(self):
         if self.body is None:
             return []

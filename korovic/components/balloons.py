@@ -11,7 +11,7 @@ class Balloon(Component):
     LIFT = v(0, 20000)
     MASS = 3
     ALT_ATTENUATION = 0.00001  # how fast lift drops off with altitude
-    slot_mask = Slot.TOP
+    slot_mask = Slot.TOP | Slot.NOSE | Slot.TAIL
 
     def __init__(self, squid, attachment_point):
         super(Balloon, self).__init__(squid, attachment_point)
@@ -27,6 +27,10 @@ class Balloon(Component):
         if self.tether:
             bs.extend(self.tether.bodies_and_shapes())
         return bs
+
+    def attach_at_slot(self, slot):
+        super(Balloon, self).attach_at_slot(slot)
+        self.reset()
 
     def home_position(self):
         return Component.get_position(self) + v(0, 100)

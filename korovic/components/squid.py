@@ -72,8 +72,7 @@ class Slots(object):
         self.slots[id].component = component
         self.components.append(component)
         self.components.sort(key=lambda c: bool(c.slot_mask & Slot.SIDE))
-        component.slot = self.slots[id]
-        component.attachment_point = self.slots[id].pos
+        component.attach_at_slot(self.slots[id])
 
     def attach_new(self, id, component_class):
         """Attach a new instance of component_class at id"""
