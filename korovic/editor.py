@@ -134,6 +134,9 @@ class AngleEditor(SlotEditor):
     def on_mouse_release(self, x, y, button, modifiers):
         ret = super(AngleEditor, self).on_mouse_release(x, y, button, modifiers)
         if ret:
+            e = self.component.editor()
+            self.min_angle = e.min_angle
+            self.max_angle = e.max_angle
             self.build_protractor()
             return ret
         if self.adjusting:
@@ -147,6 +150,8 @@ class AngleEditor(SlotEditor):
             self.click.play()
             p = v(x, y)
             angle = (p - self.protractor.centre).angle
+            if self.max_angle > 180 and angle < 0:
+                angle += 360
             angle = min(self.max_angle, max(self.min_angle, angle))
             self.component.angle = math.radians(angle)
             self.protractor.set_angle(angle)

@@ -117,6 +117,7 @@ class Susie(Component):
         img = loader.image('data/sprites/squid-shadow.png') 
         w = img.width
         img.anchor_x = w * 0.5
+        img.anchor_y = img.height * 0.5
         cls.shadow_image = img
 
     def __init__(self, world):
@@ -242,7 +243,7 @@ class Susie(Component):
 
     def draw_shadow(self):
         if self.body.position.y > SEA_LEVEL:
-            self.shadow.set_position(self.body.position.x, SEA_LEVEL)
+            self.shadow.set_position(self.body.position.x, SEA_LEVEL + 23)
             self.shadow.opacity = max(255 - self.body.position.y, 0)
             self.shadow.draw()
 

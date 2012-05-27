@@ -31,6 +31,7 @@ SHOP = [
     Item('Hang Glider', 100, components.HangGlider, 'And it vill keep ze sun off you!'),
     Item('Ekranoplan', 400, components.Ekranoplan, 'I stole zese from ze Russians.'),
     Item('Hot Air Balloon', 275, components.HotAirBalloon, 'Up, up and avay!'),
+    Item('Thruster', 150, components.Thruster, 'Zese may help you keep upright.'),
 ]
 
 GREY = (90, 90, 90, 255)

@@ -262,9 +262,9 @@ class Propeller(ActiveSound, OnAnimation, Engine):
     def force_angle(self):
         return self.force_angles[self.slot.flags]
     
-    @property
-    def angle(self):
-        return self.angles[self.slot.flags]
+    def attach_at_slot(self, slot):
+        self.angle = self.angles[slot.flags]
+        super(Propeller, self).attach_at_slot(slot)
 
     def controller(self):
         return PressController(self)
@@ -296,3 +296,25 @@ class Rotor(ActiveSound, OnAnimation, Engine):
 
     def editor(self):
         return AngleEditor(self, min_angle=-10, max_angle=10)
+
+
+class Thruster(Propeller):
+    MASS = 2
+    FORCE = v(10000, 0)
+    sound = load_sound('data/sounds/hotairballoon.wav')
+
+    FUEL_CONSUMPTION = 3
+
+    angles = {
+        Slot.TOP: math.pi * 0.5,
+        Slot.BOTTOM: math.pi * 0.5,
+        Slot.NOSE: math.pi,
+        Slot.TAIL: 0
+    }
+
+    def editor(self):
+        a = int(math.degrees(self.angles[self.slot.flags]))
+        return AngleEditor(self, min_angle=a - 45, max_angle=a + 45)
+
+    def force_angle(self):
+        return self.angle
