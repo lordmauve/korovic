@@ -21,7 +21,7 @@ data_files = data_files.items()
 
 setup(
     name='korovic',
-    version='1.0.5',
+    version='1.1.0',
     packages=find_packages(),
     description="Dr. Korovic's Flying Atomic Squid",
     long_description=open('README').read(),
