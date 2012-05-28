@@ -141,6 +141,8 @@ class World(EventDispatcher):
                 if x + iw < w:
                     self.width = None
             elif type == 'barrageballoon':
+                x += iw * 0.5
+                y += ih * 0.7
                 balloon = components.BarrageBalloon()
                 self.actors.append(balloon)
                 b = pymunk.Body(pymunk.inf, pymunk.inf)

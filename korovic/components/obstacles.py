@@ -12,7 +12,6 @@ class BarrageBalloon(Component):
     LIFT = v(0, 100000)
     MASS = 50
     collision_group = 2
-    yfix = -1    # This is a bodge to fix insertion points - see base class
 
     def __init__(self):
         self.sprite = pyglet.sprite.Sprite(self.image, 0, 0)
@@ -26,9 +25,9 @@ class BarrageBalloon(Component):
         return bs
 
     def tether_to(self, body, alt):
-        self.body.position = body.position + v(0, alt) - self.insertion_point
+        self.body.position = body.position + v(0, alt)
         self.tether = Tether(
-            a=self.body.local_to_world(self.insertion_point),
+            a=self.body.local_to_world(-self.insertion_point),
             b=v(body.position),
             c1=self.body,
             c2=body,
